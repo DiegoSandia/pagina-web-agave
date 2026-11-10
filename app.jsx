@@ -1,4 +1,4 @@
-/* global React, ReactDOM, Nav, Hero, About, Menu, Gallery, Reservations, HoursLocation, Footer, SmokeLayer, useReveal, useTweaks, TweaksPanel, TweakSection, TweakRadio */
+/* global React, ReactDOM, Nav, Hero, PromoStrip, About, Menu, Gallery, Reviews, FAQ, Reservations, HoursLocation, Footer, SmokeLayer, useReveal, WhatsAppFloat, useTweaks, TweaksPanel, TweakSection, TweakRadio */
 const { useEffect } = React;
 
 const TWEAKS = /*EDITMODE-BEGIN*/{
@@ -30,12 +30,16 @@ function App() {
       <SmokeLayer />
       <Nav />
       <Hero />
+      <PromoStrip />
       <About />
       <Menu />
       <Gallery />
+      <Reviews />
+      <FAQ />
       <Reservations />
       <HoursLocation />
       <Footer />
+      <WhatsAppFloat />
 
       <TweaksPanel title="Tweaks">
         <TweakSection title="Color del neón">

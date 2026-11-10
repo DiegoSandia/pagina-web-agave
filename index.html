@@ -3,12 +3,207 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>El Agave — Birria & Cantaritos · Arandas, Jalisco</title>
+  <title>El Agave — Birria & Cantaritos | Tlalnepantla, Estado de México</title>
+  <meta name="description" content="Birria estilo Jalisco y cantaritos en Tlalnepantla. Dos sucursales: Arboledas y Centro. Abierto miércoles a domingo desde las 8 AM. Reserva tu mesa." />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="restaurant" />
+  <meta property="og:title" content="El Agave — Birria & Cantaritos | Tlalnepantla" />
+  <meta property="og:description" content="Birria estilo Jalisco a fuego lento y cantaritos que prenden la noche. Dos sucursales en Tlalnepantla. Reserva tu mesa." />
+  <meta property="og:url" content="https://el-agave-arandas.com" />
+  <meta property="og:image" content="https://el-agave-arandas.com/assets/photos/birria-pour.jpg" />
+  <meta property="og:locale" content="es_MX" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="El Agave — Birria & Cantaritos | Tlalnepantla" />
+  <meta name="twitter:description" content="Birria estilo Jalisco y cantaritos en Tlalnepantla. Dos sucursales." />
+  <meta name="twitter:image" content="https://el-agave-arandas.com/assets/photos/birria-pour.jpg" />
+
+  <!-- JSON-LD: Restaurante con dos ubicaciones -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Restaurant",
+        "@id": "https://el-agave-arandas.com/#restaurant-arboledas",
+        "name": "El Agave — Birria & Cantaritos (Arboledas)",
+        "url": "https://el-agave-arandas.com",
+        "telephone": "+525510699414",
+        "email": "elagavearandas@gmail.com",
+        "image": "https://el-agave-arandas.com/assets/photos/birria-pour.jpg",
+        "description": "Birria estilo Jalisco a fuego lento y cantaritos servidos en barro. Recetas de familia en Tlalnepantla.",
+        "servesCuisine": ["Mexicana", "Jaliscience", "Birria"],
+        "priceRange": "$$",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Av. Niños Héroes #26",
+          "addressLocality": "Tlalnepantla de Baz",
+          "addressRegion": "Estado de México",
+          "postalCode": "54026",
+          "addressCountry": "MX"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": 19.5450,
+          "longitude": -99.1950
+        },
+        "openingHoursSpecification": [
+          { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Wednesday","Thursday"], "opens": "08:00", "closes": "23:00" },
+          { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Friday","Saturday"], "opens": "08:00", "closes": "02:00" },
+          { "@type": "OpeningHoursSpecification", "dayOfWeek": "Sunday", "opens": "08:00", "closes": "22:00" }
+        ],
+        "sameAs": [
+          "https://instagram.com/el_agave_arandas",
+          "https://facebook.com/cantaritoselagave"
+        ],
+        "menu": "https://el-agave-arandas.com/#menu",
+        "hasMap": "https://www.google.com/maps/search/?api=1&query=Av.+Ni%C3%B1os+H%C3%A9roes+26+Res+El+Dorado+Tlalnepantla",
+        "acceptsReservations": true
+      },
+      {
+        "@type": "Restaurant",
+        "@id": "https://el-agave-arandas.com/#restaurant-centro",
+        "name": "El Agave — Birria & Cantaritos (Centro)",
+        "url": "https://el-agave-arandas.com",
+        "telephone": "+525510699414",
+        "email": "elagavearandas@gmail.com",
+        "image": "https://el-agave-arandas.com/assets/photos/birria-pour.jpg",
+        "description": "Birria estilo Jalisco a fuego lento y cantaritos servidos en barro. Recetas de familia en Tlalnepantla Centro.",
+        "servesCuisine": ["Mexicana", "Jaliscience", "Birria"],
+        "priceRange": "$$",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Av. Morelos #39",
+          "addressLocality": "Tlalnepantla de Baz",
+          "addressRegion": "Estado de México",
+          "postalCode": "54030",
+          "addressCountry": "MX"
+        },
+        "openingHoursSpecification": [
+          { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Wednesday","Thursday"], "opens": "08:00", "closes": "23:00" },
+          { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Friday","Saturday"], "opens": "08:00", "closes": "02:00" },
+          { "@type": "OpeningHoursSpecification", "dayOfWeek": "Sunday", "opens": "08:00", "closes": "22:00" }
+        ],
+        "sameAs": [
+          "https://instagram.com/el_agave_arandas",
+          "https://facebook.com/cantaritoselagave"
+        ],
+        "menu": "https://el-agave-arandas.com/#menu",
+        "hasMap": "https://www.google.com/maps/search/?api=1&query=Av.+Morelos+39+San+Javier+Tlalnepantla+Centro",
+        "acceptsReservations": true
+      },
+      {
+        "@type": "Menu",
+        "@id": "https://el-agave-arandas.com/#menu",
+        "name": "Menú El Agave",
+        "hasMenuSection": [
+          {
+            "@type": "MenuSection",
+            "name": "Birria",
+            "hasMenuItem": [
+              { "@type": "MenuItem", "name": "Birria estilo Jalisco", "description": "Servida con consomé, cebolla, cilantro y limón. Receta de casa.", "offers": { "@type": "Offer", "price": "220", "priceCurrency": "MXN" } },
+              { "@type": "MenuItem", "name": "Tostadas de Birria", "description": "Tres tostadas con birria deshebrada, pico de gallo y guacamole.", "offers": { "@type": "Offer", "price": "180", "priceCurrency": "MXN" } },
+              { "@type": "MenuItem", "name": "Ramen de Birria", "description": "Fideo japonés bañado en consomé de birria.", "offers": { "@type": "Offer", "price": "210", "priceCurrency": "MXN" } }
+            ]
+          },
+          {
+            "@type": "MenuSection",
+            "name": "Cantaritos",
+            "hasMenuItem": [
+              { "@type": "MenuItem", "name": "Cantarito Clásico", "description": "Tequila blanco, jugo de toronja, naranja, limón y sal de gusano.", "offers": { "@type": "Offer", "price": "160", "priceCurrency": "MXN" } },
+              { "@type": "MenuItem", "name": "Cantarito Squirt", "description": "Tequila reposado con Squirt frío y chamoy en el borde.", "offers": { "@type": "Offer", "price": "170", "priceCurrency": "MXN" } }
+            ]
+          },
+          {
+            "@type": "MenuSection",
+            "name": "Desayunos",
+            "hasMenuItem": [
+              { "@type": "MenuItem", "name": "Chilaquiles Verdes", "description": "Salsa verde de la casa, huevo estrellado y aguacate fresco.", "offers": { "@type": "Offer", "price": "165", "priceCurrency": "MXN" } },
+              { "@type": "MenuItem", "name": "Chilaquiles Rojos", "description": "Bañados en salsa de la casa con chorizo, crema y queso fresco.", "offers": { "@type": "Offer", "price": "165", "priceCurrency": "MXN" } },
+              { "@type": "MenuItem", "name": "Huevos Mexicanos", "description": "Huevo revuelto con tomate, cebolla y chile, frijoles y bolillo.", "offers": { "@type": "Offer", "price": "130", "priceCurrency": "MXN" } }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <!-- FAQ Schema — aparece en resultados de Google con preguntas expandibles -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "¿Dónde está El Agave en Tlalnepantla?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Tenemos dos sucursales: Arboledas en Av. Niños Héroes #26, Res. El Dorado; y Centro en Av. Morelos #39, San Javier, Tlalnepantla de Baz, Estado de México."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿En qué horario atienden?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Abrimos miércoles y jueves de 8:00 AM a 11:00 PM, viernes y sábado de 8:00 AM a 2:00 AM, y domingo de 8:00 AM a 10:00 PM. Lunes y martes descansamos."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Cuánto cuesta la birria?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "La birria estilo Jalisco tiene un precio de $220 MXN, incluye consomé, cebolla, cilantro y limón. Las tostadas de birria están en $180 y el ramen de birria en $210."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Necesito reservar mesa?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No es obligatorio, pero los fines de semana las mesas se llenan rápido. Puedes apartar tu mesa desde nuestra página web o por WhatsApp al 55 1069 9414."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Hacen eventos privados o grupos?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Sí, organizamos eventos privados, grupos de trabajo, fiestas y reuniones. Contáctanos con anticipación por WhatsApp al 55 1069 9414 o al correo elagavearandas@gmail.com."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Sirven desayunos?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Sí, abrimos desde las 8:00 AM con desayunos como chilaquiles verdes y rojos, huevos mexicanos y más. La birria también está disponible desde las 8 AM."
+        }
+      }
+    ]
+  }
+  </script>
+
   <link rel="stylesheet" href="styles.css" />
   <link rel="icon" href="assets/logo.png" />
 
-  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
-  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <link rel="canonical" href="https://el-agave-arandas.com/" />
+
+  <!-- preconnect para carga rápida -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://unpkg.com" crossorigin />
+  <link rel="dns-prefetch" href="https://unpkg.com" />
+  <link rel="preload" href="assets/hero.mp4" as="video" type="video/mp4" />
+
+  <!-- React producción (3× más ligero que dev) -->
+  <script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js" crossorigin="anonymous"></script>
   <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
 </head>
 <body>

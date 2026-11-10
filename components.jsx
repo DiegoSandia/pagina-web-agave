@@ -133,7 +133,8 @@ function Nav() {
           <a href="#nosotros" className="nav-link">Nosotros</a>
           <a href="#menu" className="nav-link">Menú</a>
           <a href="#galeria" className="nav-link">Galería</a>
-          <a href="#contacto" className="nav-link">Contacto</a>
+          <a href="#resenas" className="nav-link">Reseñas</a>
+          <a href="#visita" className="nav-link">Visítanos</a>
           <a href="#contacto" className="nav-cta">Reservar</a>
         </div>
         <button
@@ -158,8 +159,9 @@ function Nav() {
           <a href="#nosotros" className="nav-drawer-link" onClick={close}>Nosotros</a>
           <a href="#menu" className="nav-drawer-link" onClick={close}>Menú</a>
           <a href="#galeria" className="nav-drawer-link" onClick={close}>Galería</a>
+          <a href="#resenas" className="nav-drawer-link" onClick={close}>Reseñas</a>
+          <a href="#faq" className="nav-drawer-link" onClick={close}>Preguntas</a>
           <a href="#visita" className="nav-drawer-link" onClick={close}>Visítanos</a>
-          <a href="#contacto" className="nav-drawer-link" onClick={close}>Contacto</a>
           <a href="#contacto" className="nav-drawer-cta" onClick={close}>Reservar mesa →</a>
           <div className="nav-drawer-foot">
             <a href="tel:5510699414">55 1069 9414</a>
@@ -320,6 +322,10 @@ function Hero() {
               <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="6 4 20 12 6 20 6 4" /></svg>
             </a>
           </div>
+          <div className="hero-social-proof blur-reveal d-7">
+            <span className="hero-sp-stars">★★★★★</span>
+            <span className="hero-sp-text">4.4 · más de 274 reseñas en Google</span>
+          </div>
 
           <div className="hero-stats blur-reveal d-7">
             <div className="hero-stat-card liquid-glass">
@@ -342,6 +348,30 @@ function Hero() {
         </div>
       </div>
     </section>
+  );
+}
+
+// ============================================================
+// Promo Strip
+// ============================================================
+const PROMOS = [
+  { icon: '🥂', text: 'Cantarito chico de cortesía', sub: 'con tu mesa de 4+' },
+  { icon: '🍺', text: 'Pulque 2 × 1', sub: 'miércoles y jueves' },
+  { icon: '🎤', text: 'Karaoke', sub: 'viernes y sábado' },
+  { icon: '🥩', text: 'Birria desde $220', sub: 'con consomé incluido' },
+];
+
+function PromoStrip() {
+  return (
+    <div className="promo-strip">
+      {PROMOS.map((p, i) => (
+        <div key={i} className="promo-item">
+          <span className="promo-icon">{p.icon}</span>
+          <span className="promo-text">{p.text}</span>
+          <span className="promo-sub">{p.sub}</span>
+        </div>
+      ))}
+    </div>
   );
 }
 
@@ -546,6 +576,8 @@ function Reservations() {
 
   function submit(e) {
     e.preventDefault();
+    const msg = `Hola, quiero apartar una mesa 🍖\n\n📋 *Reserva:*\n👤 Nombre: ${form.name}\n📞 Teléfono: ${form.phone}\n📅 Fecha: ${form.date}\n🕐 Hora: ${form.time}\n👥 Personas: ${form.people}`;
+    window.open(`https://wa.me/525510699414?text=${encodeURIComponent(msg)}`, '_blank');
     setSubmitted(true);
     setTimeout(() => setSubmitted(false), 4000);
   }
@@ -820,8 +852,137 @@ function Footer() {
   );
 }
 
+// ============================================================
+// Reviews
+// ============================================================
+const REVIEWS = [
+  { name: 'Karla M.', stars: 5, text: 'La birria es increíble, el consomé estaba riquísimo. El ambiente de cantina con neón te mete en el mood desde que entras. 100% recomendado.', branch: 'Arboledas' },
+  { name: 'Ricardo T.', stars: 5, text: 'Los cantaritos están bien servidos y el tequila es de buena calidad. Fui con un grupo de 8 y nos atendieron súper bien. Volvemos el próximo fin.', branch: 'Centro' },
+  { name: 'Sofía L.', stars: 5, text: 'El ramen de birria es una locura, no esperaba que pegara tan bien. El lugar está limpio y la música a buen volumen. Gran experiencia.', branch: 'Arboledas' },
+];
+
+function Reviews() {
+  return (
+    <section id="resenas" className="section" data-screen-label="Resenas">
+      <div className="section-inner">
+        <div className="menu-head">
+          <div>
+            <div className="section-eyebrow reveal">Lo que dicen</div>
+            <h2 className="section-title bebas reveal delay-1">
+              RESEÑAS <span className="accent">REALES</span>
+            </h2>
+          </div>
+          <div className="reviews-rating reveal delay-2">
+            <span className="reviews-stars">★★★★★</span>
+            <span className="reviews-score">4.4</span>
+            <span className="reviews-count">+274 reseñas en Google</span>
+          </div>
+        </div>
+
+        <div className="reviews-grid">
+          {REVIEWS.map((r, i) => (
+            <article key={i} className="review-card reveal" style={{ transitionDelay: `${i * 100}ms` }}>
+              <div className="review-stars">{'★'.repeat(r.stars)}</div>
+              <p className="review-text">"{r.text}"</p>
+              <div className="review-author">
+                <span className="review-name">{r.name}</span>
+                <span className="review-branch">· {r.branch}</span>
+              </div>
+            </article>
+          ))}
+        </div>
+
+        <div className="reviews-cta reveal delay-2">
+          <p className="reviews-cta-text">¿Ya nos visitaste? Déjanos tu opinión y te regalamos una bebida de cortesía.</p>
+          <a
+            href="https://www.google.com/maps/search/El+Agave+Birria+Cantaritos+Tlalnepantla/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn btn-primary reviews-cta-btn"
+          >
+            Escribir reseña en Google <span className="btn-arrow">→</span>
+          </a>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ============================================================
+// FAQ
+// ============================================================
+const FAQ_DATA = [
+  { q: '¿Dónde están ubicados?', a: 'Tenemos dos sucursales en Tlalnepantla: Arboledas en Av. Niños Héroes #26, y Centro en Av. Morelos #39. Ambas están bien ubicadas y con estacionamiento cercano.' },
+  { q: '¿En qué horario atienden?', a: 'Miércoles y jueves de 8:00 AM a 11:00 PM, viernes y sábado hasta las 2:00 AM, domingo hasta las 10:00 PM. Lunes y martes descansamos.' },
+  { q: '¿Cuánto cuesta la birria?', a: 'La birria estilo Jalisco está en $220, las tostadas de birria en $180 y el ramen de birria en $210. Todos los precios incluyen consomé, cebolla, cilantro y limón.' },
+  { q: '¿Necesito reservar?', a: 'No es obligatorio, pero los fines de semana las mesas se llenan rápido. Te recomendamos apartar tu lugar desde la sección de reservas o por WhatsApp.' },
+  { q: '¿Hacen eventos o fiestas privadas?', a: 'Sí. Para grupos grandes, cumpleaños o eventos corporativos escríbenos con anticipación. Tenemos capacidad para grupos y coordinamos música en vivo, karaoke y más.' },
+  { q: '¿Sirven desayunos?', a: 'Sí, desde las 8:00 AM tenemos chilaquiles, huevos mexicanos, birria y más. La cantina prende temprano.' },
+];
+
+function FAQ() {
+  const [open, setOpen] = useState(null);
+  function toggle(i) { setOpen(open === i ? null : i); }
+
+  return (
+    <section id="faq" className="section" data-screen-label="FAQ">
+      <div className="section-inner faq-wrap">
+        <div className="menu-head">
+          <div>
+            <div className="section-eyebrow reveal">Preguntas frecuentes</div>
+            <h2 className="section-title bebas reveal delay-1">¿TIENES <span className="accent">DUDAS?</span></h2>
+          </div>
+        </div>
+
+        <div className="faq-list">
+          {FAQ_DATA.map((item, i) => (
+            <div key={i} className={`faq-item reveal ${open === i ? 'open' : ''}`} style={{ transitionDelay: `${i * 60}ms` }}>
+              <button className="faq-q" onClick={() => toggle(i)} aria-expanded={open === i}>
+                <span>{item.q}</span>
+                <span className="faq-icon">{open === i ? '−' : '+'}</span>
+              </button>
+              <div className="faq-a">
+                <p>{item.a}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ============================================================
+// WhatsApp Float Button
+// ============================================================
+function WhatsAppFloat() {
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setVisible(window.scrollY > 300);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  return (
+    <a
+      href="https://wa.me/525510699414?text=Hola%2C%20vi%20su%20página%20y%20me%20gustaría%20más%20información."
+      target="_blank"
+      rel="noopener noreferrer"
+      className={`wa-float ${visible ? 'visible' : ''}`}
+      aria-label="Contactar por WhatsApp"
+    >
+      <svg viewBox="0 0 24 24" fill="currentColor" width="28" height="28">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+        <path d="M12 2C6.477 2 2 6.477 2 12c0 1.771.465 3.432 1.28 4.877L2 22l5.26-1.247A9.956 9.956 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2z" opacity=".55"/>
+      </svg>
+      <span className="wa-float-label">WhatsApp</span>
+    </a>
+  );
+}
+
 // Export to window so app.jsx can use them
 Object.assign(window, {
-  Nav, Hero, About, Menu, Gallery, Reservations, HoursLocation, Footer,
-  SmokeLayer, useReveal,
+  Nav, Hero, PromoStrip, About, Menu, Gallery, Reviews, FAQ, Reservations, HoursLocation, Footer,
+  SmokeLayer, useReveal, WhatsAppFloat,
 });
