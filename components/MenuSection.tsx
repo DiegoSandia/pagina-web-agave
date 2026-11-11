@@ -90,7 +90,7 @@ function Panel({ cat }: { cat: MenuCategory }) {
             <span>{cat.cols[1]}</span>
           </div>
         )}
-        <ul className={`menu-list ${cat.cols ? 'has-cols' : ''}`}>
+        <ul className={`menu-list ${cat.cols ? 'has-cols' : cat.items.length > 6 ? 'is-long' : ''}`}>
           {cat.items.map((it, i) => (
             <li key={`${it.name}-${i}`} className="menu-row">
               <div className="menu-row-main">

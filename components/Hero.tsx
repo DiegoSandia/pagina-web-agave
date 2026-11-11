@@ -39,7 +39,7 @@ export default function Hero() {
         </div>
 
         <div className="hero-meta">
-          <a href="#opiniones" className="hero-chip">
+          <a href="#sucursales" className="hero-chip">
             <span className="stars" aria-hidden="true">
               {Array.from({ length: 5 }, (_, i) => <Star key={i} size={13} />)}
             </span>

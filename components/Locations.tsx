@@ -1,11 +1,11 @@
 'use client';
 
 import { useState } from 'react';
-import { BRANCHES, SITE, directionsUrl, mapEmbedUrl, type Branch } from '@/lib/site';
+import { BRANCHES, SITE, directionsUrl, mapEmbedUrl, placeUrl, writeReviewUrl, type Branch } from '@/lib/site';
 import { SCHEDULES, formatSlot } from '@/lib/hours';
 import { useOpenStatus } from '@/lib/useOpenStatus';
 import LiveStatus from './LiveStatus';
-import { ArrowUpRight, Facebook, Phone, Pin } from './icons';
+import { ArrowUpRight, Facebook, Phone, Pin, Star } from './icons';
 
 const ORDER = [1, 2, 3, 4, 5, 6, 0];
 const NAMES = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
@@ -25,6 +25,14 @@ function BranchCard({ b, i }: { b: Branch; i: number }) {
         {b.area}
       </address>
       <p className="branch-hours">{b.hoursSummary}</p>
+      <div className="branch-rating">
+        <span className="stars" aria-hidden="true">
+          {Array.from({ length: 5 }, (_, k) => <Star key={k} size={13} />)}
+        </span>
+        <span><strong>{b.rating}</strong> · {b.reviewCount} reseñas en Google</span>
+        <a href={placeUrl(b)} target="_blank" rel="noopener noreferrer">Leer</a>
+        <a href={writeReviewUrl(b)} target="_blank" rel="noopener noreferrer">Escribir una</a>
+      </div>
 
       <div className="branch-map">
         {map ? (

@@ -59,7 +59,7 @@ export default function Signature() {
               Lo que <span className="neon">pides</span> la segunda vez
             </h2>
             <p className="lede">
-              Cinco razones por las que la gente regresa. Empieza por la birria; termina con la cazuela de diez litros.
+              Cuatro razones por las que la gente regresa. Empieza por la birria; termina con la cazuela de diez litros.
             </p>
             <span className="sig-hint" aria-hidden="true">
               <span className="hint-desk">Sigue bajando</span>

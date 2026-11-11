@@ -3,16 +3,14 @@ import type { BranchId } from './hours';
 
 import birriaNeon from '@/assets/photos/v2/birria-neon.jpg';
 import birriaConsome from '@/assets/photos/v2/birria-consome.jpg';
-import birriaSalsas from '@/assets/photos/v2/birria-salsas.jpg';
 import cenitalBirria from '@/assets/photos/v2/cenital-birria.jpg';
 import cazuela10l from '@/assets/photos/v2/cazuela-10l.jpg';
 import cantaritoNeon from '@/assets/photos/v2/cantarito-neon.jpg';
 import barraCantaritos from '@/assets/photos/v2/barra-cantaritos.jpg';
-import barraTequila from '@/assets/photos/v2/barra-tequila.jpg';
 import barraMojito from '@/assets/photos/v2/barra-mojito.jpg';
+import barraTequila from '@/assets/photos/v2/barra-tequila.jpg';
 import mojitosTrio from '@/assets/photos/v2/mojitos-trio.jpg';
 import alitasPapas from '@/assets/photos/v2/alitas-papas.jpg';
-import alitasMojito from '@/assets/photos/v2/alitas-mojito.jpg';
 import papasMojito from '@/assets/photos/v2/papas-mojito.jpg';
 import tacosLengua from '@/assets/photos/v2/tacos-lengua.jpg';
 import tacosNeon from '@/assets/photos/v2/tacos-neon.jpg';
@@ -21,12 +19,11 @@ import desayuno from '@/assets/photos/v2/desayuno.jpg';
 import chilaquilesPollo from '@/assets/photos/v2/chilaquiles-pollo.jpg';
 import enchiladasPour from '@/assets/photos/v2/enchiladas-pour.jpg';
 import gente1 from '@/assets/photos/v2/gente-1.jpg';
-import gente2 from '@/assets/photos/v2/gente-2.jpg';
-import gente3 from '@/assets/photos/v2/gente-3.jpg';
+import mesaLlena from '@/assets/photos/v2/mesa-llena.jpg';
+import meseroCantaritos from '@/assets/photos/v2/mesero-cantaritos.jpg';
 import birriaNoodles from '@/assets/photos/birria-noodles.jpg';
 import aguaJamaica from '@/assets/photos/agua-jamaica.jpg';
 import aguaFresca from '@/assets/photos/agua-fresca-splash.jpg';
-import cantaritoPour from '@/assets/photos/cantarito-pour.jpg';
 
 export const SITE = {
   name: 'El Agave',
@@ -523,7 +520,6 @@ export const SIGNATURE = [
   { n: '02', name: 'Birriamen', copy: 'Fideo bañado en consomé de birria. Suena raro, sabe a que siempre debió existir.', price: '$150', img: birriaNoodles },
   { n: '03', name: 'Cantarito tradicional', copy: '800 ml en barro con 90 ml de Tequila Arandas, limón, naranja, toronja y escarchado.', price: '$105', img: cantaritoNeon },
   { n: '04', name: 'Cazuela de 10 litros', copy: 'Casi dos litros de tequila en una sola cazuela. Para la mesa que vino a quedarse.', price: '$1,799', img: cazuela10l },
-  { n: '05', name: 'Alitas o boneless', copy: 'BBQ, mango-habanero, tamarindo, chipotle o lemon pepper. Con una mega bebida al lado.', price: '$155', img: alitasMojito },
 ];
 
 export const PROMOS = [
@@ -547,23 +543,19 @@ export const WEEK = [
 
 export const GALLERY: { img: StaticImageData; alt: string; label: string; span?: 'tall' | 'wide' }[] = [
   { img: barraCantaritos, alt: 'Bartender preparando cantaritos de barro en la barra', label: 'La barra', span: 'tall' },
-  { img: gente1, alt: 'Grupo de amigos en una mesa de El Agave', label: 'Las noches' },
-  { img: cenitalBirria, alt: 'Birria vista desde arriba con cebolla, cilantro y limón', label: 'Birria' },
+  { img: mesaLlena, alt: 'Grupo de amigos con una cazuela de cantarito bajo el letrero de neón', label: 'La mesa llena', span: 'tall' },
   { img: alitasPapas, alt: 'Alitas y papas a la francesa bajo el letrero de neón', label: 'Snacks', span: 'wide' },
+  { img: cenitalBirria, alt: 'Birria vista desde arriba con cebolla, cilantro y limón', label: 'Birria' },
+  { img: meseroCantaritos, alt: 'Mesero sirviendo cantaritos desde la cazuela en la mesa', label: 'Servido en la mesa' },
   { img: mojitosTrio, alt: 'Tres mega mojitos de sabores bajo el letrero de neón', label: 'Mega bebidas', span: 'tall' },
-  { img: gente2, alt: 'Pareja brindando en El Agave', label: 'Brindis' },
+  { img: gente1, alt: 'Grupo de amigos en una mesa de El Agave', label: 'Las noches' },
   { img: carneJugo, alt: 'Carne en su jugo con frijoles y chiles', label: 'Carne en su jugo' },
-  { img: birriaSalsas, alt: 'Birria con salsas y limones en mesa de madera', label: 'Consomé' },
-  { img: gente3, alt: 'Amigos reunidos en la cantina', label: 'La mesa llena', span: 'wide' },
-  { img: cantaritoPour, alt: 'Cantarito servido con escarchado de chile', label: 'Cantaritos', span: 'wide' },
 ];
 
 export const FAQ = [
-  { q: '¿Dónde están?', a: 'Tenemos dos sucursales en Tlalnepantla de Baz: Arboledas en Av. Niños Héroes #26, Res. El Dorado, y Centro en Av. Morelos #39, San Javier.' },
   { q: '¿Qué horario tienen?', a: 'Centro abre todos los días de 10:00 AM a 2:00 AM. Arboledas abre de martes a domingo de 10:00 AM a 5:00 AM. Los desayunos se sirven de 10:00 a 14:00 h en ambas.' },
   { q: '¿Cuánto cuesta la birria?', a: 'La birria estilo Jalisco mediana (120 g) cuesta $150 y la grande (170 g) $175. El consomé solo está en $40, el birriamen en $150 y la orden de 3 tacos de birria en $120.' },
   { q: '¿Cómo funciona el 2×1 en copeo?', a: 'Es todos los días, por persona e incluye un mezclador. Aplican restricciones: Hypnotic y Jägermeister no entran en ninguna preparación.' },
-  { q: '¿Necesito reservar?', a: 'No es obligatorio, pero viernes y sábado se llena. Aparta tu mesa desde esta página o por WhatsApp al 55 1069 9414 y te confirmamos por el mismo chat.' },
   { q: '¿Hacen eventos y grupos?', a: 'Sí: cumpleaños, grupos de trabajo y reuniones. Para mesas grandes tenemos cazuelas de cantarito de 5 y 10 litros. Escríbenos por WhatsApp con anticipación.' },
   { q: '¿La propina está incluida?', a: 'No. La propina es opcional.' },
 ];

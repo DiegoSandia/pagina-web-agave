@@ -1,7 +1,8 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
-import { BRANCHES, SITE, waLink } from '@/lib/site';
+import { BRANCHES, SITE, WEEK, waLink } from '@/lib/site';
+import { useOpenStatus } from '@/lib/useOpenStatus';
 import { SCHEDULES, mexicoNow, slotsFor } from '@/lib/hours';
 import { ArrowRight, Instagram, Phone, Spark, WhatsApp } from './icons';
 
@@ -28,6 +29,7 @@ export default function Reserve() {
   const [name, setName] = useState('');
   const [notes, setNotes] = useState('');
   const [sentUrl, setSentUrl] = useState<string | null>(null);
+  const status = useOpenStatus();
   const [minDate, setMinDate] = useState<string>();
   useEffect(() => setMinDate(todayISO()), []);
 
@@ -86,6 +88,17 @@ export default function Reserve() {
             <li><Spark size={14} /> Cumpleaños, grupos y mesas grandes</li>
             <li><Spark size={14} /> Cantarito chico de cortesía con mesa de 4+</li>
           </ul>
+          <div className="week-mini rv">
+            <p className="label">Cada día tiene su plan</p>
+            <ol>
+              {WEEK.map((d) => (
+                <li key={d.day} className={status?.day === d.day ? 'is-today' : ''}>
+                  <strong>{status?.day === d.day ? 'Hoy' : d.short}</strong>
+                  <span>{d.plan}</span>
+                </li>
+              ))}
+            </ol>
+          </div>
           <div className="direct rv">
             <a href={`tel:${SITE.phoneTel}`}><Phone size={16} /> {SITE.phoneDisplay}</a>
             <a href={SITE.instagram} target="_blank" rel="noopener noreferrer"><Instagram size={16} /> {SITE.instagramHandle}</a>

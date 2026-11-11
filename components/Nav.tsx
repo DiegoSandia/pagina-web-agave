@@ -11,7 +11,6 @@ import { lockScroll } from '@/lib/lenis';
 const LINKS = [
   { href: '#firma', label: 'La firma' },
   { href: '#menu', label: 'Menú' },
-  { href: '#semana', label: 'La semana' },
   { href: '#ambiente', label: 'Ambiente' },
   { href: '#sucursales', label: 'Sucursales' },
 ];
