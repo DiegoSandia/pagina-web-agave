@@ -657,13 +657,6 @@ address {
     linear-gradient(0deg, var(--ink) 0%, rgba(10, 7, 6, 0) 32%),
     linear-gradient(180deg, rgba(10, 7, 6, 0.55) 0%, rgba(10, 7, 6, 0) 16%);
 }
-.bg-video {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
 .embers {
   position: absolute;
   inset: 0;
@@ -1384,58 +1377,6 @@ address {
 }
 ::view-transition-image-pair(gallery-photo) {
   isolation: auto;
-}
-
-/* ==========================================================================
-   Night band
-   ========================================================================== */
-
-.night {
-  position: relative;
-  isolation: isolate;
-  display: flex;
-  align-items: center;
-  min-height: min(82svh, 760px);
-  overflow: hidden;
-}
-.night-media {
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-}
-.night-img {
-  object-position: 60% 50%;
-}
-.night-media::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(90deg, rgba(10, 7, 6, 0.92) 0%, rgba(10, 7, 6, 0.55) 45%, rgba(10, 7, 6, 0.15) 100%),
-    linear-gradient(180deg, var(--ink) 0%, transparent 18%, transparent 82%, var(--ink) 100%);
-}
-.night-inner {
-  padding-block: 88px;
-}
-.night-title {
-  font-family: var(--f-display);
-  font-weight: 400;
-  font-size: clamp(76px, 13vw, 210px);
-  line-height: 0.82;
-  text-transform: uppercase;
-  margin-bottom: 26px;
-}
-.w-wrap {
-  display: inline-block;
-  overflow: hidden;
-  padding-block: 0.04em;
-  vertical-align: top;
-}
-.w-wrap .w {
-  display: inline-block;
-}
-.night .lede {
-  margin-bottom: 32px;
 }
 
 /* ==========================================================================

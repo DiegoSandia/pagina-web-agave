@@ -4,7 +4,6 @@ import Marquee from '@/components/Marquee';
 import Signature from '@/components/Signature';
 import MenuSection from '@/components/MenuSection';
 import Gallery from '@/components/Gallery';
-import NightBand from '@/components/NightBand';
 import Locations from '@/components/Locations';
 import Reserve from '@/components/Reserve';
 import Faq from '@/components/Faq';
@@ -22,7 +21,6 @@ export default function Home() {
         <Signature />
         <MenuSection />
         <Gallery />
-        <NightBand />
         <Locations />
         <Reserve />
         <Faq />
