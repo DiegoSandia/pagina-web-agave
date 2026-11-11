@@ -625,20 +625,44 @@ address {
   z-index: -2;
   width: min(66%, 1240px);
 }
-.hero-video {
-  width: 100%;
-  height: 100%;
+.hero-media {
+  overflow: hidden;
+}
+.hero-photo {
   object-fit: cover;
-  object-position: 55% 50%;
+  object-position: 50% 18%;
+  animation:
+    hero-zoom 18s var(--ease-out) both,
+    neon-flicker 7s 2s infinite steps(1, end);
+}
+@keyframes hero-zoom {
+  from {
+    transform: scale(1.14);
+  }
+}
+@keyframes neon-flicker {
+  0%, 31%, 34%, 36%, 100% {
+    filter: brightness(1);
+  }
+  32%, 35% {
+    filter: brightness(0.72);
+  }
 }
 .hero-media::after {
   content: '';
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(90deg, var(--ink) 0%, rgba(10, 7, 6, 0.86) 16%, rgba(10, 7, 6, 0.25) 52%, rgba(10, 7, 6, 0.05) 100%),
-    linear-gradient(0deg, var(--ink) 0%, rgba(10, 7, 6, 0) 34%),
-    linear-gradient(180deg, rgba(10, 7, 6, 0.75) 0%, rgba(10, 7, 6, 0) 24%);
+    linear-gradient(90deg, var(--ink) 0%, rgba(10, 7, 6, 0.8) 14%, rgba(10, 7, 6, 0.15) 48%, rgba(10, 7, 6, 0) 100%),
+    linear-gradient(0deg, var(--ink) 0%, rgba(10, 7, 6, 0) 32%),
+    linear-gradient(180deg, rgba(10, 7, 6, 0.55) 0%, rgba(10, 7, 6, 0) 16%);
+}
+.bg-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 .embers {
   position: absolute;
@@ -1380,8 +1404,7 @@ address {
   z-index: -1;
 }
 .night-img {
-  object-fit: cover;
-  object-position: 50% 30%;
+  object-position: 60% 50%;
 }
 .night-media::after {
   content: '';
@@ -2198,8 +2221,8 @@ select.input:disabled {
     width: 100%;
     height: 64svh;
   }
-  .hero-video {
-    object-position: 50% 50%;
+  .hero-photo {
+    object-position: 50% 12%;
   }
   .hero-media::after {
     background:

@@ -1,6 +1,7 @@
+import Image from 'next/image';
 import Embers from './Embers';
-import HeroVideo from './HeroVideo';
 import LiveStatus from './LiveStatus';
+import shot from '@/assets/photos/v2/noche-neon.jpg';
 import { ArrowRight, Pin, Star } from './icons';
 import { SITE, TOTAL_REVIEWS } from '@/lib/site';
 
@@ -8,7 +9,14 @@ export default function Hero() {
   return (
     <section id="top" className="hero" aria-labelledby="hero-title">
       <div className="hero-media">
-        <HeroVideo />
+        <Image
+          src={shot}
+          alt="Cliente tomando un shot bajo el letrero de neón de El Agave"
+          priority
+          fill
+          sizes="(max-width: 900px) 100vw, 66vw"
+          className="hero-photo"
+        />
       </div>
       <Embers />
 

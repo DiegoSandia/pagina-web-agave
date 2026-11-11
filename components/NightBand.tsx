@@ -1,11 +1,10 @@
 'use client';
 
 import { useRef } from 'react';
-import Image from 'next/image';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
-import noche from '@/assets/photos/v2/noche-neon.jpg';
+import HeroVideo from './HeroVideo';
 import { ArrowRight } from './icons';
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
@@ -38,7 +37,7 @@ export default function NightBand() {
   return (
     <section ref={root} className="night" aria-labelledby="night-title">
       <div className="night-media" aria-hidden="true">
-        <Image src={noche} alt="" fill placeholder="blur" sizes="100vw" className="night-img" />
+        <HeroVideo className="night-img" preload="none" />
       </div>
       <div className="container night-inner">
         <p className="eyebrow">Arboledas, abierto hasta las 5 AM</p>

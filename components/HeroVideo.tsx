@@ -2,8 +2,8 @@
 
 import { useEffect, useRef } from 'react';
 
-// React doesn't serialize `muted` in SSR, so autoplay is kicked off after hydration.
-export default function HeroVideo() {
+// React doesn't serialize `muted` in SSR, so playback starts after hydration, only while visible.
+export default function HeroVideo({ className = '', preload = 'auto' }: { className?: string; preload?: 'auto' | 'none' }) {
   const ref = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
@@ -11,11 +11,13 @@ export default function HeroVideo() {
     if (!v) return;
     v.muted = true;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    v.play().catch(() => {});
-    const io = new IntersectionObserver(([e]) => {
-      if (e.isIntersecting) v.play().catch(() => {});
-      else v.pause();
-    });
+    const io = new IntersectionObserver(
+      ([e]) => {
+        if (e.isIntersecting) v.play().catch(() => {});
+        else v.pause();
+      },
+      { rootMargin: '200px 0px' },
+    );
     io.observe(v);
     return () => io.disconnect();
   }, []);
@@ -23,11 +25,11 @@ export default function HeroVideo() {
   return (
     <video
       ref={ref}
-      className="hero-video"
+      className={`bg-video ${className}`}
       muted
       loop
       playsInline
-      preload="auto"
+      preload={preload}
       poster="/video/hero-poster.webp"
       aria-hidden="true"
     >
