@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     template: '%s · El Agave',
   },
   description:
-    'Birria estilo Jalisco y cantaritos de barro en Tlalnepantla. Dos sucursales: Arboledas y Centro. Martes a domingo de 10 AM a 2 AM. Aparta tu mesa por WhatsApp.',
+    'Birria estilo Jalisco y cantaritos de barro en Tlalnepantla. Dos sucursales: Centro abre todos los días y Arboledas de martes a domingo hasta las 5 AM. Aparta tu mesa por WhatsApp.',
   alternates: { canonical: '/' },
   openGraph: {
     type: 'website',
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     url: SITE.url,
     siteName: SITE.legalName,
     title: 'El Agave — Birria que abraza, cantaritos que prenden',
-    description: 'Birria estilo Jalisco y cantaritos en Tlalnepantla. Dos sucursales, abierto de martes a domingo.',
+    description: 'Birria estilo Jalisco y cantaritos en Tlalnepantla. Dos sucursales en Tlalnepantla, abiertas desde las 10 AM.',
   },
   twitter: {
     card: 'summary_large_image',

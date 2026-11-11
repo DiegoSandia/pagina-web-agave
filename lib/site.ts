@@ -1,4 +1,5 @@
 import type { StaticImageData } from 'next/image';
+import type { BranchId } from './hours';
 
 import birriaNeon from '@/assets/photos/v2/birria-neon.jpg';
 import birriaConsome from '@/assets/photos/v2/birria-consome.jpg';
@@ -46,8 +47,9 @@ export function waLink(text: string) {
 }
 
 export type Branch = {
-  id: 'arboledas' | 'centro';
+  id: BranchId;
   name: string;
+  hoursSummary: string;
   street: string;
   area: string;
   postalCode: string;
@@ -63,6 +65,7 @@ export const BRANCHES: Branch[] = [
   {
     id: 'arboledas',
     name: 'Arboledas',
+    hoursSummary: 'Martes a domingo · 10 AM a 5 AM',
     street: 'Av. Niños Héroes #26',
     area: 'Res. El Dorado, Tlalnepantla',
     postalCode: '54026',
@@ -76,6 +79,7 @@ export const BRANCHES: Branch[] = [
   {
     id: 'centro',
     name: 'Centro',
+    hoursSummary: 'Todos los días · 10 AM a 2 AM',
     street: 'Av. Morelos #39',
     area: 'San Javier, Tlalnepantla Centro',
     postalCode: '54030',
@@ -532,12 +536,13 @@ export const PROMOS = [
 ];
 
 export const WEEK = [
-  { day: 2, short: 'Mar', name: 'Martes', hours: '10 AM – 2 AM', plan: '2×1 en copeo' },
-  { day: 3, short: 'Mié', name: 'Miércoles', hours: '10 AM – 2 AM', plan: 'Pulque 2×1' },
-  { day: 4, short: 'Jue', name: 'Jueves', hours: '10 AM – 2 AM', plan: 'Pulque 2×1' },
-  { day: 5, short: 'Vie', name: 'Viernes', hours: '10 AM – 2 AM', plan: 'Karaoke' },
-  { day: 6, short: 'Sáb', name: 'Sábado', hours: '10 AM – 2 AM', plan: 'Karaoke' },
-  { day: 0, short: 'Dom', name: 'Domingo', hours: '10 AM – 2 AM', plan: 'Desayuno y birria' },
+  { day: 1, short: 'Lun', name: 'Lunes', hours: 'Solo Centro · desde 10 AM', plan: '2×1 en copeo' },
+  { day: 2, short: 'Mar', name: 'Martes', hours: 'Desde 10 AM', plan: '2×1 en copeo' },
+  { day: 3, short: 'Mié', name: 'Miércoles', hours: 'Desde 10 AM', plan: 'Pulque 2×1' },
+  { day: 4, short: 'Jue', name: 'Jueves', hours: 'Desde 10 AM', plan: 'Pulque 2×1' },
+  { day: 5, short: 'Vie', name: 'Viernes', hours: 'Desde 10 AM', plan: 'Karaoke' },
+  { day: 6, short: 'Sáb', name: 'Sábado', hours: 'Desde 10 AM', plan: 'Karaoke' },
+  { day: 0, short: 'Dom', name: 'Domingo', hours: 'Desde 10 AM', plan: 'Desayuno y birria' },
 ];
 
 export const GALLERY: { img: StaticImageData; alt: string; label: string; span?: 'tall' | 'wide' }[] = [
@@ -555,7 +560,7 @@ export const GALLERY: { img: StaticImageData; alt: string; label: string; span?:
 
 export const FAQ = [
   { q: '¿Dónde están?', a: 'Tenemos dos sucursales en Tlalnepantla de Baz: Arboledas en Av. Niños Héroes #26, Res. El Dorado, y Centro en Av. Morelos #39, San Javier.' },
-  { q: '¿Qué horario tienen?', a: 'De martes a domingo, de 10:00 AM a 2:00 AM. Los desayunos se sirven de 10:00 a 14:00 h. Los lunes descansamos.' },
+  { q: '¿Qué horario tienen?', a: 'Centro abre todos los días de 10:00 AM a 2:00 AM. Arboledas abre de martes a domingo de 10:00 AM a 5:00 AM. Los desayunos se sirven de 10:00 a 14:00 h en ambas.' },
   { q: '¿Cuánto cuesta la birria?', a: 'La birria estilo Jalisco mediana (120 g) cuesta $150 y la grande (170 g) $175. El consomé solo está en $40, el birriamen en $150 y la orden de 3 tacos de birria en $120.' },
   { q: '¿Cómo funciona el 2×1 en copeo?', a: 'Es todos los días, por persona e incluye un mezclador. Aplican restricciones: Hypnotic y Jägermeister no entran en ninguna preparación.' },
   { q: '¿Necesito reservar?', a: 'No es obligatorio, pero viernes y sábado se llena. Aparta tu mesa desde esta página o por WhatsApp al 55 1069 9414 y te confirmamos por el mismo chat.' },

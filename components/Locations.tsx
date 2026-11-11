@@ -2,12 +2,12 @@
 
 import { useState } from 'react';
 import { BRANCHES, SITE, directionsUrl, mapEmbedUrl, type Branch } from '@/lib/site';
-import { SCHEDULE, formatTime } from '@/lib/hours';
+import { SCHEDULES, formatSlot } from '@/lib/hours';
 import { useOpenStatus } from '@/lib/useOpenStatus';
 import LiveStatus from './LiveStatus';
 import { ArrowUpRight, Facebook, Phone, Pin } from './icons';
 
-const ORDER = [2, 3, 4, 5, 6, 0, 1];
+const ORDER = [1, 2, 3, 4, 5, 6, 0];
 const NAMES = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
 
 function BranchCard({ b, i }: { b: Branch; i: number }) {
@@ -16,7 +16,7 @@ function BranchCard({ b, i }: { b: Branch; i: number }) {
     <article className="branch rv">
       <header className="branch-head">
         <span className="tag">Sucursal 0{i + 1}</span>
-        <LiveStatus />
+        <LiveStatus branch={b.id} />
       </header>
       <h3 className="branch-name">{b.name}</h3>
       <address className="branch-addr">
@@ -24,6 +24,7 @@ function BranchCard({ b, i }: { b: Branch; i: number }) {
         <br />
         {b.area}
       </address>
+      <p className="branch-hours">{b.hoursSummary}</p>
 
       <div className="branch-map">
         {map ? (
@@ -67,7 +68,7 @@ export default function Locations() {
             <p className="eyebrow rv">Visítanos</p>
             <h2 id="loc-title" className="h-xl rv">Dos casas en <span className="neon">Tlalnepantla</span></h2>
           </div>
-          <p className="lede rv">Mismo menú, misma birria, mismos cantaritos. Escoge la que te quede más cerca.</p>
+          <p className="lede rv">Mismo menú, misma birria, mismos cantaritos. Centro abre todos los días; Arboledas se queda hasta las 5 de la mañana.</p>
         </header>
 
         <div className="loc-grid">
@@ -75,18 +76,30 @@ export default function Locations() {
 
           <aside className="hours rv" aria-labelledby="hours-title">
             <h3 id="hours-title">Horario</h3>
-            <ul>
-              {ORDER.map((d) => {
-                const s = SCHEDULE[d];
-                return (
-                  <li key={d} className={`${status?.day === d ? 'is-today' : ''} ${s ? '' : 'is-closed'}`}>
-                    <span>{NAMES[d]}</span>
-                    <span>{s ? `${formatTime(s.open)} – ${formatTime(s.close)}` : 'Descansamos'}</span>
-                  </li>
-                );
-              })}
-            </ul>
-            <p className="hours-note">Desayunos de 10:00 a 14:00 h.</p>
+            <table>
+              <thead>
+                <tr>
+                  <th scope="col"><span className="sr-only">Día</span></th>
+                  {BRANCHES.map((b) => <th key={b.id} scope="col">{b.name}</th>)}
+                </tr>
+              </thead>
+              <tbody>
+                {ORDER.map((d) => (
+                  <tr key={d} className={status?.day === d ? 'is-today' : ''}>
+                    <th scope="row">{NAMES[d]}</th>
+                    {BRANCHES.map((b) => {
+                      const s = SCHEDULES[b.id][d];
+                      return (
+                        <td key={b.id} className={s ? '' : 'is-closed'}>
+                          {s ? formatSlot(s).replace(' – ', '–') : 'Cerrado'}
+                        </td>
+                      );
+                    })}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            <p className="hours-note">Desayunos de 10:00 a 14:00 h en ambas sucursales.</p>
           </aside>
         </div>
       </div>

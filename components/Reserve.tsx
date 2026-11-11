@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from 'react';
 import { BRANCHES, SITE, waLink } from '@/lib/site';
-import { SCHEDULE, mexicoNow, slotsFor } from '@/lib/hours';
+import { SCHEDULES, mexicoNow, slotsFor } from '@/lib/hours';
 import { ArrowRight, Instagram, Phone, Spark, WhatsApp } from './icons';
 
 function todayISO() {
@@ -31,19 +31,21 @@ export default function Reserve() {
   const [minDate, setMinDate] = useState<string>();
   useEffect(() => setMinDate(todayISO()), []);
 
+  const current = BRANCHES.find((b) => b.id === branch)!;
   const day = date ? dayOf(date) : null;
-  const closed = day !== null && !SCHEDULE[day];
+  const closed = day !== null && !SCHEDULES[branch][day];
   const slots = useMemo(() => {
     if (day === null || closed) return [];
-    const all = slotsFor(day);
+    const all = slotsFor(branch, day);
     if (date !== todayISO()) return all;
     const { minutes } = mexicoNow();
+    const open = SCHEDULES[branch][day]!.open;
     return all.filter((s) => {
       const [h, m] = s.value.split(':').map(Number);
-      const mins = h * 60 + m < SCHEDULE[day]!.open ? h * 60 + m + 1440 : h * 60 + m;
+      const mins = h * 60 + m < open ? h * 60 + m + 1440 : h * 60 + m;
       return mins > minutes + 30;
     });
-  }, [day, closed, date]);
+  }, [branch, day, closed, date]);
 
   const valid = name.trim().length > 1 && date && !closed && time;
 
@@ -96,7 +98,7 @@ export default function Reserve() {
             <div className="seg">
               {BRANCHES.map((b) => (
                 <label key={b.id} className="seg-opt">
-                  <input type="radio" name="branch" value={b.id} checked={branch === b.id} onChange={() => setBranch(b.id)} />
+                  <input type="radio" name="branch" value={b.id} checked={branch === b.id} onChange={() => { setBranch(b.id); setTime(''); }} />
                   <span>
                     <strong>{b.name}</strong>
                     <small>{b.street}</small>
@@ -123,7 +125,7 @@ export default function Reserve() {
                 aria-describedby="date-hint"
               />
               <span id="date-hint" className={`hint ${closed ? 'is-error' : ''}`}>
-                {closed ? 'Los lunes descansamos. Escoge otro día.' : 'Martes a domingo'}
+                {closed ? `${current.name} descansa los lunes. Prueba en Centro u otro día.` : current.hoursSummary}
               </span>
             </label>
 

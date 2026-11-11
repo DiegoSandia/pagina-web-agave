@@ -1,13 +1,14 @@
 import { BRANCHES, FAQ, MENU, SITE, placeUrl } from './site';
+import { SCHEDULES, type BranchId } from './hours';
 
-const HOURS = [
-  {
-    '@type': 'OpeningHoursSpecification',
-    dayOfWeek: ['Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
-    opens: '10:00',
-    closes: '02:00',
-  },
-];
+const DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+const hhmm = (min: number) => `${String(Math.floor((min % 1440) / 60)).padStart(2, '0')}:${String(min % 60).padStart(2, '0')}`;
+
+function hoursFor(id: BranchId) {
+  return Object.entries(SCHEDULES[id])
+    .filter(([, s]) => s)
+    .map(([d, s]) => ({ '@type': 'OpeningHoursSpecification', dayOfWeek: DAYS[Number(d)], opens: hhmm(s!.open), closes: hhmm(s!.close) }));
+}
 
 export function jsonLd() {
   const menuId = `${SITE.url}/#menu`;
@@ -45,7 +46,7 @@ export function jsonLd() {
           addressCountry: 'MX',
         },
         hasMap: placeUrl(b),
-        openingHoursSpecification: HOURS,      })),
+        openingHoursSpecification: hoursFor(b.id),      })),
       {
         '@type': 'Menu',
         '@id': menuId,

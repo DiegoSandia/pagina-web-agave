@@ -25,7 +25,7 @@ export default function Hero() {
 
           <p className="hero-lede">
             Birria estilo Jalisco a fuego lento y cantaritos servidos en barro.
-            Dos sucursales en Tlalnepantla, de martes a domingo de 10 AM a 2 AM.
+            Dos sucursales en Tlalnepantla, abiertas desde las 10 AM y hasta las 5 AM en Arboledas.
           </p>
 
           <div className="hero-ctas">
