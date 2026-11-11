@@ -39,8 +39,6 @@ export const SITE = {
   instagram: 'https://instagram.com/el_agave_arandas',
   instagramHandle: '@el_agave_arandas',
   rating: 4.4,
-  reviewCount: 274,
-  reviewsUrl: 'https://www.google.com/maps/search/El+Agave+Birria+Cantaritos+Tlalnepantla/',
 };
 
 export function waLink(text: string) {
@@ -56,6 +54,9 @@ export type Branch = {
   mapsQuery: string;
   facebook: string;
   facebookHandle: string;
+  placeId: string;
+  rating: number;
+  reviewCount: number;
 };
 
 export const BRANCHES: Branch[] = [
@@ -68,6 +69,9 @@ export const BRANCHES: Branch[] = [
     mapsQuery: 'Av. Niños Héroes 26, Residencial El Dorado, Tlalnepantla de Baz, Estado de México',
     facebook: 'https://facebook.com/Agavearboledas',
     facebookHandle: 'Agavearboledas',
+    placeId: 'ChIJv3R-YwAd0oUR7bI8fhf2seM',
+    rating: 4.4,
+    reviewCount: 57,
   },
   {
     id: 'centro',
@@ -78,11 +82,24 @@ export const BRANCHES: Branch[] = [
     mapsQuery: 'Av. Morelos 39, San Javier, Tlalnepantla de Baz, Estado de México',
     facebook: 'https://facebook.com/cantaritoselagave',
     facebookHandle: 'cantaritoselagave',
+    placeId: 'ChIJDUTgGB330YURjObAqnz2DSA',
+    rating: 4.4,
+    reviewCount: 294,
   },
 ];
 
+export const TOTAL_REVIEWS = BRANCHES.reduce((n, b) => n + b.reviewCount, 0);
+
+export function placeUrl(b: Branch) {
+  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`El Agave ${b.name}`)}&query_place_id=${b.placeId}`;
+}
+
+export function writeReviewUrl(b: Branch) {
+  return `https://search.google.com/local/writereview?placeid=${b.placeId}`;
+}
+
 export function directionsUrl(b: Branch) {
-  return `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(b.mapsQuery)}`;
+  return `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(b.mapsQuery)}&destination_place_id=${b.placeId}`;
 }
 
 export function mapEmbedUrl(b: Branch) {
@@ -515,11 +532,12 @@ export const PROMOS = [
 ];
 
 export const WEEK = [
-  { day: 3, short: 'Mié', name: 'Miércoles', hours: '8 AM – 11 PM', plan: 'Pulque 2×1' },
-  { day: 4, short: 'Jue', name: 'Jueves', hours: '8 AM – 11 PM', plan: 'Pulque 2×1' },
-  { day: 5, short: 'Vie', name: 'Viernes', hours: '8 AM – 2 AM', plan: 'Karaoke' },
-  { day: 6, short: 'Sáb', name: 'Sábado', hours: '8 AM – 2 AM', plan: 'Karaoke' },
-  { day: 0, short: 'Dom', name: 'Domingo', hours: '8 AM – 10 PM', plan: 'Birria en familia' },
+  { day: 2, short: 'Mar', name: 'Martes', hours: '10 AM – 2 AM', plan: '2×1 en copeo' },
+  { day: 3, short: 'Mié', name: 'Miércoles', hours: '10 AM – 2 AM', plan: 'Pulque 2×1' },
+  { day: 4, short: 'Jue', name: 'Jueves', hours: '10 AM – 2 AM', plan: 'Pulque 2×1' },
+  { day: 5, short: 'Vie', name: 'Viernes', hours: '10 AM – 2 AM', plan: 'Karaoke' },
+  { day: 6, short: 'Sáb', name: 'Sábado', hours: '10 AM – 2 AM', plan: 'Karaoke' },
+  { day: 0, short: 'Dom', name: 'Domingo', hours: '10 AM – 2 AM', plan: 'Desayuno y birria' },
 ];
 
 export const GALLERY: { img: StaticImageData; alt: string; label: string; span?: 'tall' | 'wide' }[] = [
@@ -537,7 +555,7 @@ export const GALLERY: { img: StaticImageData; alt: string; label: string; span?:
 
 export const FAQ = [
   { q: '¿Dónde están?', a: 'Tenemos dos sucursales en Tlalnepantla de Baz: Arboledas en Av. Niños Héroes #26, Res. El Dorado, y Centro en Av. Morelos #39, San Javier.' },
-  { q: '¿Qué horario tienen?', a: 'Miércoles y jueves de 8:00 AM a 11:00 PM, viernes y sábado de 8:00 AM a 2:00 AM y domingo de 8:00 AM a 10:00 PM. Los desayunos se sirven de 10:00 a 14:00 h.' },
+  { q: '¿Qué horario tienen?', a: 'De martes a domingo, de 10:00 AM a 2:00 AM. Los desayunos se sirven de 10:00 a 14:00 h. Los lunes descansamos.' },
   { q: '¿Cuánto cuesta la birria?', a: 'La birria estilo Jalisco mediana (120 g) cuesta $150 y la grande (170 g) $175. El consomé solo está en $40, el birriamen en $150 y la orden de 3 tacos de birria en $120.' },
   { q: '¿Cómo funciona el 2×1 en copeo?', a: 'Es todos los días, por persona e incluye un mezclador. Aplican restricciones: Hypnotic y Jägermeister no entran en ninguna preparación.' },
   { q: '¿Necesito reservar?', a: 'No es obligatorio, pero viernes y sábado se llena. Aparta tu mesa desde esta página o por WhatsApp al 55 1069 9414 y te confirmamos por el mismo chat.' },

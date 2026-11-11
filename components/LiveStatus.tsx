@@ -8,7 +8,7 @@ export default function LiveStatus({ className = '' }: { className?: string }) {
   return (
     <span className={`live ${className}`} data-state={state} aria-live="polite">
       <span className="live-dot" aria-hidden="true" />
-      <span>{status ? status.label : 'Mié a dom · desde 8 AM'}</span>
+      <span>{status ? status.label : 'Mar a dom · 10 AM a 2 AM'}</span>
     </span>
   );
 }

@@ -7,7 +7,7 @@ import { useOpenStatus } from '@/lib/useOpenStatus';
 import LiveStatus from './LiveStatus';
 import { ArrowUpRight, Facebook, Phone, Pin } from './icons';
 
-const ORDER = [3, 4, 5, 6, 0, 1, 2];
+const ORDER = [2, 3, 4, 5, 6, 0, 1];
 const NAMES = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
 
 function BranchCard({ b, i }: { b: Branch; i: number }) {

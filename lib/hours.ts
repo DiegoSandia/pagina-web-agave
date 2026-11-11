@@ -1,14 +1,16 @@
 // Minutes from midnight; close > 1440 means it closes after midnight.
 type Slot = { open: number; close: number } | null;
 
+const DAILY: Slot = { open: 10 * 60, close: 26 * 60 };
+
 export const SCHEDULE: Record<number, Slot> = {
-  0: { open: 8 * 60, close: 22 * 60 },
+  0: DAILY,
   1: null,
-  2: null,
-  3: { open: 8 * 60, close: 23 * 60 },
-  4: { open: 8 * 60, close: 23 * 60 },
-  5: { open: 8 * 60, close: 26 * 60 },
-  6: { open: 8 * 60, close: 26 * 60 },
+  2: DAILY,
+  3: DAILY,
+  4: DAILY,
+  5: DAILY,
+  6: DAILY,
 };
 
 const DAY_SHORT = ['dom', 'lun', 'mar', 'mié', 'jue', 'vie', 'sáb'];

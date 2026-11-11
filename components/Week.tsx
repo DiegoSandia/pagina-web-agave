@@ -16,7 +16,7 @@ export default function Week() {
             <p className="eyebrow rv">Cada día tiene su plan</p>
             <h2 id="week-title" className="h-xl rv">La semana en <span className="neon">El Agave</span></h2>
           </div>
-          <p className="lede rv">Lunes y martes descansamos. El resto de la semana, la cocina abre temprano y la barra cierra tarde.</p>
+          <p className="lede rv">De martes a domingo, de 10 de la mañana a 2 de la madrugada. Los lunes descansamos.</p>
         </header>
 
         <ol className="week-grid">

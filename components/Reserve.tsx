@@ -123,7 +123,7 @@ export default function Reserve() {
                 aria-describedby="date-hint"
               />
               <span id="date-hint" className={`hint ${closed ? 'is-error' : ''}`}>
-                {closed ? 'Lunes y martes descansamos. Escoge otro día.' : 'Miércoles a domingo'}
+                {closed ? 'Los lunes descansamos. Escoge otro día.' : 'Martes a domingo'}
               </span>
             </label>
 

@@ -41,7 +41,7 @@ export default function NightBand() {
         <Image src={noche} alt="" fill placeholder="blur" sizes="100vw" className="night-img" />
       </div>
       <div className="container night-inner">
-        <p className="eyebrow">Viernes y sábado hasta las 2 AM</p>
+        <p className="eyebrow">Abierto hasta las 2 AM</p>
         <h2 id="night-title" className="night-title">
           <span className="w-wrap"><span className="w">Prende</span></span>{' '}
           <span className="w-wrap"><span className="w">la</span></span>{' '}

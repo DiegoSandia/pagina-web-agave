@@ -1327,7 +1327,7 @@ address {
 
 .week-grid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(6, 1fr);
   gap: 14px;
 }
 .week-card {
@@ -1626,13 +1626,50 @@ address {
   letter-spacing: 0.02em;
   text-transform: uppercase;
 }
-.proof-ctas {
+.proof-branches {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 340px));
+  gap: 14px;
+  margin-top: 40px;
+}
+.proof-branch {
+  display: grid;
+  gap: 16px;
+  padding: 20px 22px;
+  border-radius: 20px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.02);
+  text-align: left;
+}
+.proof-branch-head {
+  display: grid;
+  gap: 6px;
+}
+.proof-branch-head strong {
+  font-family: var(--f-display);
+  font-weight: 400;
+  font-size: 34px;
+  line-height: 1;
+  text-transform: uppercase;
+}
+.proof-branch-head span {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--smoke);
+  font-size: 13px;
+}
+.proof-branch-links {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
   align-items: center;
-  gap: 18px 28px;
-  margin-top: 36px;
+  gap: 12px 18px;
+}
+@media (max-width: 640px) {
+  .proof-branches {
+    grid-template-columns: 1fr;
+    width: 100%;
+  }
 }
 
 /* ==========================================================================
@@ -2342,7 +2379,7 @@ select.input:disabled {
     grid-column: 1 / -1;
   }
   .week-grid {
-    grid-template-columns: repeat(5, minmax(150px, 1fr));
+    grid-template-columns: repeat(6, minmax(150px, 1fr));
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     padding-bottom: 6px;

@@ -2,7 +2,7 @@ import Embers from './Embers';
 import HeroVideo from './HeroVideo';
 import LiveStatus from './LiveStatus';
 import { ArrowRight, Pin, Star } from './icons';
-import { SITE } from '@/lib/site';
+import { SITE, TOTAL_REVIEWS } from '@/lib/site';
 
 export default function Hero() {
   return (
@@ -25,7 +25,7 @@ export default function Hero() {
 
           <p className="hero-lede">
             Birria estilo Jalisco a fuego lento y cantaritos servidos en barro.
-            Dos sucursales en Tlalnepantla, de miércoles a domingo desde las 8 AM.
+            Dos sucursales en Tlalnepantla, de martes a domingo de 10 AM a 2 AM.
           </p>
 
           <div className="hero-ctas">
@@ -39,11 +39,11 @@ export default function Hero() {
         </div>
 
         <div className="hero-meta">
-          <a href={SITE.reviewsUrl} target="_blank" rel="noopener noreferrer" className="hero-chip">
+          <a href="#opiniones" className="hero-chip">
             <span className="stars" aria-hidden="true">
               {Array.from({ length: 5 }, (_, i) => <Star key={i} size={13} />)}
             </span>
-            <strong>{SITE.rating}</strong> · {SITE.reviewCount}+ reseñas en Google
+            <strong>{SITE.rating}</strong> · {TOTAL_REVIEWS} reseñas en Google
           </a>
           <a href="#sucursales" className="hero-chip">
             <Pin size={15} /> Arboledas · Centro

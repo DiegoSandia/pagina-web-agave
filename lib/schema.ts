@@ -1,9 +1,12 @@
-import { BRANCHES, FAQ, MENU, SITE } from './site';
+import { BRANCHES, FAQ, MENU, SITE, placeUrl } from './site';
 
 const HOURS = [
-  { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Wednesday', 'Thursday'], opens: '08:00', closes: '23:00' },
-  { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Friday', 'Saturday'], opens: '08:00', closes: '02:00' },
-  { '@type': 'OpeningHoursSpecification', dayOfWeek: 'Sunday', opens: '08:00', closes: '22:00' },
+  {
+    '@type': 'OpeningHoursSpecification',
+    dayOfWeek: ['Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+    opens: '10:00',
+    closes: '02:00',
+  },
 ];
 
 export function jsonLd() {
@@ -41,9 +44,8 @@ export function jsonLd() {
           postalCode: b.postalCode,
           addressCountry: 'MX',
         },
-        hasMap: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(b.mapsQuery)}`,
-        openingHoursSpecification: HOURS,
-      })),
+        hasMap: placeUrl(b),
+        openingHoursSpecification: HOURS,      })),
       {
         '@type': 'Menu',
         '@id': menuId,
