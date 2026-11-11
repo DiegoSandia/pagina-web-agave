@@ -1,6 +1,6 @@
 'use client';
 
-import { useLayoutEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { flushSync } from 'react-dom';
 import Image from 'next/image';
 import mark from '@/assets/brand/agave-mark.png';
@@ -121,7 +121,8 @@ function Panel({ cat }: { cat: MenuCategory }) {
   );
 }
 
-export default function MenuSection() {
+export default function MenuSection({ asPage = false }: { asPage?: boolean }) {
+  const Title = asPage ? 'h1' : 'h2';
   const [groupId, setGroupId] = useState(MENU[0].id);
   const group = MENU.find((g) => g.id === groupId)!;
   const [catId, setCatId] = useState(group.categories[0].id);
@@ -135,13 +136,26 @@ export default function MenuSection() {
     });
   const pickCat = (id: string) => withTransition(panel.current, () => setCatId(id));
 
+  useEffect(() => {
+    const select = () => {
+      const h = decodeURIComponent(window.location.hash.slice(1));
+      const g = MENU.find((x) => x.id === h || x.categories.some((c) => c.id === h));
+      if (!g) return;
+      setGroupId(g.id);
+      setCatId(g.categories.find((c) => c.id === h)?.id ?? g.categories[0].id);
+    };
+    select();
+    window.addEventListener('hashchange', select);
+    return () => window.removeEventListener('hashchange', select);
+  }, []);
+
   return (
     <section id="menu" className="section menu" aria-labelledby="menu-title">
       <div className="container">
         <header className="section-head">
           <div>
             <p className="eyebrow rv">La carta completa</p>
-            <h2 id="menu-title" className="h-xl rv">El menú</h2>
+            <Title id="menu-title" className="h-xl rv">El menú</Title>
           </div>
           <p className="lede rv">
             Todo se prepara al momento. Precios en pesos mexicanos; la propina es opcional.

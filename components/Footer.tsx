@@ -27,6 +27,8 @@ export default function Footer() {
 
           <div className="footer-col">
             <h3>Contacto</h3>
+            <a href="/menu">Menú con precios</a>
+            <a href="/reservar">Reservar mesa</a>
             <a href={`tel:${SITE.phoneTel}`}>{SITE.phoneDisplay}</a>
             <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
             <a href={SITE.instagram} target="_blank" rel="noopener noreferrer"><Instagram size={15} /> {SITE.instagramHandle}</a>

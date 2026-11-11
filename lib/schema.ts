@@ -11,7 +11,7 @@ function hoursFor(id: BranchId) {
 }
 
 export function jsonLd() {
-  const menuId = `${SITE.url}/#menu`;
+  const menuId = `${SITE.url}/menu`;
   return {
     '@context': 'https://schema.org',
     '@graph': [
@@ -34,7 +34,7 @@ export function jsonLd() {
         image: `${SITE.url}/opengraph-image.jpg`,
         servesCuisine: ['Mexicana', 'Jalisciense', 'Birria'],
         priceRange: '$$',
-        acceptsReservations: true,
+        acceptsReservations: `${SITE.url}/reservar`,
         menu: menuId,
         sameAs: [b.facebook],
         address: {

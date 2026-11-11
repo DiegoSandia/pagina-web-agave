@@ -21,7 +21,8 @@ function prettyDate(iso: string) {
   return new Date(y, m - 1, d).toLocaleDateString('es-MX', { weekday: 'long', day: 'numeric', month: 'long' });
 }
 
-export default function Reserve() {
+export default function Reserve({ asPage = false }: { asPage?: boolean }) {
+  const Title = asPage ? 'h1' : 'h2';
   const [branch, setBranch] = useState(BRANCHES[0].id);
   const [date, setDate] = useState('');
   const [time, setTime] = useState('');
@@ -31,7 +32,12 @@ export default function Reserve() {
   const [sentUrl, setSentUrl] = useState<string | null>(null);
   const status = useOpenStatus();
   const [minDate, setMinDate] = useState<string>();
-  useEffect(() => setMinDate(todayISO()), []);
+  useEffect(() => {
+    setMinDate(todayISO());
+    const s = new URLSearchParams(window.location.search).get('sucursal');
+    const b = BRANCHES.find((x) => x.id === s);
+    if (b) setBranch(b.id);
+  }, []);
 
   const current = BRANCHES.find((b) => b.id === branch)!;
   const day = date ? dayOf(date) : null;
@@ -79,7 +85,7 @@ export default function Reserve() {
       <div className="container reserve-grid">
         <div className="reserve-copy">
           <p className="eyebrow rv">Aparta tu mesa</p>
-          <h2 id="reserve-title" className="h-xl rv">Tu mesa <span className="neon">te espera</span></h2>
+          <Title id="reserve-title" className="h-xl rv">Tu mesa <span className="neon">te espera</span></Title>
           <p className="lede rv">
             Llena tus datos y se abre WhatsApp con tu reservación lista para enviar. Te confirmamos por el mismo chat.
           </p>

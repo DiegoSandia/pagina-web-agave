@@ -15,7 +15,10 @@ const LINKS = [
   { href: '#sucursales', label: 'Sucursales' },
 ];
 
-export default function Nav() {
+const PAGES: Record<string, string> = { '#menu': '/menu', '#reservar': '/reservar' };
+
+export default function Nav({ onHome = true }: { onHome?: boolean }) {
+  const href = (anchor: string) => (onHome ? anchor : PAGES[anchor] ?? `/${anchor}`);
   const [scrolled, setScrolled] = useState(false);
   const [hidden, setHidden] = useState(false);
   const [open, setOpen] = useState(false);
@@ -48,14 +51,14 @@ export default function Nav() {
     <>
       <header className={`nav ${scrolled ? 'is-scrolled' : ''} ${hidden && !open ? 'is-hidden' : ''}`}>
         <div className="nav-inner">
-          <a href="#top" className="nav-brand" onClick={close} aria-label="El Agave, inicio">
+          <a href={onHome ? '#top' : '/'} className="nav-brand" onClick={close} aria-label="El Agave, inicio">
             <Image src={mark} alt="" width={40} height={35} priority className="nav-mark" />
             <span className="nav-word">El Agave</span>
           </a>
 
           <nav className="nav-links" aria-label="Principal">
             {LINKS.map((l) => (
-              <a key={l.href} href={l.href} className="nav-link">
+              <a key={l.href} href={href(l.href)} className="nav-link">
                 {l.label}
               </a>
             ))}
@@ -63,7 +66,7 @@ export default function Nav() {
 
           <div className="nav-end">
             <LiveStatus className="nav-live" />
-            <a href="#reservar" className="btn btn-primary btn-sm nav-cta">
+            <a href={href('#reservar')} className="btn btn-primary btn-sm nav-cta">
               Reservar
             </a>
             <button
@@ -84,14 +87,14 @@ export default function Nav() {
       <div id="mobile-menu" className={`sheet ${open ? 'is-open' : ''}`} aria-hidden={!open} inert={!open}>
         <nav className="sheet-links" aria-label="Móvil">
           {[...LINKS, { href: '#faq', label: 'Preguntas' }].map((l, i) => (
-            <a key={l.href} href={l.href} onClick={close} className="sheet-link" style={{ '--i': i } as React.CSSProperties}>
+            <a key={l.href} href={href(l.href)} onClick={close} className="sheet-link" style={{ '--i': i } as React.CSSProperties}>
               <span className="sheet-num">0{i + 1}</span>
               {l.label}
             </a>
           ))}
         </nav>
         <div className="sheet-foot">
-          <a href="#reservar" onClick={close} className="btn btn-primary btn-lg">
+          <a href={href('#reservar')} onClick={close} className="btn btn-primary btn-lg">
             Aparta tu mesa <ArrowUpRight />
           </a>
           <div className="sheet-contact">
