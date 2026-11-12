@@ -20,7 +20,7 @@ export default async function QrPage() {
   const cards = await Promise.all(
     CARDS.map(async (c) => ({
       ...c,
-      svg: await QRCode.toString(`https://el-agave-arandas.com${c.path}`, {
+      svg: await QRCode.toString(`https://el-agave-arandas.com${c.path}${c.path.startsWith('/resena') ? '' : '?ref=qr'}`, {
         type: 'svg',
         margin: 1,
         errorCorrectionLevel: 'M',

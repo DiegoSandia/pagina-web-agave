@@ -1801,6 +1801,13 @@ select.input:disabled {
   font-family: var(--f-display);
   font-size: 28px;
 }
+.hp {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
 .res-fine,
 .res-sent {
   color: var(--smoke);

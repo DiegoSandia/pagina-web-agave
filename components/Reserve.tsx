@@ -3,6 +3,8 @@
 import { useEffect, useMemo, useState } from 'react';
 import { BRANCHES, SITE, WEEK, waLink } from '@/lib/site';
 import { useOpenStatus } from '@/lib/useOpenStatus';
+import { getOrigin } from '@/lib/origin';
+import { track } from '@vercel/analytics';
 import { SCHEDULES, mexicoNow, slotsFor } from '@/lib/hours';
 import { ArrowRight, Instagram, Phone, Spark, WhatsApp } from './icons';
 
@@ -30,6 +32,7 @@ export default function Reserve({ asPage = false }: { asPage?: boolean }) {
   const [name, setName] = useState('');
   const [notes, setNotes] = useState('');
   const [sentUrl, setSentUrl] = useState<string | null>(null);
+  const [honeypot, setHoneypot] = useState('');
   const status = useOpenStatus();
   const [minDate, setMinDate] = useState<string>();
   useEffect(() => {
@@ -62,9 +65,31 @@ export default function Reserve({ asPage = false }: { asPage?: boolean }) {
     if (!valid) return;
     const b = BRANCHES.find((x) => x.id === branch)!;
     const slot = slots.find((s) => s.value === time);
+    const folio = `AG-${Math.random().toString(36).slice(2, 7).toUpperCase().padEnd(5, '0')}`;
+    const peopleLabel = people >= 20 ? '20+' : String(people);
+
+    fetch('/api/reservar', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      keepalive: true,
+      body: JSON.stringify({
+        folio,
+        sucursal: b.name,
+        fecha: date,
+        hora: slot?.label ?? time,
+        personas: peopleLabel,
+        nombre: name.trim(),
+        notas: notes.trim(),
+        origen: getOrigin(),
+        website: honeypot,
+      }),
+    }).catch(() => {});
+    track('Reserva enviada', { sucursal: b.name, personas: peopleLabel, origen: getOrigin() });
+
     const msg = [
       'Hola, quiero apartar una mesa en El Agave.',
       '',
+      `Folio: ${folio}`,
       `Sucursal: ${b.name}`,
       `Fecha: ${prettyDate(date)}`,
       `Hora: ${slot?.label ?? time}`,
@@ -176,6 +201,11 @@ export default function Reserve({ asPage = false }: { asPage?: boolean }) {
           <label className="field">
             <span className="label">Notas <em>(opcional)</em></span>
             <input className="input" type="text" value={notes} onChange={(e) => setNotes(e.target.value)} placeholder="Cumpleaños, silla para bebé, terraza…" maxLength={160} />
+          </label>
+
+          <label className="hp" aria-hidden="true">
+            Sitio web
+            <input type="text" tabIndex={-1} autoComplete="off" value={honeypot} onChange={(e) => setHoneypot(e.target.value)} />
           </label>
 
           <button type="submit" className="btn btn-primary btn-lg btn-block" disabled={!valid}>

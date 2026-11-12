@@ -4,6 +4,7 @@ import localFont from 'next/font/local';
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import SmoothScroll from '@/components/SmoothScroll';
+import Tracker from '@/components/Tracker';
 import { SITE } from '@/lib/site';
 import { jsonLd } from '@/lib/schema';
 import './globals.css';
@@ -55,6 +56,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd()).replace(/</g, '\\u003c') }}
         />
         <SmoothScroll />
+        <Tracker />
         {children}
         <Analytics />
         <SpeedInsights />
