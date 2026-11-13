@@ -1,7 +1,10 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { BRANCHES, SITE, directionsUrl, waLink } from '@/lib/site';
+import { track } from '@vercel/analytics';
+import { BRANCHES, SITE, directionsUrl } from '@/lib/site';
+import { getOrigin } from '@/lib/origin';
+import ReserveModal, { openReserve } from './ReserveModal';
 import { Phone, Pin, WhatsApp } from './icons';
 
 export default function Dock({ onHome = true }: { onHome?: boolean }) {
@@ -17,19 +20,23 @@ export default function Dock({ onHome = true }: { onHome?: boolean }) {
     return () => window.removeEventListener('scroll', onScroll);
   }, [onHome]);
 
-  const wa = waLink('Hola, vi su página y quiero información.');
+  const open = (from: string) => {
+    track('Abrir reserva', { desde: from, origen: getOrigin() });
+    openReserve();
+  };
 
   return (
     <>
       <nav className={`dock ${show ? 'is-visible' : ''}`} aria-label="Acciones rápidas">
         <a href={`tel:${SITE.phoneTel}`}><Phone size={18} /><span>Llamar</span></a>
         <a href={directionsUrl(BRANCHES[0])} target="_blank" rel="noopener noreferrer"><Pin size={18} /><span>Cómo llegar</span></a>
-        <a href={onHome ? '#reservar' : '/reservar'} className="dock-main"><span>Reservar</span></a>
+        <button type="button" className="dock-main" onClick={() => open('barra')}><span>Reservar</span></button>
       </nav>
-      <a href={wa} target="_blank" rel="noopener noreferrer" className={`wa-fab ${show ? 'is-visible' : ''}`} aria-label="Escríbenos por WhatsApp">
+      <button type="button" className={`wa-fab ${show ? 'is-visible' : ''}`} onClick={() => open('whatsapp-flotante')} aria-label="Apartar mesa por WhatsApp">
         <WhatsApp size={26} />
-        <span className="wa-tip">¿Dudas? Escríbenos</span>
-      </a>
+        <span className="wa-tip">Aparta tu mesa</span>
+      </button>
+      <ReserveModal />
     </>
   );
 }
