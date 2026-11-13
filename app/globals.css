@@ -1819,6 +1819,196 @@ select.input:disabled {
   text-decoration: underline;
 }
 
+/* Quick-pick reservation form */
+.res-card .label b {
+  display: inline-grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  margin-right: 8px;
+  border-radius: 50%;
+  background: rgba(255, 184, 0, 0.16);
+  color: var(--gold);
+  font-size: 11px;
+  letter-spacing: 0;
+}
+.res-card .seg-opt small {
+  font-size: 11px;
+}
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.chip-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+.chip {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 46px;
+  padding: 6px 12px;
+  border-radius: 12px;
+  border: 1px solid var(--line-2);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--cream);
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s, color 0.2s, transform 0.15s;
+}
+.chip:hover {
+  border-color: rgba(255, 184, 0, 0.45);
+}
+.chip:active {
+  transform: scale(0.97);
+}
+.chip[aria-pressed='true'],
+.chip[data-active] {
+  border-color: rgba(255, 184, 0, 0.85);
+  background: rgba(255, 184, 0, 0.14);
+  color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(255, 184, 0, 0.1);
+}
+.chip-date {
+  min-width: 74px;
+  gap: 1px;
+  line-height: 1.1;
+}
+.chip-date small {
+  color: var(--smoke);
+  font-size: 11px;
+  font-weight: 500;
+}
+.chip-date[aria-pressed='true'] small,
+.chip-date[data-active] small {
+  color: var(--gold);
+}
+.chip-other input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+.chip-other input::-webkit-calendar-picker-indicator {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+.part-tabs {
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  margin-bottom: 10px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--line);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.part-tabs button {
+  flex: 1;
+  height: 34px;
+  padding-inline: 10px;
+  border-radius: 9px;
+  color: var(--smoke);
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.part-tabs button[aria-selected='true'] {
+  background: rgba(255, 184, 0, 0.16);
+  color: var(--gold);
+}
+.inline-link {
+  color: var(--gold);
+  font-size: 13px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.res-add-note {
+  justify-self: start;
+  color: var(--smoke);
+}
+.res-summary {
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px dashed rgba(255, 184, 0, 0.35);
+  background: rgba(255, 184, 0, 0.05);
+  color: rgba(245, 230, 200, 0.85);
+  font-size: 14px;
+  line-height: 1.5;
+}
+.res-summary strong {
+  color: var(--gold);
+  font-weight: 600;
+}
+.res-done {
+  justify-items: center;
+  text-align: center;
+}
+.res-done-icon {
+  color: #25d366;
+  filter: drop-shadow(0 0 16px rgba(37, 211, 102, 0.45));
+}
+.res-done h3 {
+  font-family: var(--f-display);
+  font-weight: 400;
+  font-size: 38px;
+  line-height: 1;
+  text-transform: uppercase;
+}
+.res-steps {
+  display: grid;
+  gap: 10px;
+  width: 100%;
+  counter-reset: step;
+  text-align: left;
+}
+.res-steps li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.02);
+  font-size: 15px;
+  counter-increment: step;
+}
+.res-steps li::before {
+  content: counter(step);
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: rgba(255, 184, 0, 0.16);
+  color: var(--gold);
+  font-weight: 700;
+  font-size: 13px;
+}
+.res-steps strong {
+  color: var(--gold);
+}
+.res-folio {
+  color: var(--smoke);
+  font-size: 13px;
+}
+.res-folio strong {
+  color: var(--cream);
+  letter-spacing: 0.04em;
+}
+
 /* ==========================================================================
    FAQ
    ========================================================================== */

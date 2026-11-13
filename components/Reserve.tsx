@@ -1,108 +1,173 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
-import { BRANCHES, SITE, WEEK, waLink } from '@/lib/site';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { BRANCHES, SITE, WEEK, waLink, type Branch } from '@/lib/site';
 import { useOpenStatus } from '@/lib/useOpenStatus';
 import { getOrigin } from '@/lib/origin';
 import { track } from '@vercel/analytics';
-import { SCHEDULES, mexicoNow, slotsFor } from '@/lib/hours';
+import { SCHEDULES, mexicoNow, slotsFor, type BranchId } from '@/lib/hours';
 import { ArrowRight, Instagram, Phone, Spark, WhatsApp } from './icons';
 
-function todayISO() {
+const NAME_KEY = 'agave_nombre';
+const PEOPLE = ['1', '2', '3', '4', '5', '6', '8', '10+'];
+const PARTS = [
+  { id: 'manana', label: 'Mañana', from: 0, to: 13 * 60 },
+  { id: 'tarde', label: 'Tarde', from: 13 * 60, to: 19 * 60 },
+  { id: 'noche', label: 'Noche', from: 19 * 60, to: 24 * 60 },
+  { id: 'madrugada', label: 'Madrugada', from: 24 * 60, to: 30 * 60 },
+] as const;
+type PartId = (typeof PARTS)[number]['id'];
+
+function mxToday() {
   const d = new Date(new Date().toLocaleString('en-US', { timeZone: 'America/Mexico_City' }));
-  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+  return new Date(d.getFullYear(), d.getMonth(), d.getDate());
+}
+const iso = (d: Date) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+const fromIso = (s: string) => {
+  const [y, m, d] = s.split('-').map(Number);
+  return new Date(y, m - 1, d);
+};
+const shortDate = (d: Date) => d.toLocaleDateString('es-MX', { day: 'numeric', month: 'short' }).replace('.', '');
+const longDate = (s: string) => fromIso(s).toLocaleDateString('es-MX', { weekday: 'long', day: 'numeric', month: 'long' });
+const weekday = (d: Date) => {
+  const w = d.toLocaleDateString('es-MX', { weekday: 'short' }).replace('.', '');
+  return w.charAt(0).toUpperCase() + w.slice(1);
+};
+
+// Slots for a branch/day as minutes since opening day's midnight (after-midnight > 1440).
+function slotsWithMinutes(branch: BranchId, dateIso: string) {
+  const day = fromIso(dateIso).getDay();
+  const s = SCHEDULES[branch][day];
+  if (!s) return [];
+  const isToday = dateIso === iso(mxToday());
+  const now = mexicoNow().minutes;
+  return slotsFor(branch, day)
+    .map((slot) => {
+      const [h, m] = slot.value.split(':').map(Number);
+      const raw = h * 60 + m;
+      return { ...slot, mins: raw < s.open ? raw + 1440 : raw };
+    })
+    .filter((slot) => !isToday || slot.mins > now + 30);
 }
 
-function dayOf(iso: string) {
-  const [y, m, d] = iso.split('-').map(Number);
-  return new Date(y, m - 1, d).getDay();
-}
-
-function prettyDate(iso: string) {
-  const [y, m, d] = iso.split('-').map(Number);
-  return new Date(y, m - 1, d).toLocaleDateString('es-MX', { weekday: 'long', day: 'numeric', month: 'long' });
+function upcomingDays(branch: BranchId, count = 5) {
+  const out: { iso: string; label: string; sub: string }[] = [];
+  const base = mxToday();
+  for (let i = 0; i < 14 && out.length < count; i++) {
+    const d = new Date(base);
+    d.setDate(base.getDate() + i);
+    const key = iso(d);
+    if (!slotsWithMinutes(branch, key).length) continue;
+    out.push({ iso: key, label: i === 0 ? 'Hoy' : i === 1 ? 'Mañana' : weekday(d), sub: shortDate(d) });
+  }
+  return out;
 }
 
 export default function Reserve({ asPage = false }: { asPage?: boolean }) {
   const Title = asPage ? 'h1' : 'h2';
-  const [branch, setBranch] = useState(BRANCHES[0].id);
+  const status = useOpenStatus();
+  const [ready, setReady] = useState(false);
+  const [branch, setBranch] = useState<BranchId>(BRANCHES[0].id);
   const [date, setDate] = useState('');
+  const [customDate, setCustomDate] = useState(false);
+  const [part, setPart] = useState<PartId>('noche');
   const [time, setTime] = useState('');
-  const [people, setPeople] = useState(4);
+  const [people, setPeople] = useState('2');
   const [name, setName] = useState('');
   const [notes, setNotes] = useState('');
-  const [sentUrl, setSentUrl] = useState<string | null>(null);
+  const [showNotes, setShowNotes] = useState(false);
+  const [missing, setMissing] = useState<'time' | 'name' | null>(null);
+  const [sent, setSent] = useState<{ url: string; folio: string } | null>(null);
   const [honeypot, setHoneypot] = useState('');
-  const status = useOpenStatus();
-  const [minDate, setMinDate] = useState<string>();
+  const timeRef = useRef<HTMLFieldSetElement>(null);
+  const nameRef = useRef<HTMLInputElement>(null);
+
   useEffect(() => {
-    setMinDate(todayISO());
     const s = new URLSearchParams(window.location.search).get('sucursal');
-    const b = BRANCHES.find((x) => x.id === s);
-    if (b) setBranch(b.id);
+    if (BRANCHES.some((b) => b.id === s)) setBranch(s as BranchId);
+    try {
+      setName(localStorage.getItem(NAME_KEY) ?? '');
+    } catch {}
+    setReady(true);
   }, []);
 
-  const current = BRANCHES.find((b) => b.id === branch)!;
-  const day = date ? dayOf(date) : null;
-  const closed = day !== null && !SCHEDULES[branch][day];
-  const slots = useMemo(() => {
-    if (day === null || closed) return [];
-    const all = slotsFor(branch, day);
-    if (date !== todayISO()) return all;
-    const { minutes } = mexicoNow();
-    const open = SCHEDULES[branch][day]!.open;
-    return all.filter((s) => {
-      const [h, m] = s.value.split(':').map(Number);
-      const mins = h * 60 + m < open ? h * 60 + m + 1440 : h * 60 + m;
-      return mins > minutes + 30;
-    });
-  }, [branch, day, closed, date]);
+  const days = useMemo(() => (ready ? upcomingDays(branch) : []), [branch, ready]);
+  const current = BRANCHES.find((b) => b.id === branch) as Branch;
 
-  const valid = name.trim().length > 1 && date && !closed && time;
+  useEffect(() => {
+    if (!ready) return;
+    if (!date || (!customDate && !days.some((d) => d.iso === date))) setDate(days[0]?.iso ?? '');
+  }, [days, date, customDate, ready]);
+
+  const slots = useMemo(() => (date ? slotsWithMinutes(branch, date) : []), [branch, date]);
+  const closedDay = !!date && !SCHEDULES[branch][fromIso(date).getDay()];
+  const partsAvailable = PARTS.filter((p) => slots.some((s) => s.mins >= p.from && s.mins < p.to));
+
+  useEffect(() => {
+    if (!partsAvailable.length) return;
+    if (!partsAvailable.some((p) => p.id === part)) {
+      setPart((partsAvailable.find((p) => p.id === 'noche') ?? partsAvailable[0]).id);
+    }
+    if (time && !slots.some((s) => s.value === time)) setTime('');
+  }, [slots, partsAvailable, part, time]);
+
+  const partDef = PARTS.find((p) => p.id === part)!;
+  const visible = slots.filter((s) => s.mins >= partDef.from && s.mins < partDef.to);
+  const slot = slots.find((s) => s.value === time);
+  const peopleText = people === '10+' ? '10 o más' : `${people} ${people === '1' ? 'persona' : 'personas'}`;
 
   function submit(e: React.FormEvent) {
     e.preventDefault();
-    if (!valid) return;
-    const b = BRANCHES.find((x) => x.id === branch)!;
-    const slot = slots.find((s) => s.value === time);
-    const folio = `AG-${Math.random().toString(36).slice(2, 7).toUpperCase().padEnd(5, '0')}`;
-    const peopleLabel = people >= 20 ? '20+' : String(people);
+    if (!slot) {
+      setMissing('time');
+      timeRef.current?.scrollIntoView({ block: 'center', behavior: 'smooth' });
+      return;
+    }
+    if (name.trim().length < 2) {
+      setMissing('name');
+      nameRef.current?.focus();
+      return;
+    }
+    setMissing(null);
+    try {
+      localStorage.setItem(NAME_KEY, name.trim());
+    } catch {}
 
+    const folio = `AG-${Math.random().toString(36).slice(2, 7).toUpperCase().padEnd(5, '0')}`;
     fetch('/api/reservar', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       keepalive: true,
       body: JSON.stringify({
         folio,
-        sucursal: b.name,
+        sucursal: current.name,
         fecha: date,
-        hora: slot?.label ?? time,
-        personas: peopleLabel,
+        hora: slot.label,
+        personas: people,
         nombre: name.trim(),
         notas: notes.trim(),
         origen: getOrigin(),
         website: honeypot,
       }),
     }).catch(() => {});
-    track('Reserva enviada', { sucursal: b.name, personas: peopleLabel, origen: getOrigin() });
+    track('Reserva enviada', { sucursal: current.name, personas: people, origen: getOrigin() });
 
     const msg = [
-      'Hola, quiero apartar una mesa en El Agave.',
+      `Hola, quiero apartar una mesa en El Agave ${current.name} 🌵`,
+      '',
+      `📅 ${longDate(date)}`,
+      `🕐 ${slot.label}`,
+      `👥 ${peopleText}`,
+      `🙋 A nombre de ${name.trim()}`,
+      notes.trim() ? `📝 ${notes.trim()}` : '',
       '',
       `Folio: ${folio}`,
-      `Sucursal: ${b.name}`,
-      `Fecha: ${prettyDate(date)}`,
-      `Hora: ${slot?.label ?? time}`,
-      `Personas: ${people >= 20 ? '20 o más' : people}`,
-      `A nombre de: ${name.trim()}`,
-      notes.trim() ? `Notas: ${notes.trim()}` : '',
     ]
-      .filter((l, i, a) => l !== '' || a[i - 1] !== '')
-      .join('\n')
-      .trim();
+      .filter((l, i, a) => l !== '' || (a[i - 1] !== '' && i !== a.length - 1))
+      .join('\n');
     const url = waLink(msg);
     window.open(url, '_blank', 'noopener');
-    setSentUrl(url);
+    setSent({ url, folio });
   }
 
   return (
@@ -112,7 +177,7 @@ export default function Reserve({ asPage = false }: { asPage?: boolean }) {
           <p className="eyebrow rv">Aparta tu mesa</p>
           <Title id="reserve-title" className="h-xl rv">Tu mesa <span className="neon">te espera</span></Title>
           <p className="lede rv">
-            Llena tus datos y se abre WhatsApp con tu reservación lista para enviar. Te confirmamos por el mismo chat.
+            Elige día, hora y cuántos vienen. Toma 20 segundos y te confirmamos por WhatsApp.
           </p>
           <ul className="perks rv">
             <li><Spark size={14} /> Confirmación por WhatsApp</li>
@@ -136,90 +201,175 @@ export default function Reserve({ asPage = false }: { asPage?: boolean }) {
           </div>
         </div>
 
-        <form className="res-card rv" onSubmit={submit} noValidate>
-          <fieldset className="field">
-            <legend className="label">Sucursal</legend>
-            <div className="seg">
-              {BRANCHES.map((b) => (
-                <label key={b.id} className="seg-opt">
-                  <input type="radio" name="branch" value={b.id} checked={branch === b.id} onChange={() => { setBranch(b.id); setTime(''); }} />
-                  <span>
-                    <strong>{b.name}</strong>
-                    <small>{b.street}</small>
-                  </span>
-                </label>
-              ))}
-            </div>
-          </fieldset>
-
-          <div className="field-row">
-            <label className="field">
-              <span className="label">Fecha</span>
-              <input
-                type="date"
-                className="input"
-                min={minDate}
-                value={date}
-                onChange={(e) => {
-                  setDate(e.target.value);
-                  setTime('');
-                }}
-                required
-                aria-invalid={closed || undefined}
-                aria-describedby="date-hint"
-              />
-              <span id="date-hint" className={`hint ${closed ? 'is-error' : ''}`}>
-                {closed ? `${current.name} descansa los lunes. Prueba en Centro u otro día.` : current.hoursSummary}
-              </span>
-            </label>
-
-            <label className="field">
-              <span className="label">Hora</span>
-              <select className="input" value={time} onChange={(e) => setTime(e.target.value)} disabled={!slots.length} required>
-                <option value="">{date && !closed && !slots.length ? 'Sin horarios hoy' : 'Elige hora'}</option>
-                {slots.map((s) => (
-                  <option key={s.value} value={s.value}>{s.label}</option>
+        {sent ? (
+          <div className="res-card res-done rv" role="status">
+            <WhatsApp size={40} className="res-done-icon" />
+            <h3>¡Ya casi! Solo falta un toque</h3>
+            <ol className="res-steps">
+              <li>Se abrió WhatsApp con tu reserva escrita.</li>
+              <li><strong>Toca “Enviar”</strong> en WhatsApp.</li>
+              <li>Te confirmamos tu mesa por el mismo chat.</li>
+            </ol>
+            <p className="res-folio">Folio <strong>{sent.folio}</strong> · {current.name} · {longDate(date)} · {slot?.label}</p>
+            <a href={sent.url} target="_blank" rel="noopener noreferrer" className="btn btn-primary btn-lg btn-block">
+              <WhatsApp size={20} /> Abrir WhatsApp otra vez
+            </a>
+            <button type="button" className="btn btn-link" onClick={() => setSent(null)}>Hacer otra reserva</button>
+          </div>
+        ) : (
+          <form className="res-card rv" onSubmit={submit} noValidate>
+            <fieldset className="field">
+              <legend className="label"><b>1</b> Sucursal</legend>
+              <div className="seg">
+                {BRANCHES.map((b) => (
+                  <label key={b.id} className="seg-opt">
+                    <input type="radio" name="branch" value={b.id} checked={branch === b.id} onChange={() => setBranch(b.id)} />
+                    <span>
+                      <strong>{b.name}</strong>
+                      <small>{b.hoursSummary}</small>
+                    </span>
+                  </label>
                 ))}
-              </select>
+              </div>
+            </fieldset>
+
+            <fieldset className="field">
+              <legend className="label"><b>2</b> Día</legend>
+              <div className="chips">
+                {days.map((d) => (
+                  <button
+                    key={d.iso}
+                    type="button"
+                    className="chip chip-date"
+                    aria-pressed={!customDate && date === d.iso}
+                    onClick={() => {
+                      setCustomDate(false);
+                      setDate(d.iso);
+                    }}
+                  >
+                    <span>{d.label}</span>
+                    <small>{d.sub}</small>
+                  </button>
+                ))}
+                <label className="chip chip-date chip-other" data-active={customDate || undefined}>
+                  <span>{customDate && date ? weekday(fromIso(date)) : 'Otro día'}</span>
+                  <small>{customDate && date ? shortDate(fromIso(date)) : 'Calendario'}</small>
+                  <input
+                    type="date"
+                    min={ready ? iso(mxToday()) : undefined}
+                    value={customDate ? date : ''}
+                    onChange={(e) => {
+                      if (!e.target.value) return;
+                      setCustomDate(true);
+                      setDate(e.target.value);
+                    }}
+                    aria-label="Elegir otra fecha"
+                  />
+                </label>
+              </div>
+              {closedDay && (
+                <p className="hint is-error">
+                  {current.name} descansa ese día.{' '}
+                  {branch === 'arboledas' && (
+                    <button type="button" className="inline-link" onClick={() => setBranch('centro')}>Reservar en Centro</button>
+                  )}
+                </p>
+              )}
+            </fieldset>
+
+            <fieldset className="field" ref={timeRef}>
+              <legend className="label"><b>3</b> Hora</legend>
+              {partsAvailable.length > 1 && (
+                <div className="part-tabs" role="tablist" aria-label="Parte del día">
+                  {partsAvailable.map((p) => (
+                    <button key={p.id} type="button" role="tab" aria-selected={part === p.id} onClick={() => setPart(p.id)}>
+                      {p.label}
+                    </button>
+                  ))}
+                </div>
+              )}
+              {visible.length ? (
+                <div className="chip-grid">
+                  {visible.map((s) => (
+                    <button
+                      key={s.value}
+                      type="button"
+                      className="chip"
+                      aria-pressed={time === s.value}
+                      onClick={() => {
+                        setTime(s.value);
+                        if (missing === 'time') setMissing(null);
+                      }}
+                    >
+                      {s.label}
+                    </button>
+                  ))}
+                </div>
+              ) : (
+                <p className="hint">{date && !closedDay ? 'Ya no hay horarios este día, elige otro.' : 'Elige un día primero.'}</p>
+              )}
+              {missing === 'time' && <p className="hint is-error">Elige una hora para tu mesa.</p>}
+            </fieldset>
+
+            <fieldset className="field">
+              <legend className="label"><b>4</b> ¿Cuántos son?</legend>
+              <div className="chip-grid">
+                {PEOPLE.map((p) => (
+                  <button key={p} type="button" className="chip" aria-pressed={people === p} onClick={() => setPeople(p)}>
+                    {p}
+                  </button>
+                ))}
+              </div>
+              {people === '10+' && <p className="hint">Para grupos grandes coordinamos los detalles por WhatsApp.</p>}
+            </fieldset>
+
+            <label className="field">
+              <span className="label"><b>5</b> A nombre de</span>
+              <input
+                ref={nameRef}
+                className="input"
+                type="text"
+                autoComplete="given-name"
+                enterKeyHint="send"
+                value={name}
+                onChange={(e) => {
+                  setName(e.target.value);
+                  if (missing === 'name') setMissing(null);
+                }}
+                placeholder="Tu nombre"
+                aria-invalid={missing === 'name' || undefined}
+              />
+              {missing === 'name' && <span className="hint is-error">Escribe tu nombre para apartar la mesa.</span>}
             </label>
-          </div>
 
-          <div className="field">
-            <span className="label" id="people-label">Personas</span>
-            <div className="stepper" role="group" aria-labelledby="people-label">
-              <button type="button" onClick={() => setPeople((p) => Math.max(1, p - 1))} aria-label="Menos personas">−</button>
-              <output aria-live="polite">{people >= 20 ? '20+' : people}</output>
-              <button type="button" onClick={() => setPeople((p) => Math.min(20, p + 1))} aria-label="Más personas">+</button>
-            </div>
-          </div>
+            {showNotes ? (
+              <label className="field">
+                <span className="label">Nota <em>(opcional)</em></span>
+                <input className="input" type="text" value={notes} onChange={(e) => setNotes(e.target.value)} placeholder="Cumpleaños, silla para bebé, terraza…" maxLength={160} autoFocus />
+              </label>
+            ) : (
+              <button type="button" className="inline-link res-add-note" onClick={() => setShowNotes(true)}>
+                + Agregar una nota (cumpleaños, silla para bebé…)
+              </button>
+            )}
 
-          <label className="field">
-            <span className="label">A nombre de</span>
-            <input className="input" type="text" autoComplete="name" value={name} onChange={(e) => setName(e.target.value)} placeholder="Tu nombre" required />
-          </label>
+            <label className="hp" aria-hidden="true">
+              Sitio web
+              <input type="text" tabIndex={-1} autoComplete="off" value={honeypot} onChange={(e) => setHoneypot(e.target.value)} />
+            </label>
 
-          <label className="field">
-            <span className="label">Notas <em>(opcional)</em></span>
-            <input className="input" type="text" value={notes} onChange={(e) => setNotes(e.target.value)} placeholder="Cumpleaños, silla para bebé, terraza…" maxLength={160} />
-          </label>
-
-          <label className="hp" aria-hidden="true">
-            Sitio web
-            <input type="text" tabIndex={-1} autoComplete="off" value={honeypot} onChange={(e) => setHoneypot(e.target.value)} />
-          </label>
-
-          <button type="submit" className="btn btn-primary btn-lg btn-block" disabled={!valid}>
-            <WhatsApp size={20} /> Enviar por WhatsApp <ArrowRight />
-          </button>
-
-          {sentUrl ? (
-            <p className="res-sent" role="status">
-              Listo. Si WhatsApp no se abrió, <a href={sentUrl} target="_blank" rel="noopener noreferrer">toca aquí</a>.
+            <p className="res-summary" aria-live="polite">
+              {slot
+                ? <>Mesa para <strong>{peopleText}</strong> · <strong>{longDate(date)}</strong> · <strong>{slot.label}</strong> · {current.name}</>
+                : <>Elige una hora y listo.</>}
             </p>
-          ) : (
-            <p className="res-fine">Tu reservación queda confirmada cuando te respondemos por WhatsApp.</p>
-          )}
-        </form>
+
+            <button type="submit" className="btn btn-primary btn-lg btn-block">
+              <WhatsApp size={20} /> Apartar por WhatsApp <ArrowRight />
+            </button>
+            <p className="res-fine">Se abre WhatsApp con todo escrito. Solo dale enviar.</p>
+          </form>
+        )}
       </div>
     </section>
   );

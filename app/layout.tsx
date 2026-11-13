@@ -40,6 +40,7 @@ export const metadata: Metadata = {
     description: 'Birria estilo Jalisco y cantaritos en Tlalnepantla.',
   },
   formatDetection: { telephone: false },
+  verification: { google: 'yVpIGrK_PPoYSSCsWaUTqO_8pni4TZ6MHltFkzfRKcU' },
 };
 
 export const viewport: Viewport = {
