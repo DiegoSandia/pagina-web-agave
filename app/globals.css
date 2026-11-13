@@ -1903,30 +1903,36 @@ select.input:disabled {
   height: 100%;
   cursor: pointer;
 }
-.part-tabs {
+.time-group {
+  grid-column: 1 / -1;
   display: flex;
-  gap: 4px;
-  padding: 4px;
-  margin-bottom: 10px;
-  border-radius: 12px;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid var(--line);
-  overflow-x: auto;
-  scrollbar-width: none;
-}
-.part-tabs button {
-  flex: 1;
-  height: 34px;
-  padding-inline: 10px;
-  border-radius: 9px;
+  align-items: center;
+  gap: 10px;
+  margin-top: 6px;
   color: var(--smoke);
-  font-size: 13px;
+  font-size: 11px;
   font-weight: 600;
-  white-space: nowrap;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
 }
-.part-tabs button[aria-selected='true'] {
-  background: rgba(255, 184, 0, 0.16);
-  color: var(--gold);
+.time-group:first-child {
+  margin-top: 0;
+}
+.time-group::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--line);
+}
+.label .req {
+  margin-left: 6px;
+  padding: 2px 7px;
+  border-radius: 999px;
+  background: rgba(255, 107, 26, 0.14);
+  color: var(--orange);
+  font-size: 10px;
+  font-style: normal;
+  letter-spacing: 0.08em;
 }
 .inline-link {
   color: var(--gold);

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { Fragment, useEffect, useMemo, useRef, useState } from 'react';
 import { BRANCHES, SITE, WEEK, waLink, type Branch } from '@/lib/site';
 import { useOpenStatus } from '@/lib/useOpenStatus';
 import { getOrigin } from '@/lib/origin';
@@ -10,13 +10,11 @@ import { ArrowRight, Instagram, Phone, Spark, WhatsApp } from './icons';
 
 const NAME_KEY = 'agave_nombre';
 const PEOPLE = ['1', '2', '3', '4', '5', '6', '8', '10+'];
-const PARTS = [
-  { id: 'manana', label: 'Mañana', from: 0, to: 13 * 60 },
-  { id: 'tarde', label: 'Tarde', from: 13 * 60, to: 19 * 60 },
-  { id: 'noche', label: 'Noche', from: 19 * 60, to: 24 * 60 },
-  { id: 'madrugada', label: 'Madrugada', from: 24 * 60, to: 30 * 60 },
-] as const;
-type PartId = (typeof PARTS)[number]['id'];
+const GROUPS = [
+  { label: 'De día', from: 0, to: 19 * 60 },
+  { label: 'De noche', from: 19 * 60, to: 24 * 60 },
+  { label: 'Madrugada', from: 24 * 60, to: 30 * 60 },
+];
 
 function mxToday() {
   const d = new Date(new Date().toLocaleString('en-US', { timeZone: 'America/Mexico_City' }));
@@ -47,7 +45,7 @@ function slotsWithMinutes(branch: BranchId, dateIso: string) {
       const raw = h * 60 + m;
       return { ...slot, mins: raw < s.open ? raw + 1440 : raw };
     })
-    .filter((slot) => !isToday || slot.mins > now + 30);
+    .filter((slot) => slot.mins % 60 === 0 && (!isToday || slot.mins > now + 30));
 }
 
 function upcomingDays(branch: BranchId, count = 5) {
@@ -70,7 +68,6 @@ export default function Reserve({ asPage = false }: { asPage?: boolean }) {
   const [branch, setBranch] = useState<BranchId>(BRANCHES[0].id);
   const [date, setDate] = useState('');
   const [customDate, setCustomDate] = useState(false);
-  const [part, setPart] = useState<PartId>('noche');
   const [time, setTime] = useState('');
   const [people, setPeople] = useState('2');
   const [name, setName] = useState('');
@@ -101,18 +98,12 @@ export default function Reserve({ asPage = false }: { asPage?: boolean }) {
 
   const slots = useMemo(() => (date ? slotsWithMinutes(branch, date) : []), [branch, date]);
   const closedDay = !!date && !SCHEDULES[branch][fromIso(date).getDay()];
-  const partsAvailable = PARTS.filter((p) => slots.some((s) => s.mins >= p.from && s.mins < p.to));
+  const groups = GROUPS.map((g) => ({ ...g, slots: slots.filter((s) => s.mins >= g.from && s.mins < g.to) })).filter((g) => g.slots.length);
 
   useEffect(() => {
-    if (!partsAvailable.length) return;
-    if (!partsAvailable.some((p) => p.id === part)) {
-      setPart((partsAvailable.find((p) => p.id === 'noche') ?? partsAvailable[0]).id);
-    }
     if (time && !slots.some((s) => s.value === time)) setTime('');
-  }, [slots, partsAvailable, part, time]);
+  }, [slots, time]);
 
-  const partDef = PARTS.find((p) => p.id === part)!;
-  const visible = slots.filter((s) => s.mins >= partDef.from && s.mins < partDef.to);
   const slot = slots.find((s) => s.value === time);
   const peopleText = people === '10+' ? '10 o más' : `${people} ${people === '1' ? 'persona' : 'personas'}`;
 
@@ -123,7 +114,7 @@ export default function Reserve({ asPage = false }: { asPage?: boolean }) {
       timeRef.current?.scrollIntoView({ block: 'center', behavior: 'smooth' });
       return;
     }
-    if (name.trim().length < 2) {
+    if (!/\p{L}.*\p{L}/u.test(name.trim())) {
       setMissing('name');
       nameRef.current?.focus();
       return;
@@ -279,30 +270,26 @@ export default function Reserve({ asPage = false }: { asPage?: boolean }) {
 
             <fieldset className="field" ref={timeRef}>
               <legend className="label"><b>3</b> Hora</legend>
-              {partsAvailable.length > 1 && (
-                <div className="part-tabs" role="tablist" aria-label="Parte del día">
-                  {partsAvailable.map((p) => (
-                    <button key={p.id} type="button" role="tab" aria-selected={part === p.id} onClick={() => setPart(p.id)}>
-                      {p.label}
-                    </button>
-                  ))}
-                </div>
-              )}
-              {visible.length ? (
-                <div className="chip-grid">
-                  {visible.map((s) => (
-                    <button
-                      key={s.value}
-                      type="button"
-                      className="chip"
-                      aria-pressed={time === s.value}
-                      onClick={() => {
-                        setTime(s.value);
-                        if (missing === 'time') setMissing(null);
-                      }}
-                    >
-                      {s.label}
-                    </button>
+              {groups.length ? (
+                <div className="chip-grid time-grid">
+                  {groups.map((g) => (
+                    <Fragment key={g.label}>
+                      <span className="time-group">{g.label}</span>
+                      {g.slots.map((s) => (
+                        <button
+                          key={s.value}
+                          type="button"
+                          className="chip"
+                          aria-pressed={time === s.value}
+                          onClick={() => {
+                            setTime(s.value);
+                            if (missing === 'time') setMissing(null);
+                          }}
+                        >
+                          {s.label}
+                        </button>
+                      ))}
+                    </Fragment>
                   ))}
                 </div>
               ) : (
@@ -324,11 +311,13 @@ export default function Reserve({ asPage = false }: { asPage?: boolean }) {
             </fieldset>
 
             <label className="field">
-              <span className="label"><b>5</b> A nombre de</span>
+              <span className="label"><b>5</b> A nombre de <em className="req">obligatorio</em></span>
               <input
                 ref={nameRef}
                 className="input"
                 type="text"
+                required
+                aria-required="true"
                 autoComplete="given-name"
                 enterKeyHint="send"
                 value={name}
@@ -361,7 +350,7 @@ export default function Reserve({ asPage = false }: { asPage?: boolean }) {
             <p className="res-summary" aria-live="polite">
               {slot
                 ? <>Mesa para <strong>{peopleText}</strong> · <strong>{longDate(date)}</strong> · <strong>{slot.label}</strong> · {current.name}</>
-                : <>Elige una hora y listo.</>}
+                : <>Elige una hora y escribe tu nombre.</>}
             </p>
 
             <button type="submit" className="btn btn-primary btn-lg btn-block">
