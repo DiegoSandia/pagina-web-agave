@@ -2785,6 +2785,53 @@ select.input:disabled {
   font-size: 11px;
   letter-spacing: 0.04em;
 }
+.qr-head-2 {
+  margin-top: 56px;
+}
+.qr-head-2 h2 {
+  font-family: var(--f-display);
+  font-weight: 400;
+  font-size: 36px;
+  text-transform: uppercase;
+}
+.qr-ticket {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 5mm;
+  min-height: 62mm;
+  padding: 6mm 7mm;
+  background: radial-gradient(circle at 0% 0%, #2a1408, #0a0706 70%);
+  color: var(--cream);
+  outline: 1px dashed rgba(245, 230, 200, 0.35);
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+.qr-ticket-copy {
+  display: grid;
+  gap: 4px;
+  justify-items: start;
+}
+.qr-ticket-title {
+  font-family: var(--f-display);
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 1;
+  text-transform: uppercase;
+  color: var(--gold);
+  text-shadow: var(--glow-amber);
+}
+.qr-ticket-note {
+  max-width: 24ch;
+  color: rgba(245, 230, 200, 0.8);
+  font-size: 12px;
+  line-height: 1.35;
+}
+.qr-code-sm {
+  width: 30mm;
+  padding: 2mm;
+  margin: 0;
+}
 @media print {
   @page {
     size: letter;
@@ -2802,8 +2849,12 @@ select.input:disabled {
     padding: 0;
     max-width: none;
   }
-  .qr-card {
+  .qr-card,
+  .qr-ticket {
     break-inside: avoid;
+  }
+  .qr-tickets {
+    break-before: page;
   }
 }
 

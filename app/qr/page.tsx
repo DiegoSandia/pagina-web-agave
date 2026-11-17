@@ -16,17 +16,29 @@ const CARDS = [
   { path: '/resena-centro', eyebrow: '¿Te gustó?', title: 'Califícanos', note: 'Tu reseña de Centro en Google nos ayuda muchísimo' },
 ];
 
+// Small cards to slip in with the bill: 4 per branch on one letter sheet.
+const TICKETS = [
+  { path: '/resena-arboledas', branch: 'Arboledas' },
+  { path: '/resena-centro', branch: 'Centro' },
+];
+
+const qr = (url: string) =>
+  QRCode.toString(url, {
+    type: 'svg',
+    margin: 1,
+    errorCorrectionLevel: 'M',
+    color: { dark: '#0a0706', light: '#ffffff' },
+  });
+
 export default async function QrPage() {
   const cards = await Promise.all(
     CARDS.map(async (c) => ({
       ...c,
-      svg: await QRCode.toString(`https://el-agave-arandas.com${c.path}${c.path.startsWith('/resena') ? '' : '?ref=qr'}`, {
-        type: 'svg',
-        margin: 1,
-        errorCorrectionLevel: 'M',
-        color: { dark: '#0a0706', light: '#ffffff' },
-      }),
+      svg: await qr(`https://el-agave-arandas.com${c.path}${c.path.startsWith('/resena') ? '' : '?ref=qr'}`),
     })),
+  );
+  const tickets = await Promise.all(
+    TICKETS.map(async (t) => ({ ...t, svg: await qr(`https://el-agave-arandas.com${t.path}`) })),
   );
 
   return (
@@ -47,6 +59,27 @@ export default async function QrPage() {
             <p className="qr-url">el-agave-arandas.com{c.path}</p>
           </article>
         ))}
+      </div>
+
+      <header className="qr-head qr-head-2">
+        <h2>Tarjetas para la cuenta</h2>
+        <p>Segunda hoja: 8 tarjetitas para dejar junto con el ticket. Arriba Arboledas, abajo Centro.</p>
+      </header>
+      <div className="qr-sheet qr-tickets">
+        {tickets.flatMap((t) =>
+          [0, 1, 2, 3].map((i) => (
+            <article key={`${t.path}-${i}`} className="qr-ticket">
+              <div className="qr-ticket-copy">
+                <Image src={mark} alt="" width={36} height={32} className="qr-mark" />
+                <p className="qr-eyebrow">Gracias por venir</p>
+                <h3 className="qr-ticket-title">¿Cómo te fue?</h3>
+                <p className="qr-ticket-note">Escanea y déjanos tus estrellas en Google. Te toma 10 segundos.</p>
+                <p className="qr-url">El Agave {t.branch}</p>
+              </div>
+              <div className="qr-code qr-code-sm" dangerouslySetInnerHTML={{ __html: t.svg }} />
+            </article>
+          )),
+        )}
       </div>
     </main>
   );
