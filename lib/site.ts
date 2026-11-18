@@ -556,6 +556,6 @@ export const FAQ = [
   { q: '¿Qué horario tienen?', a: 'Centro abre todos los días de 10:00 AM a 2:00 AM. Arboledas abre de martes a domingo de 10:00 AM a 5:00 AM. Los desayunos se sirven de 10:00 a 14:00 h en ambas.' },
   { q: '¿Cuánto cuesta la birria?', a: 'La birria estilo Jalisco mediana (120 g) cuesta $150 y la grande (170 g) $175. El consomé solo está en $40, el birriamen en $150 y la orden de 3 tacos de birria en $120.' },
   { q: '¿Cómo funciona el 2×1 en copeo?', a: 'Es todos los días, por persona e incluye un mezclador. Aplican restricciones: Hypnotic y Jägermeister no entran en ninguna preparación.' },
-  { q: '¿Hacen eventos y grupos?', a: 'Sí: cumpleaños, grupos de trabajo y reuniones. Para mesas grandes tenemos cazuelas de cantarito de 5 y 10 litros. Escríbenos por WhatsApp con anticipación.' },
+  { q: '¿Hacen eventos y grupos?', a: 'Sí: posadas, cumpleaños, grupos de trabajo y reuniones. Para mesas grandes tenemos cazuelas de cantarito de 5 y 10 litros. Aparta en la sección Posadas y grupos o escríbenos por WhatsApp con anticipación; en diciembre las fechas se llenan rápido.' },
   { q: '¿La propina está incluida?', a: 'No. La propina es opcional.' },
 ];

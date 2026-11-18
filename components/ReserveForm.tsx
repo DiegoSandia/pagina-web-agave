@@ -11,6 +11,10 @@ import { ArrowRight, WhatsApp } from './icons';
 const NAME_KEY = 'agave_nombre';
 const PEOPLE = ['1', '2', '3', '4', '5', '6', '8', '10+'];
 const PREFERRED_MINUTES = 20 * 60;
+const OCCASIONS = ['Posada', 'Cumpleaños', 'Reunión de trabajo', 'Otro festejo'] as const;
+type Occasion = (typeof OCCASIONS)[number];
+
+export type ReservePreset = { occasion?: Occasion };
 
 function mxToday() {
   const d = new Date(new Date().toLocaleString('en-US', { timeZone: 'America/Mexico_City' }));
@@ -57,13 +61,15 @@ function upcomingDays(branch: BranchId, count = 6) {
   return out;
 }
 
-export default function ReserveForm({ idPrefix = 'res' }: { idPrefix?: string }) {
+export default function ReserveForm({ idPrefix = 'res', preset }: { idPrefix?: string; preset?: ReservePreset }) {
   const [ready, setReady] = useState(false);
   const [branch, setBranch] = useState<BranchId>(BRANCHES[0].id);
   const [date, setDate] = useState('');
   const [customDate, setCustomDate] = useState(false);
   const [time, setTime] = useState('');
-  const [people, setPeople] = useState('2');
+  const [people, setPeople] = useState(preset?.occasion ? '10+' : '2');
+  const [headcount, setHeadcount] = useState('');
+  const [occasion, setOccasion] = useState<Occasion | null>(preset?.occasion ?? null);
   const [name, setName] = useState('');
   const [notes, setNotes] = useState('');
   const [showNotes, setShowNotes] = useState(false);
@@ -100,7 +106,10 @@ export default function ReserveForm({ idPrefix = 'res' }: { idPrefix?: string })
 
   const onTime = useCallback((v: string) => setTime(v), []);
   const slot = slots.find((s) => s.value === time);
-  const peopleText = people === '10+' ? '10 o más' : `${people} ${people === '1' ? 'persona' : 'personas'}`;
+  const bigTable = people === '8' || people === '10+';
+  const count = people === '10+' && Number(headcount) >= 10 ? String(Math.min(Number(headcount), 300)) : '';
+  const peopleText = people === '10+' ? (count ? `${count} personas aprox.` : '10 o más') : `${people} ${people === '1' ? 'persona' : 'personas'}`;
+  const festejo = bigTable ? occasion : null;
 
   function submit(e: React.FormEvent) {
     e.preventDefault();
@@ -125,18 +134,21 @@ export default function ReserveForm({ idPrefix = 'res' }: { idPrefix?: string })
         sucursal: current.name,
         fecha: date,
         hora: slot.label,
-        personas: people,
+        personas: count || people,
         nombre: name.trim(),
-        notas: notes.trim(),
+        notas: [festejo?.toUpperCase(), notes.trim()].filter(Boolean).join(' · '),
         origen: getOrigin(),
         website: honeypot,
       }),
     }).catch(() => {});
-    track('Reserva enviada', { sucursal: current.name, personas: people, origen: getOrigin() });
+    track('Reserva enviada', { sucursal: current.name, personas: count || people, festejo: festejo ?? 'no', origen: getOrigin() });
 
     const msg = [
-      `Hola, quiero apartar una mesa en El Agave ${current.name} 🌵`,
+      festejo
+        ? `Hola, quiero apartar para un grupo en El Agave ${current.name} 🌵`
+        : `Hola, quiero apartar una mesa en El Agave ${current.name} 🌵`,
       '',
+      ...(festejo ? [`🎉 ${festejo}`] : []),
       `📅 ${longDate(date)}`,
       `🕐 ${slot.label}`,
       `👥 ${peopleText}`,
@@ -247,8 +259,34 @@ export default function ReserveForm({ idPrefix = 'res' }: { idPrefix?: string })
               </button>
             ))}
           </div>
+          {people === '10+' && (
+            <input
+              className="input input-sm"
+              type="number"
+              inputMode="numeric"
+              min={10}
+              max={300}
+              value={headcount}
+              onChange={(e) => setHeadcount(e.target.value)}
+              placeholder="¿Cuántos más o menos?"
+              aria-label="Número aproximado de personas"
+            />
+          )}
         </div>
       </div>
+
+      {bigTable && (
+        <fieldset className="field">
+          <legend className="label">¿Qué celebran? <em>(opcional)</em></legend>
+          <div className="chips">
+            {OCCASIONS.map((o) => (
+              <button key={o} type="button" className="chip" aria-pressed={occasion === o} onClick={() => setOccasion(occasion === o ? null : o)}>
+                {o}
+              </button>
+            ))}
+          </div>
+        </fieldset>
+      )}
 
       <label className="field">
         <span className="label"><b>5</b> A nombre de <em className="req">obligatorio</em></span>
@@ -289,7 +327,7 @@ export default function ReserveForm({ idPrefix = 'res' }: { idPrefix?: string })
 
       {slot && (
         <p className="res-summary" aria-live="polite">
-          Mesa para <strong>{peopleText}</strong> · <strong>{longDate(date)}</strong> · <strong>{slot.label}</strong> · {current.name}
+          {festejo ? <>{festejo} · </> : 'Mesa para '}<strong>{peopleText}</strong> · <strong>{longDate(date)}</strong> · <strong>{slot.label}</strong> · {current.name}
         </p>
       )}
 

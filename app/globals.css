@@ -1943,6 +1943,117 @@ select.input:disabled {
 .people-grid .chip {
   min-height: 40px;
 }
+.input-sm {
+  height: 42px;
+  margin-top: 6px;
+  padding-inline: 12px;
+  font-size: 14px;
+}
+.input-sm::-webkit-inner-spin-button {
+  opacity: 0.4;
+}
+
+/* ==========================================================================
+   Posadas y grupos
+   ========================================================================== */
+
+.groups-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.05fr;
+  align-items: center;
+  gap: clamp(32px, 5vw, 80px);
+}
+.groups-grid > * {
+  min-width: 0;
+}
+.groups-photo {
+  position: relative;
+  border-radius: var(--radius);
+  overflow: hidden;
+  aspect-ratio: 4 / 5;
+  box-shadow: 0 40px 90px -40px rgba(255, 107, 26, 0.45);
+}
+.groups-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.groups-photo::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 55%, rgba(10, 7, 6, 0.85));
+  pointer-events: none;
+}
+.groups-badge {
+  position: absolute;
+  left: 18px;
+  bottom: 18px;
+  z-index: 1;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: rgba(10, 7, 6, 0.7);
+  border: 1px solid rgba(255, 184, 0, 0.5);
+  color: var(--gold);
+  font-size: 13px;
+  font-weight: 600;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+.groups-copy .lede {
+  margin-top: 18px;
+}
+.groups-perks {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px 22px;
+  margin-top: 28px;
+}
+.groups-perks li {
+  display: flex;
+  gap: 12px;
+  padding: 16px;
+  border-radius: 16px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.02);
+}
+.groups-perks svg {
+  flex: none;
+  margin-top: 4px;
+  color: var(--amber);
+}
+.groups-perks strong {
+  display: block;
+  margin-bottom: 2px;
+  font-size: 15px;
+}
+.groups-perks span {
+  color: rgba(245, 230, 200, 0.68);
+  font-size: 14px;
+  line-height: 1.5;
+}
+.groups-cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 30px;
+}
+@media (max-width: 900px) {
+  .groups-grid {
+    grid-template-columns: 1fr;
+  }
+  .groups-photo {
+    aspect-ratio: 16 / 11;
+  }
+}
+@media (max-width: 560px) {
+  .groups-perks {
+    grid-template-columns: 1fr;
+  }
+  .groups-cta .btn {
+    width: 100%;
+  }
+}
 
 /* Time wheel */
 .wheel {

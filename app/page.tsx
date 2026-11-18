@@ -5,6 +5,7 @@ import Signature from '@/components/Signature';
 import MenuSection from '@/components/MenuSection';
 import Gallery from '@/components/Gallery';
 import Locations from '@/components/Locations';
+import Groups from '@/components/Groups';
 import Reserve from '@/components/Reserve';
 import Faq from '@/components/Faq';
 import Footer from '@/components/Footer';
@@ -21,6 +22,7 @@ export default function Home() {
         <Signature />
         <MenuSection />
         <Gallery />
+        <Groups />
         <Locations />
         <Reserve />
         <Faq />

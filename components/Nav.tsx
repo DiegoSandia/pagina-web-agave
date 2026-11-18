@@ -12,6 +12,7 @@ const LINKS = [
   { href: '#firma', label: 'La firma' },
   { href: '#menu', label: 'Menú' },
   { href: '#ambiente', label: 'Ambiente' },
+  { href: '#grupos', label: 'Posadas' },
   { href: '#sucursales', label: 'Sucursales' },
 ];
 

@@ -1,23 +1,25 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import ReserveForm from './ReserveForm';
+import ReserveForm, { type ReservePreset } from './ReserveForm';
 import { Close, WhatsApp } from './icons';
 import { lockScroll } from '@/lib/lenis';
 import { waLink } from '@/lib/site';
 
 export const OPEN_RESERVE = 'agave:open-reserve';
 
-export function openReserve() {
-  window.dispatchEvent(new Event(OPEN_RESERVE));
+export function openReserve(preset?: ReservePreset) {
+  window.dispatchEvent(new CustomEvent(OPEN_RESERVE, { detail: preset ?? null }));
 }
 
 export default function ReserveModal() {
   const ref = useRef<HTMLDialogElement>(null);
   const [mounted, setMounted] = useState(false);
+  const [preset, setPreset] = useState<ReservePreset | null>(null);
 
   useEffect(() => {
-    const open = () => {
+    const open = (e: Event) => {
+      setPreset((e as CustomEvent<ReservePreset | null>).detail ?? null);
       setMounted(true);
       if (ref.current && !ref.current.open) {
         ref.current.showModal();
@@ -32,6 +34,8 @@ export default function ReserveModal() {
     ref.current?.close();
     lockScroll(false);
   };
+
+  const group = !!preset?.occasion;
 
   return (
     <dialog
@@ -49,14 +53,19 @@ export default function ReserveModal() {
     >
       <div className="res-modal-inner">
         <header className="res-modal-head">
-          <h2 id="res-modal-title">Aparta tu mesa</h2>
+          <h2 id="res-modal-title">{group ? 'Aparta para tu grupo' : 'Aparta tu mesa'}</h2>
           <button type="button" className="lb-btn res-modal-close" onClick={close} aria-label="Cerrar">
             <Close size={20} />
           </button>
         </header>
-        {mounted && <ReserveForm idPrefix="modal" />}
-        <a className="res-modal-chat" href={waLink('Hola, tengo una pregunta.')} target="_blank" rel="noopener noreferrer">
-          <WhatsApp size={16} /> ¿Solo una pregunta? Escríbenos
+        {mounted && <ReserveForm key={preset?.occasion ?? 'mesa'} idPrefix="modal" preset={preset ?? undefined} />}
+        <a
+          className="res-modal-chat"
+          href={waLink(group ? 'Hola, quiero preguntar por una posada o reunión para un grupo.' : 'Hola, tengo una pregunta.')}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <WhatsApp size={16} /> {group ? '¿Dudas sobre tu grupo? Escríbenos' : '¿Solo una pregunta? Escríbenos'}
         </a>
       </div>
     </dialog>
