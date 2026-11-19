@@ -557,5 +557,13 @@ export const FAQ = [
   { q: '¿Cuánto cuesta la birria?', a: 'La birria estilo Jalisco mediana (120 g) cuesta $150 y la grande (170 g) $175. El consomé solo está en $40, el birriamen en $150 y la orden de 3 tacos de birria en $120.' },
   { q: '¿Cómo funciona el 2×1 en copeo?', a: 'Es todos los días, por persona e incluye un mezclador. Aplican restricciones: Hypnotic y Jägermeister no entran en ninguna preparación.' },
   { q: '¿Hacen eventos y grupos?', a: 'Sí: posadas, cumpleaños, grupos de trabajo y reuniones. Para mesas grandes tenemos cazuelas de cantarito de 5 y 10 litros. Aparta en la sección Posadas y grupos o escríbenos por WhatsApp con anticipación; en diciembre las fechas se llenan rápido.' },
+  { q: '¿Cómo reservo una mesa?', a: 'En la sección Reservar de esta página: eliges sucursal, día, hora y cuántos vienen, se abre WhatsApp con todo escrito y te confirmamos la mesa por ese chat. Toma 20 segundos.' },
+  { q: '¿Qué promociones tienen?', a: '2×1 en copeo todos los días, pulque 2×1 miércoles y jueves, cantarito chico de cortesía con mesa de 4 o más y karaoke viernes y sábado. Los domingos, desayuno y birria.' },
+  { q: '¿Hay música en vivo?', a: 'Sí. En Centro hay música en vivo de miércoles a domingo y en Arboledas de jueves a domingo. Viernes y sábado también hay karaoke.' },
+  { q: '¿Qué formas de pago aceptan?', a: 'Efectivo, tarjeta de crédito y débito, y pago con el celular.' },
+  { q: '¿Tienen estacionamiento?', a: 'Sí, contamos con valet parking.' },
+  { q: '¿Puedo ir con niños o con mascotas?', a: 'Los niños son bienvenidos. Por ahora no se permiten mascotas.' },
+  { q: '¿Tienen terraza?', a: 'Sí, en la sucursal Arboledas. Puedes pedir mesa en terraza al reservar, sujeto a disponibilidad.' },
+  { q: '¿Hacen envíos a domicilio o para llevar?', a: 'Por el momento no. Solo servimos en el lugar, así que te esperamos en cualquiera de las dos sucursales.' },
   { q: '¿La propina está incluida?', a: 'No. La propina es opcional.' },
 ];
