@@ -9,6 +9,18 @@ import TimeWheel from './TimeWheel';
 import { ArrowRight, WhatsApp } from './icons';
 
 const NAME_KEY = 'agave_nombre';
+const PHONE_KEY = 'agave_tel';
+const EMAIL_KEY = 'agave_correo';
+
+// Mexican mobile/landline: 10 digits, optionally typed with +52 / 52 / 1 prefixes and spaces.
+function phoneDigits(raw: string) {
+  let d = raw.replace(/\D/g, '');
+  if (d.length === 13 && d.startsWith('521')) d = d.slice(3);
+  else if (d.length === 12 && d.startsWith('52')) d = d.slice(2);
+  return d;
+}
+const prettyPhone = (d: string) => `${d.slice(0, 2)} ${d.slice(2, 6)} ${d.slice(6)}`;
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const PEOPLE = ['1', '2', '3', '4', '5', '6', '8', '10+'];
 const PREFERRED_MINUTES = 20 * 60;
 const OCCASIONS = ['Posada', 'Cumpleaños', 'Reunión de trabajo', 'Otro festejo'] as const;
@@ -74,15 +86,23 @@ export default function ReserveForm({ idPrefix = 'res', preset }: { idPrefix?: s
   const [notes, setNotes] = useState('');
   const [showNotes, setShowNotes] = useState(false);
   const [nameError, setNameError] = useState(false);
+  const [phone, setPhone] = useState('');
+  const [phoneError, setPhoneError] = useState(false);
+  const [email, setEmail] = useState('');
+  const [emailError, setEmailError] = useState(false);
   const [sent, setSent] = useState<{ url: string; folio: string; when: string } | null>(null);
   const [honeypot, setHoneypot] = useState('');
   const nameRef = useRef<HTMLInputElement>(null);
+  const phoneRef = useRef<HTMLInputElement>(null);
+  const emailRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     const s = new URLSearchParams(window.location.search).get('sucursal');
     if (BRANCHES.some((b) => b.id === s)) setBranch(s as BranchId);
     try {
       setName(localStorage.getItem(NAME_KEY) ?? '');
+      setPhone(localStorage.getItem(PHONE_KEY) ?? '');
+      setEmail(localStorage.getItem(EMAIL_KEY) ?? '');
     } catch {}
     setReady(true);
   }, []);
@@ -114,14 +134,22 @@ export default function ReserveForm({ idPrefix = 'res', preset }: { idPrefix?: s
   function submit(e: React.FormEvent) {
     e.preventDefault();
     if (!slot) return;
-    if (!/\p{L}.*\p{L}/u.test(name.trim())) {
-      setNameError(true);
-      nameRef.current?.focus();
+    const tel = phoneDigits(phone);
+    const mail = email.trim();
+    const badName = !/\p{L}.*\p{L}/u.test(name.trim());
+    const badPhone = tel.length !== 10;
+    const badEmail = !!mail && !EMAIL_RE.test(mail);
+    setNameError(badName);
+    setPhoneError(badPhone);
+    setEmailError(badEmail);
+    if (badName || badPhone || badEmail) {
+      (badName ? nameRef : badPhone ? phoneRef : emailRef).current?.focus();
       return;
     }
-    setNameError(false);
     try {
       localStorage.setItem(NAME_KEY, name.trim());
+      localStorage.setItem(PHONE_KEY, prettyPhone(tel));
+      if (mail) localStorage.setItem(EMAIL_KEY, mail);
     } catch {}
 
     const folio = `AG-${Math.random().toString(36).slice(2, 7).toUpperCase().padEnd(5, '0')}`;
@@ -136,6 +164,8 @@ export default function ReserveForm({ idPrefix = 'res', preset }: { idPrefix?: s
         hora: slot.label,
         personas: count || people,
         nombre: name.trim(),
+        telefono: tel,
+        correo: mail,
         notas: [festejo?.toUpperCase(), notes.trim()].filter(Boolean).join(' · '),
         origen: getOrigin(),
         website: honeypot,
@@ -297,7 +327,7 @@ export default function ReserveForm({ idPrefix = 'res', preset }: { idPrefix?: s
           required
           aria-required="true"
           autoComplete="given-name"
-          enterKeyHint="send"
+          enterKeyHint="next"
           value={name}
           onChange={(e) => {
             setName(e.target.value);
@@ -308,6 +338,53 @@ export default function ReserveForm({ idPrefix = 'res', preset }: { idPrefix?: s
         />
         {nameError && <span className="hint is-error">Escribe tu nombre para apartar la mesa.</span>}
       </label>
+
+      <div className="field-row res-contact">
+        <label className="field">
+          <span className="label"><b>6</b> Teléfono <em className="req">obligatorio</em></span>
+          <input
+            ref={phoneRef}
+            className="input"
+            type="tel"
+            inputMode="tel"
+            required
+            aria-required="true"
+            autoComplete="tel-national"
+            value={phone}
+            onChange={(e) => {
+              setPhone(e.target.value);
+              if (phoneError) setPhoneError(false);
+            }}
+            onBlur={() => {
+              const d = phoneDigits(phone);
+              if (d.length === 10) setPhone(prettyPhone(d));
+            }}
+            placeholder="55 1234 5678"
+            aria-invalid={phoneError || undefined}
+          />
+          {phoneError && <span className="hint is-error">Escribe tu número a 10 dígitos.</span>}
+        </label>
+
+        <label className="field">
+          <span className="label">Correo <em>(opcional)</em></span>
+          <input
+            ref={emailRef}
+            className="input"
+            type="email"
+            inputMode="email"
+            autoComplete="email"
+            value={email}
+            onChange={(e) => {
+              setEmail(e.target.value);
+              if (emailError) setEmailError(false);
+            }}
+            placeholder="tu@correo.com"
+            aria-invalid={emailError || undefined}
+          />
+          {emailError && <span className="hint is-error">Revisa tu correo o déjalo vacío.</span>}
+        </label>
+      </div>
+      <p className="hint res-privacy">Solo los usamos para confirmar tu reserva y avisarte si algo cambia.</p>
 
       {showNotes ? (
         <label className="field">

@@ -7,6 +7,8 @@ type Payload = {
   hora?: unknown;
   personas?: unknown;
   nombre?: unknown;
+  telefono?: unknown;
+  correo?: unknown;
   notas?: unknown;
   origen?: unknown;
   website?: unknown;
@@ -33,6 +35,8 @@ export async function POST(req: Request) {
     hora: str(body.hora, 10),
     personas: str(body.personas, 6),
     nombre: str(body.nombre, 80),
+    telefono: str(body.telefono, 20).replace(/\D/g, ''),
+    correo: str(body.correo, 120).toLowerCase(),
     notas: str(body.notas, 160),
     origen: str(body.origen, 40) || 'directo',
   };
@@ -42,8 +46,12 @@ export async function POST(req: Request) {
     ['Arboledas', 'Centro'].includes(row.sucursal) &&
     /^\d{4}-\d{2}-\d{2}$/.test(row.fecha) &&
     /^\d{1,2}(:\d{2})? (AM|PM)$/.test(row.hora) &&
-    row.nombre.length > 1;
+    row.nombre.length > 1 &&
+    /^\d{10}$/.test(row.telefono) &&
+    (!row.correo || /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(row.correo));
   if (!valid) return NextResponse.json({ ok: false }, { status: 422 });
+  // Spaced format keeps Sheets from turning the number into a numeric cell.
+  row.telefono = row.telefono.replace(/^(\d{2})(\d{4})(\d{4})$/, '$1 $2 $3');
 
   const url = process.env.SHEETS_WEBHOOK_URL;
   const secret = process.env.SHEETS_SECRET;

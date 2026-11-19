@@ -2004,6 +2004,12 @@ select.input:disabled {
 .people-grid .chip {
   min-height: 40px;
 }
+.res-contact {
+  align-items: end;
+}
+.res-privacy {
+  margin-top: -6px;
+}
 .input-sm {
   height: 42px;
   margin-top: 6px;
