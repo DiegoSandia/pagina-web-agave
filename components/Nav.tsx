@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import mark from '@/assets/brand/agave-mark.png';
 import LiveStatus from './LiveStatus';
+import PromoBar from './PromoBar';
 import { ArrowUpRight, Instagram, Phone } from './icons';
 import { SITE } from '@/lib/site';
 import { lockScroll } from '@/lib/lenis';
@@ -51,6 +52,7 @@ export default function Nav({ onHome = true }: { onHome?: boolean }) {
   return (
     <>
       <header className={`nav ${scrolled ? 'is-scrolled' : ''} ${hidden && !open ? 'is-hidden' : ''}`}>
+        <PromoBar hidden={open} />
         <div className="nav-inner">
           <a href={onHome ? '#top' : '/'} className="nav-brand" onClick={close} aria-label="El Agave, inicio">
             <Image src={mark} alt="" width={40} height={35} priority className="nav-mark" />
