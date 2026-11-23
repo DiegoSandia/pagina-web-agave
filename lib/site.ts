@@ -24,6 +24,14 @@ import meseroCantaritos from '@/assets/photos/v2/mesero-cantaritos.jpg';
 import birriaNoodles from '@/assets/photos/birria-noodles.jpg';
 import aguaJamaica from '@/assets/photos/agua-jamaica.jpg';
 import aguaFresca from '@/assets/photos/agua-fresca-splash.jpg';
+import chamorro from '@/assets/photos/v3/chamorro.jpg';
+import nachos from '@/assets/photos/v3/nachos.jpg';
+import mezcalinas from '@/assets/photos/v3/mezcalinas.jpg';
+import quesabirrias from '@/assets/photos/v3/quesabirrias.jpg';
+import flautas from '@/assets/photos/v3/flautas.jpg';
+import tortaBirria from '@/assets/photos/v3/torta-birria.jpg';
+import margaritaAzulito from '@/assets/photos/v3/margarita-azulito.jpg';
+import consome from '@/assets/photos/v3/consome.jpg';
 
 export const SITE = {
   name: 'El Agave',
@@ -138,17 +146,17 @@ export const MENU: MenuGroup[] = [
         items: [
           { name: 'Birria mediana', note: '120 g de proteína', price: 150, img: birriaConsome, tag: 'Lo más pedido' },
           { name: 'Birria grande', note: '170 g de proteína', price: 175, img: cenitalBirria },
-          { name: 'Consomé', price: 40 },
+          { name: 'Consomé', price: 40, img: consome },
           { name: 'Birriamen', note: '100 g de proteína', price: 150, img: birriaNoodles, tag: 'De la casa' },
           { name: 'Carne en su jugo', note: '100 g de proteína', price: 155, img: carneJugo },
-          { name: 'Chamorro', note: '700 g aprox.', desc: 'Acompañado de nopales y arroz.', price: 185 },
+          { name: 'Chamorro', note: '700 g aprox.', desc: 'Acompañado de nopales y arroz.', price: 185, img: chamorro },
           { name: 'Taco de birria', note: '60 g', price: 42 },
-          { name: 'Orden de tacos de birria', note: '3 piezas', price: 120, img: birriaNeon, tag: 'Lo más pedido' },
+          { name: 'Orden de tacos de birria', note: '3 piezas', price: 120 },
           { name: 'Quesadilla frita de birria', note: '60 g', price: 45 },
-          { name: 'Quesabirria', note: '60 g', price: 48 },
-          { name: 'Orden de quesabirrias', note: '2 piezas', price: 85 },
-          { name: 'Flautas de birria', note: '3 piezas de 100 g', price: 95 },
-          { name: 'Torta de birria', note: '100 g', price: 95 },
+          { name: 'Quesabirria', note: '60 g', price: 48, img: quesabirrias },
+          { name: 'Orden de quesabirrias', note: '2 piezas', price: 85, img: quesabirrias, tag: 'Lo más pedido' },
+          { name: 'Flautas de birria', note: '3 piezas de 100 g', price: 95, img: flautas },
+          { name: 'Torta de birria', note: '100 g', price: 95, img: tortaBirria },
         ],
       },
       {
@@ -189,7 +197,7 @@ export const MENU: MenuGroup[] = [
         items: [
           { name: 'Papas a la francesa', note: '250 g', price: 65, img: papasMojito },
           { name: 'Cazuelitas de carne', note: '120 g', price: 72 },
-          { name: 'Nachos Agave', note: '120 g', price: 110 },
+          { name: 'Nachos Agave', note: '120 g', price: 110, img: nachos, tag: 'Para compartir' },
           { name: 'Orden de dobladitas', note: '6 piezas de 30 g', desc: 'Rellenas de frijol y papa.', price: 39 },
           { name: 'Boneless', note: '300 g', desc: SALSAS, price: 155 },
           { name: 'Alitas', note: '10 piezas', desc: SALSAS, price: 155, img: alitasPapas, tag: 'Para compartir' },
@@ -294,9 +302,9 @@ export const MENU: MenuGroup[] = [
         items: [
           { name: 'Frutos rojos', note: '450 ml', price: 110 },
           { name: 'Jamaica y chile ancho', note: '450 ml', price: 110, img: aguaJamaica },
-          { name: 'Pepino y Tajín', note: '450 ml', price: 110 },
-          { name: 'Mango', note: '450 ml', price: 99 },
-          { name: 'Tamarindo', note: '450 ml', price: 99 },
+          { name: 'Pepino y Tajín', note: '450 ml', price: 110, img: mezcalinas },
+          { name: 'Mango', note: '450 ml', price: 99, img: mezcalinas },
+          { name: 'Tamarindo', note: '450 ml', price: 99, img: mezcalinas },
           { name: 'Piña', note: '450 ml', price: 99 },
         ],
       },
@@ -308,8 +316,8 @@ export const MENU: MenuGroup[] = [
         items: [
           { name: 'Mojito de sabores', note: '1 L', desc: 'Bacardí (90 ml), limón, agua mineral y jarabe: mango, piña, tamarindo, naranja, arándano, frutos rojos, coco, kiwi o sandía.', price: 140, img: mojitosTrio, tag: 'Lo más pedido' },
           { name: 'Mojito', note: '1 L', desc: 'Bacardí (90 ml) con agua mineral, limón y jarabe.', price: 130, img: barraMojito },
-          { name: 'Margarita frozen', note: '1 L', desc: 'Tequila Arandas (90 ml) y Controy (45 ml): clásica, mango o tamarindo.', price: 130 },
-          { name: 'Azulito', note: '1 L', desc: 'Vodka Wyborowa (90 ml) con agua mineral y curazao.', price: 130 },
+          { name: 'Margarita frozen', note: '1 L', desc: 'Tequila Arandas (90 ml) y Controy (45 ml): clásica, mango o tamarindo.', price: 130, img: margaritaAzulito },
+          { name: 'Azulito', note: '1 L', desc: 'Vodka Wyborowa (90 ml) con agua mineral y curazao.', price: 130, img: margaritaAzulito },
           { name: 'Cuba', note: '1 L', desc: 'Bacardí (90 ml) con refresco.', price: 130 },
           { name: 'Bull', note: '500 ml', desc: 'Levanta muertos: ron (45 ml) con cerveza, limón y jarabe.', price: 135 },
           { name: 'Piedra', note: '90 ml', desc: 'Levanta muertos: Tequila Arandas con licor de anís y fernet.', price: 95 },
@@ -366,8 +374,8 @@ export const MENU: MenuGroup[] = [
         img: aguaFresca,
         items: [
           { name: 'Cantarito sin tequila', note: '750 ml', price: 65 },
-          { name: 'Margarita sin alcohol', note: '1 L', price: 90 },
-          { name: 'Azulito sin alcohol', note: '1 L', price: 90 },
+          { name: 'Margarita sin alcohol', note: '1 L', price: 90, img: margaritaAzulito },
+          { name: 'Azulito sin alcohol', note: '1 L', price: 90, img: margaritaAzulito },
           { name: 'Mega mojito sin alcohol', note: '1 L', price: 90 },
           { name: 'Clamato natural', note: '500 ml', price: 65 },
           { name: 'Piñada', note: '500 ml', price: 75 },
