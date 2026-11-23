@@ -1245,6 +1245,215 @@ address {
   font-size: 14px;
   line-height: 1.5;
 }
+.menu-row.has-thumb {
+  align-items: center;
+}
+.menu-row.has-thumb .menu-name {
+  display: grid;
+  grid-template-columns: 56px minmax(0, 1fr);
+  align-items: center;
+  column-gap: 12px;
+  row-gap: 2px;
+}
+.menu-row.has-thumb .menu-thumb {
+  grid-row: span 2;
+}
+.menu-row.has-thumb .menu-name small {
+  grid-column: 2;
+}
+.menu-row.has-thumb .menu-desc {
+  padding-left: 68px;
+}
+.menu-thumb {
+  position: relative;
+  flex: none;
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--line-2);
+  transition: transform 0.3s var(--ease), border-color 0.3s;
+}
+.menu-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.menu-thumb:hover {
+  transform: scale(1.06);
+  border-color: var(--amber);
+}
+.menu-name-text {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 10px;
+}
+.menu-tag,
+.dish-tag {
+  display: inline-block;
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: rgba(255, 184, 0, 0.14);
+  border: 1px solid rgba(255, 184, 0, 0.45);
+  color: var(--gold);
+  font-family: var(--f-body);
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+
+/* "Lo que más se pide" strip */
+.featured {
+  margin-bottom: clamp(26px, 3vw, 40px);
+}
+.featured-label {
+  margin-bottom: 12px;
+}
+.featured-row {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: clamp(200px, 22vw, 270px);
+  gap: 14px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  margin-inline: calc(var(--gutter) * -1);
+  padding: 4px var(--gutter) 10px;
+}
+.featured-row::-webkit-scrollbar {
+  display: none;
+}
+.featured-row li {
+  scroll-snap-align: start;
+}
+.featured-card {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  text-align: left;
+  isolation: isolate;
+  transition: transform 0.4s var(--ease), border-color 0.3s, box-shadow 0.4s;
+}
+.featured-card img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -2;
+  transition: transform 0.8s var(--ease);
+}
+.featured-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(180deg, transparent 45%, rgba(10, 7, 6, 0.92));
+}
+.featured-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255, 184, 0, 0.5);
+  box-shadow: 0 24px 50px -24px rgba(255, 107, 26, 0.6);
+}
+.featured-card:hover img {
+  transform: scale(1.05);
+}
+.featured-card .dish-tag {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: rgba(10, 7, 6, 0.65);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+.featured-cap {
+  position: absolute;
+  inset: auto 14px 14px;
+  display: grid;
+  gap: 2px;
+}
+.featured-cap strong {
+  font-family: var(--f-display);
+  font-weight: 400;
+  font-size: 26px;
+  line-height: 1;
+  text-transform: uppercase;
+}
+.featured-cap span {
+  color: var(--gold);
+  font-family: var(--f-display);
+  font-size: 22px;
+}
+
+/* Dish photo viewer */
+.dish-view {
+  width: min(560px, calc(100vw - 32px));
+  max-height: calc(100dvh - 32px);
+  margin: auto;
+  padding: 0;
+  border: 1px solid var(--line-2);
+  border-radius: 22px;
+  background: var(--ink-2);
+  color: var(--cream);
+  overflow: auto;
+}
+.dish-view::backdrop {
+  background: rgba(6, 4, 3, 0.82);
+  backdrop-filter: blur(6px);
+}
+.dish-view-inner {
+  position: relative;
+}
+.dish-view-inner img {
+  width: 100%;
+  height: auto;
+  max-height: 62dvh;
+  object-fit: cover;
+}
+.dish-view figcaption {
+  display: grid;
+  gap: 6px;
+  justify-items: start;
+  padding: 18px 22px 22px;
+}
+.dish-view h3 {
+  font-family: var(--f-display);
+  font-weight: 400;
+  font-size: 34px;
+  line-height: 1;
+  text-transform: uppercase;
+}
+.dish-meta {
+  color: var(--smoke-2);
+  font-size: 13px;
+}
+.dish-desc {
+  color: var(--smoke);
+  font-size: 15px;
+  line-height: 1.5;
+}
+.dish-price {
+  margin-top: 4px;
+  color: var(--gold);
+  font-family: var(--f-display);
+  font-size: 30px;
+  line-height: 1;
+}
+.dish-close {
+  top: 12px;
+  right: 12px;
+  width: 44px;
+  height: 44px;
+}
 .menu-price {
   font-family: var(--f-display);
   font-size: clamp(24px, 2.2vw, 30px);

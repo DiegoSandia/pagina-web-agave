@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
-import { track } from '@vercel/analytics';
+import { trackEvent as track } from '@/lib/analytics';
 import { captureOrigin, getOrigin } from '@/lib/origin';
 
 function eventFor(href: string) {

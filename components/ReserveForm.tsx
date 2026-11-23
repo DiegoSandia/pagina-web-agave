@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { BRANCHES, waLink, type Branch } from '@/lib/site';
 import { getOrigin } from '@/lib/origin';
-import { track } from '@vercel/analytics';
+import { trackEvent as track } from '@/lib/analytics';
 import { SCHEDULES, mexicoNow, slotsFor, type BranchId } from '@/lib/hours';
 import TimeWheel from './TimeWheel';
 import { ArrowRight, WhatsApp } from './icons';

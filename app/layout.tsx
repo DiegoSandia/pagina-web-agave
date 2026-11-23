@@ -5,6 +5,7 @@ import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import SmoothScroll from '@/components/SmoothScroll';
 import Tracker from '@/components/Tracker';
+import AdTags from '@/components/AdTags';
 import { SITE } from '@/lib/site';
 import { jsonLd } from '@/lib/schema';
 import './globals.css';
@@ -59,6 +60,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <SmoothScroll />
         <Tracker />
         {children}
+        <AdTags />
         <Analytics />
         <SpeedInsights />
       </body>

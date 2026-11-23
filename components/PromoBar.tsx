@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { track } from '@vercel/analytics';
+import { trackEvent as track } from '@/lib/analytics';
 import { getOrigin } from '@/lib/origin';
 import { openReserve } from './ReserveModal';
 import { ArrowRight, Close } from './icons';

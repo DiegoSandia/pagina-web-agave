@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { track } from '@vercel/analytics';
+import { trackEvent as track } from '@/lib/analytics';
 import mesaLlena from '@/assets/photos/v2/mesa-llena.jpg';
 import { waLink } from '@/lib/site';
 import { getOrigin } from '@/lib/origin';
