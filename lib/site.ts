@@ -24,14 +24,6 @@ import meseroCantaritos from '@/assets/photos/v2/mesero-cantaritos.jpg';
 import birriaNoodles from '@/assets/photos/birria-noodles.jpg';
 import aguaJamaica from '@/assets/photos/agua-jamaica.jpg';
 import aguaFresca from '@/assets/photos/agua-fresca-splash.jpg';
-import chamorro from '@/assets/photos/v3/chamorro.jpg';
-import nachos from '@/assets/photos/v3/nachos.jpg';
-import mezcalinas from '@/assets/photos/v3/mezcalinas.jpg';
-import quesabirrias from '@/assets/photos/v3/quesabirrias.jpg';
-import flautas from '@/assets/photos/v3/flautas.jpg';
-import tortaBirria from '@/assets/photos/v3/torta-birria.jpg';
-import margaritaAzulito from '@/assets/photos/v3/margarita-azulito.jpg';
-import consome from '@/assets/photos/v3/consome.jpg';
 
 export const SITE = {
   name: 'El Agave',
@@ -118,8 +110,7 @@ export function mapEmbedUrl(b: Branch) {
 // ------------------------------------------------------------------
 // Menú — transcrito del menú impreso final.
 // ------------------------------------------------------------------
-export type MenuTag = 'Lo más pedido' | 'Para compartir' | 'De la casa';
-export type MenuItem = { name: string; note?: string; desc?: string; price?: number; price2?: number; img?: StaticImageData; tag?: MenuTag };
+export type MenuItem = { name: string; note?: string; desc?: string; price?: number; price2?: number };
 export type MenuCategory = {
   id: string;
   label: string;
@@ -144,19 +135,19 @@ export const MENU: MenuGroup[] = [
         intro: 'Birria estilo Jalisco, la especialidad de la casa.',
         img: birriaConsome,
         items: [
-          { name: 'Birria mediana', note: '120 g de proteína', price: 150, img: birriaConsome, tag: 'Lo más pedido' },
-          { name: 'Birria grande', note: '170 g de proteína', price: 175, img: cenitalBirria },
-          { name: 'Consomé', price: 40, img: consome },
-          { name: 'Birriamen', note: '100 g de proteína', price: 150, img: birriaNoodles, tag: 'De la casa' },
-          { name: 'Carne en su jugo', note: '100 g de proteína', price: 155, img: carneJugo },
-          { name: 'Chamorro', note: '700 g aprox.', desc: 'Acompañado de nopales y arroz.', price: 185, img: chamorro },
+          { name: 'Birria mediana', note: '120 g de proteína', price: 150 },
+          { name: 'Birria grande', note: '170 g de proteína', price: 175 },
+          { name: 'Consomé', price: 40 },
+          { name: 'Birriamen', note: '100 g de proteína', price: 150 },
+          { name: 'Carne en su jugo', note: '100 g de proteína', price: 155 },
+          { name: 'Chamorro', note: '700 g aprox.', desc: 'Acompañado de nopales y arroz.', price: 185 },
           { name: 'Taco de birria', note: '60 g', price: 42 },
           { name: 'Orden de tacos de birria', note: '3 piezas', price: 120 },
           { name: 'Quesadilla frita de birria', note: '60 g', price: 45 },
-          { name: 'Quesabirria', note: '60 g', price: 48, img: quesabirrias },
-          { name: 'Orden de quesabirrias', note: '2 piezas', price: 85, img: quesabirrias, tag: 'Lo más pedido' },
-          { name: 'Flautas de birria', note: '3 piezas de 100 g', price: 95, img: flautas },
-          { name: 'Torta de birria', note: '100 g', price: 95, img: tortaBirria },
+          { name: 'Quesabirria', note: '60 g', price: 48 },
+          { name: 'Orden de quesabirrias', note: '2 piezas', price: 85 },
+          { name: 'Flautas de birria', note: '3 piezas de 100 g', price: 95 },
+          { name: 'Torta de birria', note: '100 g', price: 95 },
         ],
       },
       {
@@ -164,7 +155,7 @@ export const MENU: MenuGroup[] = [
         label: 'Tacos',
         img: tacosLengua,
         items: [
-          { name: 'Lengua', note: '50 g', price: 59, img: tacosLengua },
+          { name: 'Lengua', note: '50 g', price: 59 },
           { name: 'Bistec', note: '60 g', price: 42 },
           { name: 'Costilla de res', note: '60 g', price: 42 },
           { name: 'Cecina de res', note: '60 g', price: 42 },
@@ -184,7 +175,7 @@ export const MENU: MenuGroup[] = [
         intro: 'Incluye papas, nopales y cebollitas cambray.',
         img: tacosNeon,
         items: [
-          { name: 'Arrachera', note: '200 g', price: 179, img: tacosNeon },
+          { name: 'Arrachera', note: '200 g', price: 179 },
           { name: 'Costilla de res', note: '200 g', price: 159 },
           { name: 'Cecina de res', note: '200 g', price: 159 },
           { name: 'Cecina adobada', note: '200 g', price: 159 },
@@ -195,12 +186,12 @@ export const MENU: MenuGroup[] = [
         label: 'Snacks',
         img: alitasPapas,
         items: [
-          { name: 'Papas a la francesa', note: '250 g', price: 65, img: papasMojito },
+          { name: 'Papas a la francesa', note: '250 g', price: 65 },
           { name: 'Cazuelitas de carne', note: '120 g', price: 72 },
-          { name: 'Nachos Agave', note: '120 g', price: 110, img: nachos, tag: 'Para compartir' },
+          { name: 'Nachos Agave', note: '120 g', price: 110 },
           { name: 'Orden de dobladitas', note: '6 piezas de 30 g', desc: 'Rellenas de frijol y papa.', price: 39 },
           { name: 'Boneless', note: '300 g', desc: SALSAS, price: 155 },
-          { name: 'Alitas', note: '10 piezas', desc: SALSAS, price: 155, img: alitasPapas, tag: 'Para compartir' },
+          { name: 'Alitas', note: '10 piezas', desc: SALSAS, price: 155 },
           { name: 'Nuggets', note: '5 piezas', desc: 'Con papas a la francesa (125 g).', price: 89 },
         ],
       },
@@ -229,7 +220,7 @@ export const MENU: MenuGroup[] = [
         items: [
           { name: 'Sencillos', price: 85, price2: 130 },
           { name: 'Con huevo', note: '2 piezas', price: 95, price2: 135 },
-          { name: 'Con pollo', note: '60 g', price: 105, price2: 150, img: chilaquilesPollo },
+          { name: 'Con pollo', note: '60 g', price: 105, price2: 150 },
           { name: 'Con carne asada', note: '120 g', price: 125, price2: 170 },
         ],
       },
@@ -240,7 +231,7 @@ export const MENU: MenuGroup[] = [
         img: enchiladasPour,
         cols: ['Solo', 'Paquete*'],
         items: [
-          { name: 'Sencillas', price: 100, price2: 145, img: enchiladasPour },
+          { name: 'Sencillas', price: 100, price2: 145 },
           { name: 'Con huevo estrellado', price: 125, price2: 170 },
           { name: 'Con carne asada', note: '120 g', price: 165, price2: 200 },
           {
@@ -258,7 +249,7 @@ export const MENU: MenuGroup[] = [
         img: desayuno,
         cols: ['Solo', 'Paquete*'],
         items: [
-          { name: 'Estrellados', price: 75, price2: 120, img: desayuno },
+          { name: 'Estrellados', price: 75, price2: 120 },
           { name: 'Con jamón', price: 85, price2: 130 },
           { name: 'Con tocino', price: 85, price2: 130 },
           { name: 'A la mexicana', price: 85, price2: 130 },
@@ -289,9 +280,9 @@ export const MENU: MenuGroup[] = [
         intro: 'Tequila Arandas con jugos de limón, naranja y toronja, refresco de toronja y sal.',
         img: barraCantaritos,
         items: [
-          { name: 'Tradicional', note: '800 ml · 90 ml de tequila', price: 105, img: cantaritoNeon, tag: 'De la casa' },
-          { name: 'Cazuela 5 L', note: '990 ml de tequila', price: 990, img: meseroCantaritos },
-          { name: 'Cazuela 10 L', note: '1,980 ml de tequila', price: 1799, img: cazuela10l, tag: 'Para compartir' },
+          { name: 'Tradicional', note: '800 ml · 90 ml de tequila', price: 105 },
+          { name: 'Cazuela 5 L', note: '990 ml de tequila', price: 990 },
+          { name: 'Cazuela 10 L', note: '1,980 ml de tequila', price: 1799 },
         ],
       },
       {
@@ -301,10 +292,10 @@ export const MENU: MenuGroup[] = [
         img: aguaJamaica,
         items: [
           { name: 'Frutos rojos', note: '450 ml', price: 110 },
-          { name: 'Jamaica y chile ancho', note: '450 ml', price: 110, img: aguaJamaica },
-          { name: 'Pepino y Tajín', note: '450 ml', price: 110, img: mezcalinas },
-          { name: 'Mango', note: '450 ml', price: 99, img: mezcalinas },
-          { name: 'Tamarindo', note: '450 ml', price: 99, img: mezcalinas },
+          { name: 'Jamaica y chile ancho', note: '450 ml', price: 110 },
+          { name: 'Pepino y Tajín', note: '450 ml', price: 110 },
+          { name: 'Mango', note: '450 ml', price: 99 },
+          { name: 'Tamarindo', note: '450 ml', price: 99 },
           { name: 'Piña', note: '450 ml', price: 99 },
         ],
       },
@@ -314,10 +305,10 @@ export const MENU: MenuGroup[] = [
         intro: 'De un litro, para que dure la plática.',
         img: mojitosTrio,
         items: [
-          { name: 'Mojito de sabores', note: '1 L', desc: 'Bacardí (90 ml), limón, agua mineral y jarabe: mango, piña, tamarindo, naranja, arándano, frutos rojos, coco, kiwi o sandía.', price: 140, img: mojitosTrio, tag: 'Lo más pedido' },
-          { name: 'Mojito', note: '1 L', desc: 'Bacardí (90 ml) con agua mineral, limón y jarabe.', price: 130, img: barraMojito },
-          { name: 'Margarita frozen', note: '1 L', desc: 'Tequila Arandas (90 ml) y Controy (45 ml): clásica, mango o tamarindo.', price: 130, img: margaritaAzulito },
-          { name: 'Azulito', note: '1 L', desc: 'Vodka Wyborowa (90 ml) con agua mineral y curazao.', price: 130, img: margaritaAzulito },
+          { name: 'Mojito de sabores', note: '1 L', desc: 'Bacardí (90 ml), limón, agua mineral y jarabe: mango, piña, tamarindo, naranja, arándano, frutos rojos, coco, kiwi o sandía.', price: 140 },
+          { name: 'Mojito', note: '1 L', desc: 'Bacardí (90 ml) con agua mineral, limón y jarabe.', price: 130 },
+          { name: 'Margarita frozen', note: '1 L', desc: 'Tequila Arandas (90 ml) y Controy (45 ml): clásica, mango o tamarindo.', price: 130 },
+          { name: 'Azulito', note: '1 L', desc: 'Vodka Wyborowa (90 ml) con agua mineral y curazao.', price: 130 },
           { name: 'Cuba', note: '1 L', desc: 'Bacardí (90 ml) con refresco.', price: 130 },
           { name: 'Bull', note: '500 ml', desc: 'Levanta muertos: ron (45 ml) con cerveza, limón y jarabe.', price: 135 },
           { name: 'Piedra', note: '90 ml', desc: 'Levanta muertos: Tequila Arandas con licor de anís y fernet.', price: 95 },
@@ -374,12 +365,12 @@ export const MENU: MenuGroup[] = [
         img: aguaFresca,
         items: [
           { name: 'Cantarito sin tequila', note: '750 ml', price: 65 },
-          { name: 'Margarita sin alcohol', note: '1 L', price: 90, img: margaritaAzulito },
-          { name: 'Azulito sin alcohol', note: '1 L', price: 90, img: margaritaAzulito },
+          { name: 'Margarita sin alcohol', note: '1 L', price: 90 },
+          { name: 'Azulito sin alcohol', note: '1 L', price: 90 },
           { name: 'Mega mojito sin alcohol', note: '1 L', price: 90 },
           { name: 'Clamato natural', note: '500 ml', price: 65 },
           { name: 'Piñada', note: '500 ml', price: 75 },
-          { name: 'Limonada · Naranjada', note: '500 ml', price: 45, img: aguaFresca },
+          { name: 'Limonada · Naranjada', note: '500 ml', price: 45 },
           { name: 'Jugo', note: '355 ml', price: 45 },
           { name: 'Agua mineral preparada', note: '500 ml', price: 49 },
           { name: 'Refresco preparado', note: '500 ml', price: 49 },
@@ -428,7 +419,7 @@ export const MENU: MenuGroup[] = [
           { name: 'Centenario Plata', note: '695 ml', price: 1400, price2: 180 },
           { name: 'Tradicional Reposado', note: '695 ml', price: 1300, price2: 170 },
           { name: 'Centenario Reposado', note: '700 ml', price: 1150, price2: 165 },
-          { name: 'Arandas', note: '990 ml', price: 1050, price2: 130, img: barraTequila },
+          { name: 'Arandas', note: '990 ml', price: 1050, price2: 130 },
           { name: 'José Cuervo Especial', note: '695 ml', price: 1050, price2: 130 },
         ],
       },
@@ -514,9 +505,6 @@ export const MENU: MenuGroup[] = [
     ],
   },
 ];
-
-/** Dishes with a photo and a tag, shown first as a visual strip. */
-export const FEATURED = MENU.flatMap((g) => g.categories.flatMap((c) => c.items.filter((it) => it.img && it.tag).map((it) => ({ ...it, group: g.id, category: c.id, categoryLabel: c.label }))));
 
 export const MENU_NOTES: Record<string, string> = {
   desayunar: '*El paquete incluye jugo o fruta y café. Horario de desayunos: 10:00 a 14:00 h.',

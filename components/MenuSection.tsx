@@ -4,90 +4,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { flushSync } from 'react-dom';
 import Image from 'next/image';
 import mark from '@/assets/brand/agave-mark.png';
-import { FEATURED, MENU, MENU_NOTES, money, type MenuCategory, type MenuItem } from '@/lib/site';
-import { lockScroll } from '@/lib/lenis';
-import { Close } from './icons';
-
-type Dish = MenuItem & { categoryLabel?: string; cols?: [string, string] };
-
-function priceText(d: Dish) {
-  if (d.cols && d.price && d.price2) return `${d.cols[0]} ${money(d.price)} · ${d.cols[1]} ${money(d.price2)}`;
-  if (d.price) return money(d.price);
-  if (d.price2) return money(d.price2);
-  return '';
-}
-
-function DishView({ dish, onClose }: { dish: Dish | null; onClose: () => void }) {
-  const ref = useRef<HTMLDialogElement>(null);
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    if (dish && !el.open) {
-      el.showModal();
-      lockScroll(true);
-    }
-    if (!dish && el.open) {
-      el.close();
-      lockScroll(false);
-    }
-  }, [dish]);
-
-  return (
-    <dialog
-      ref={ref}
-      className="dish-view"
-      aria-label={dish?.name ?? 'Platillo'}
-      data-lenis-prevent
-      onCancel={(e) => {
-        e.preventDefault();
-        onClose();
-      }}
-      onClick={(e) => {
-        if (e.target === e.currentTarget) onClose();
-      }}
-    >
-      {dish?.img && (
-        <figure className="dish-view-inner">
-          <Image src={dish.img} alt={dish.name} placeholder="blur" sizes="(max-width: 700px) 100vw, 560px" />
-          <figcaption>
-            {dish.tag && <span className="dish-tag">{dish.tag}</span>}
-            <h3>{dish.name}</h3>
-            {(dish.note || dish.categoryLabel) && (
-              <p className="dish-meta">{[dish.categoryLabel, dish.note].filter(Boolean).join(' · ')}</p>
-            )}
-            {dish.desc && <p className="dish-desc">{dish.desc}</p>}
-            <p className="dish-price">{priceText(dish)}</p>
-          </figcaption>
-          <button type="button" className="lb-btn dish-close" onClick={onClose} aria-label="Cerrar">
-            <Close size={20} />
-          </button>
-        </figure>
-      )}
-    </dialog>
-  );
-}
-
-function Featured({ onOpen }: { onOpen: (d: Dish) => void }) {
-  return (
-    <div className="featured rv">
-      <p className="label featured-label">Lo que más se pide</p>
-      <ul className="featured-row" data-lenis-prevent>
-        {FEATURED.map((d) => (
-          <li key={`${d.category}-${d.name}`}>
-            <button type="button" className="featured-card" onClick={() => onOpen(d)} aria-label={`Ver ${d.name}`}>
-              <Image src={d.img!} alt="" placeholder="blur" sizes="(max-width: 700px) 62vw, 260px" />
-              <span className="dish-tag">{d.tag}</span>
-              <span className="featured-cap">
-                <strong>{d.name === 'Tradicional' ? 'Cantarito tradicional' : d.name}</strong>
-                <span>{priceText(d)}</span>
-              </span>
-            </button>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-}
+import { MENU, MENU_NOTES, money, type MenuCategory } from '@/lib/site';
 
 function withTransition(el: HTMLElement | null, update: () => void) {
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -147,7 +64,7 @@ function Pill({ items, active, onPick, label, size }: {
   );
 }
 
-function Panel({ cat, onOpen }: { cat: MenuCategory; onOpen: (d: Dish) => void }) {
+function Panel({ cat }: { cat: MenuCategory }) {
   return (
     <div className="menu-panel-inner">
       <div className="menu-visual">
@@ -175,23 +92,10 @@ function Panel({ cat, onOpen }: { cat: MenuCategory; onOpen: (d: Dish) => void }
         )}
         <ul className={`menu-list ${cat.cols ? 'has-cols' : cat.items.length > 6 ? 'is-long' : ''}`}>
           {cat.items.map((it, i) => (
-            <li key={`${it.name}-${i}`} className={`menu-row ${it.img ? 'has-thumb' : ''}`}>
+            <li key={`${it.name}-${i}`} className="menu-row">
               <div className="menu-row-main">
                 <span className="menu-name">
-                  {it.img && (
-                    <button
-                      type="button"
-                      className="menu-thumb"
-                      onClick={() => onOpen({ ...it, categoryLabel: cat.label, cols: cat.cols })}
-                      aria-label={`Ver foto de ${it.name}`}
-                    >
-                      <Image src={it.img} alt="" placeholder="blur" sizes="56px" />
-                    </button>
-                  )}
-                  <span className="menu-name-text">
-                    {it.name}
-                    {it.tag && <em className="menu-tag">{it.tag}</em>}
-                  </span>
+                  {it.name}
                   {it.note && <small>{it.note}</small>}
                 </span>
                 {it.desc && <span className="menu-desc">{it.desc}</span>}
@@ -224,7 +128,6 @@ export default function MenuSection({ asPage = false }: { asPage?: boolean }) {
   const [catId, setCatId] = useState(group.categories[0].id);
   const cat = group.categories.find((c) => c.id === catId) ?? group.categories[0];
   const panel = useRef<HTMLDivElement>(null);
-  const [dish, setDish] = useState<Dish | null>(null);
 
   const pickGroup = (id: string) =>
     withTransition(panel.current, () => {
@@ -259,20 +162,17 @@ export default function MenuSection({ asPage = false }: { asPage?: boolean }) {
           </p>
         </header>
 
-        <Featured onOpen={setDish} />
-
         <div className="menu-nav rv">
           <Pill items={MENU} active={groupId} onPick={pickGroup} label="Secciones del menú" size="lg" />
           <Pill items={group.categories} active={cat.id} onPick={pickCat} label={`Categorías de ${group.label}`} size="sm" />
         </div>
 
         <div ref={panel} className="menu-panel" role="tabpanel" aria-label={cat.label}>
-          <Panel cat={cat} onOpen={setDish} />
+          <Panel cat={cat} />
         </div>
 
         {MENU_NOTES[groupId] && <p className="menu-note">{MENU_NOTES[groupId]}</p>}
       </div>
-      <DishView dish={dish} onClose={() => setDish(null)} />
     </section>
   );
 }
