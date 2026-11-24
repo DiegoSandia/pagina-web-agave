@@ -1,7 +1,9 @@
 import Image from 'next/image';
 import logo from '@/assets/brand/logo-full.png';
 import { BRANCHES, SITE } from '@/lib/site';
+import { PRIVACY_READY } from '@/lib/privacy';
 import { Facebook, Instagram } from './icons';
+import PrivacyDialog, { PrivacyLink } from './PrivacyDialog';
 
 export default function Footer() {
   return (
@@ -37,9 +39,11 @@ export default function Footer() {
 
         <div className="footer-bottom">
           <span>© {new Date().getFullYear()} El Agave · Birria & Cantaritos</span>
+          {PRIVACY_READY && <PrivacyLink className="footer-legal">Aviso de privacidad</PrivacyLink>}
           <span>La propina es opcional · Consume con moderación</span>
         </div>
       </div>
+      <PrivacyDialog />
     </footer>
   );
 }

@@ -2010,6 +2010,82 @@ select.input:disabled {
 .res-privacy {
   margin-top: -6px;
 }
+.res-promos + .res-privacy {
+  margin-top: 0;
+  line-height: 1.5;
+}
+.res-privacy .inline-link {
+  font-size: inherit;
+}
+.res-promos {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding-block: 4px;
+  color: rgba(245, 230, 200, 0.86);
+  font-size: 14px;
+  line-height: 1.4;
+  cursor: pointer;
+}
+.res-promos input {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  accent-color: var(--amber);
+}
+.res-promos em {
+  color: var(--smoke);
+  font-style: normal;
+}
+.footer-legal {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.footer-legal:hover {
+  color: var(--gold);
+}
+.privacy-modal {
+  width: min(680px, 100vw);
+}
+.privacy-modal .res-modal-head {
+  position: sticky;
+  top: -18px;
+  z-index: 1;
+  margin: -18px -18px 0;
+  padding: 18px 18px 12px;
+  background: #1c120c;
+}
+.privacy-text {
+  display: grid;
+  gap: 10px;
+  padding: 4px 6px 10px;
+  color: rgba(245, 230, 200, 0.82);
+  font-size: 14px;
+  line-height: 1.6;
+}
+.privacy-text h3 {
+  margin-top: 10px;
+  color: var(--gold);
+  font-size: 15px;
+  font-weight: 600;
+}
+.privacy-text ul {
+  display: grid;
+  gap: 4px;
+  padding-left: 18px;
+  list-style: disc;
+}
+.privacy-text a {
+  color: var(--gold);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  overflow-wrap: anywhere;
+}
+.privacy-date {
+  margin-top: 8px;
+  color: var(--smoke);
+  font-size: 12px;
+}
 .input-sm {
   height: 42px;
   margin-top: 6px;

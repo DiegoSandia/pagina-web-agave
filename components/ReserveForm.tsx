@@ -1,10 +1,12 @@
 'use client';
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { BRANCHES, waLink, type Branch } from '@/lib/site';
+import { BRANCHES, SITE, waLink, type Branch } from '@/lib/site';
+import { PRIVACY, PRIVACY_READY } from '@/lib/privacy';
 import { getOrigin } from '@/lib/origin';
 import { trackEvent as track } from '@/lib/analytics';
 import { SCHEDULES, mexicoNow, slotsFor, type BranchId } from '@/lib/hours';
+import { PrivacyLink } from './PrivacyDialog';
 import TimeWheel from './TimeWheel';
 import { ArrowRight, WhatsApp } from './icons';
 
@@ -90,6 +92,8 @@ export default function ReserveForm({ idPrefix = 'res', preset }: { idPrefix?: s
   const [phoneError, setPhoneError] = useState(false);
   const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState(false);
+  // Never preselected or remembered: marketing needs a fresh, explicit yes.
+  const [promos, setPromos] = useState(false);
   const [sent, setSent] = useState<{ url: string; folio: string; when: string } | null>(null);
   const [honeypot, setHoneypot] = useState('');
   const nameRef = useRef<HTMLInputElement>(null);
@@ -166,6 +170,7 @@ export default function ReserveForm({ idPrefix = 'res', preset }: { idPrefix?: s
         nombre: name.trim(),
         telefono: tel,
         correo: mail,
+        promos,
         notas: [festejo?.toUpperCase(), notes.trim()].filter(Boolean).join(' · '),
         origen: getOrigin(),
         website: honeypot,
@@ -206,7 +211,7 @@ export default function ReserveForm({ idPrefix = 'res', preset }: { idPrefix?: s
         <a href={sent.url} target="_blank" rel="noopener noreferrer" className="btn btn-primary btn-lg btn-block">
           <WhatsApp size={20} /> Abrir WhatsApp otra vez
         </a>
-        <button type="button" className="btn btn-link" onClick={() => setSent(null)}>Hacer otra reserva</button>
+        <button type="button" className="btn btn-link" onClick={() => { setPromos(false); setSent(null); }}>Hacer otra reserva</button>
       </div>
     );
   }
@@ -384,7 +389,22 @@ export default function ReserveForm({ idPrefix = 'res', preset }: { idPrefix?: s
           {emailError && <span className="hint is-error">Revisa tu correo o déjalo vacío.</span>}
         </label>
       </div>
-      <p className="hint res-privacy">Solo los usamos para confirmar tu reserva y avisarte si algo cambia.</p>
+      {PRIVACY_READY ? (
+        <>
+          <label className="res-promos">
+            <input type="checkbox" checked={promos} onChange={(e) => setPromos(e.target.checked)} />
+            <span>Quiero recibir promos y novedades por WhatsApp o correo <em>(opcional)</em></span>
+          </label>
+          <p className="hint res-privacy">
+            {PRIVACY.responsible}, con domicilio en {PRIVACY.address}, usará tu nombre, teléfono, correo y los datos de tu
+            reserva para registrarla, confirmarla y avisarte de cambios. Solo si marcas la casilla, también para enviarte
+            promos. No pedimos datos sensibles. Para limitar su uso escribe a {SITE.email}. Consulta el{' '}
+            <PrivacyLink className="inline-link">aviso de privacidad integral</PrivacyLink>.
+          </p>
+        </>
+      ) : (
+        <p className="hint res-privacy">Solo los usamos para confirmar tu reserva y avisarte si algo cambia.</p>
+      )}
 
       {showNotes ? (
         <label className="field">

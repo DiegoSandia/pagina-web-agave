@@ -9,6 +9,7 @@ type Payload = {
   nombre?: unknown;
   telefono?: unknown;
   correo?: unknown;
+  promos?: unknown;
   notas?: unknown;
   origen?: unknown;
   website?: unknown;
@@ -39,6 +40,7 @@ export async function POST(req: Request) {
     correo: str(body.correo, 120).toLowerCase(),
     notas: str(body.notas, 160),
     origen: str(body.origen, 40) || 'directo',
+    promos: body.promos === true ? 'Sí' : 'No',
   };
 
   const valid =
