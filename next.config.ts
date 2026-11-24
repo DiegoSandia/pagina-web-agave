@@ -22,7 +22,7 @@ const nextConfig: NextConfig = {
       { source: '/centro', destination: place('Centro', PLACE.centro), permanent: false },
       { source: '/resena-arboledas', destination: review(PLACE.arboledas), permanent: false },
       { source: '/resena-centro', destination: review(PLACE.centro), permanent: false },
-      { source: '/whatsapp', destination: 'https://wa.me/525510699414', permanent: false },
+      { source: '/whatsapp', destination: 'https://wa.me/525671304217', permanent: false },
       { source: '/horario', destination: '/#sucursales', permanent: false },
       { source: '/ubicacion', destination: '/#sucursales', permanent: false },
       { source: '/carta', destination: '/menu', permanent: true },
