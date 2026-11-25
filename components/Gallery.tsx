@@ -92,7 +92,13 @@ export default function Gallery() {
                 onClick={() => open(i)}
                 aria-label={`Ver foto: ${g.alt}`}
               >
-                <Image src={g.img} alt={g.alt} placeholder="blur" sizes="(max-width: 700px) 50vw, 25vw" />
+                <Image
+                  src={g.img}
+                  alt={g.alt}
+                  placeholder="blur"
+                  sizes={g.span === 'big' || g.span === 'wide' ? '(max-width: 700px) 100vw, 50vw' : '(max-width: 700px) 50vw, 25vw'}
+                  style={g.pos ? { objectPosition: g.pos } : undefined}
+                />
                 <span className="bento-label">{g.label}</span>
               </button>
             </li>

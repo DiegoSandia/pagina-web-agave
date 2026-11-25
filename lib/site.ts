@@ -7,23 +7,25 @@ import cenitalBirria from '@/assets/photos/v2/cenital-birria.jpg';
 import cazuela10l from '@/assets/photos/v2/cazuela-10l.jpg';
 import cantaritoNeon from '@/assets/photos/v2/cantarito-neon.jpg';
 import barraCantaritos from '@/assets/photos/v2/barra-cantaritos.jpg';
-import barraMojito from '@/assets/photos/v2/barra-mojito.jpg';
 import barraTequila from '@/assets/photos/v2/barra-tequila.jpg';
 import mojitosTrio from '@/assets/photos/v2/mojitos-trio.jpg';
 import alitasPapas from '@/assets/photos/v2/alitas-papas.jpg';
-import papasMojito from '@/assets/photos/v2/papas-mojito.jpg';
 import tacosLengua from '@/assets/photos/v2/tacos-lengua.jpg';
 import tacosNeon from '@/assets/photos/v2/tacos-neon.jpg';
-import carneJugo from '@/assets/photos/v2/carne-jugo.jpg';
 import desayuno from '@/assets/photos/v2/desayuno.jpg';
 import chilaquilesPollo from '@/assets/photos/v2/chilaquiles-pollo.jpg';
 import enchiladasPour from '@/assets/photos/v2/enchiladas-pour.jpg';
-import gente1 from '@/assets/photos/v2/gente-1.jpg';
-import mesaLlena from '@/assets/photos/v2/mesa-llena.jpg';
-import meseroCantaritos from '@/assets/photos/v2/mesero-cantaritos.jpg';
+import meseroCantaritos from '@/assets/photos/v3/mesero-cantaritos.jpg';
+import nocheSombreros from '@/assets/photos/v3/noche-sombreros.jpg';
+import djNeon from '@/assets/photos/v3/dj-neon.jpg';
+import amistadCantarito from '@/assets/photos/v3/amistad-cantarito.jpg';
+import grupoNeon from '@/assets/photos/v3/grupo-neon.jpg';
+import cubetaNeon from '@/assets/photos/v3/cubeta-neon.jpg';
+import salon from '@/assets/photos/v3/salon.jpg';
+import barra from '@/assets/photos/v3/barra.jpg';
+import flotante from '@/assets/photos/v3/flotante.jpg';
 import birriaNoodles from '@/assets/photos/birria-noodles.jpg';
 import aguaJamaica from '@/assets/photos/agua-jamaica.jpg';
-import aguaFresca from '@/assets/photos/agua-fresca-splash.jpg';
 
 export const SITE = {
   name: 'El Agave',
@@ -289,7 +291,6 @@ export const MENU: MenuGroup[] = [
         id: 'mezcalinas',
         label: 'Mezcalinas',
         intro: 'Mezcal (60 ml) con jugo de tu elección y agua mineral, en vaso escarchado con sal de gusano.',
-        img: aguaJamaica,
         items: [
           { name: 'Frutos rojos', note: '450 ml', price: 110 },
           { name: 'Jamaica y chile ancho', note: '450 ml', price: 110 },
@@ -317,7 +318,7 @@ export const MENU: MenuGroup[] = [
       {
         id: 'cocteleria',
         label: 'Coctelería',
-        img: barraMojito,
+        img: flotante,
         items: [
           { name: 'Piña colada', note: '400 ml', desc: 'Frappé con Bacardí blanco (90 ml), piña y crema de coco.', price: 125 },
           { name: 'Derrame', note: '45 ml', desc: 'Baileys, licor de durazno y granadina.', price: 120 },
@@ -333,7 +334,7 @@ export const MENU: MenuGroup[] = [
       {
         id: 'cervezas',
         label: 'Cervezas',
-        img: papasMojito,
+        img: cubetaNeon,
         items: [
           { name: 'Corona · Victoria · Pacífico', note: '355 ml', price: 55 },
           { name: 'Modelo Especial · Negra Modelo', note: '355 ml', price: 60 },
@@ -362,7 +363,7 @@ export const MENU: MenuGroup[] = [
       {
         id: 'sin-alcohol',
         label: 'Sin alcohol',
-        img: aguaFresca,
+        img: aguaJamaica,
         items: [
           { name: 'Cantarito sin tequila', note: '750 ml', price: 65 },
           { name: 'Margarita sin alcohol', note: '1 L', price: 90 },
@@ -541,15 +542,16 @@ export const WEEK = [
   { day: 0, short: 'Dom', name: 'Domingo', hours: 'Desde 10 AM', plan: 'Desayuno y birria' },
 ];
 
-export const GALLERY: { img: StaticImageData; alt: string; label: string; span?: 'tall' | 'wide' }[] = [
-  { img: barraCantaritos, alt: 'Bartender preparando cantaritos de barro en la barra', label: 'La barra', span: 'tall' },
-  { img: mesaLlena, alt: 'Grupo de amigos con una cazuela de cantarito bajo el letrero de neón', label: 'La mesa llena', span: 'tall' },
-  { img: alitasPapas, alt: 'Alitas y papas a la francesa bajo el letrero de neón', label: 'Snacks', span: 'wide' },
+export const GALLERY: { img: StaticImageData; alt: string; label: string; span?: 'tall' | 'wide' | 'big'; pos?: string }[] = [
+  { img: nocheSombreros, alt: 'Grupo grande con sombreros alrededor de una mesa con cantaritos, de noche en El Agave', label: 'Las noches', span: 'big', pos: '60% 60%' },
+  { img: djNeon, alt: 'DJ tocando en cabina de madera junto al letrero de neón de El Agave', label: 'DJ en vivo', span: 'tall', pos: '42% 50%' },
+  { img: amistadCantarito, alt: 'Dos amigas sonriendo, una levanta un cantarito de barro', label: 'Salud', span: 'tall', pos: '30% 50%' },
+  { img: meseroCantaritos, alt: 'Mesero sirviendo cantaritos desde la cazuela en la mesa', label: 'En tu mesa', span: 'tall', pos: '36% 50%' },
+  { img: mojitosTrio, alt: 'Tres mega mojitos de sabores bajo el letrero de neón', label: 'Mega bebidas', pos: '50% 62%' },
+  { img: salon, alt: 'Salón de El Agave con mesas de madera, enredadera, focos y letrero de neón', label: 'El salón', span: 'big', pos: '30% 50%' },
   { img: cenitalBirria, alt: 'Birria vista desde arriba con cebolla, cilantro y limón', label: 'Birria' },
-  { img: meseroCantaritos, alt: 'Mesero sirviendo cantaritos desde la cazuela en la mesa', label: 'Servido en la mesa' },
-  { img: mojitosTrio, alt: 'Tres mega mojitos de sabores bajo el letrero de neón', label: 'Mega bebidas', span: 'tall' },
-  { img: gente1, alt: 'Grupo de amigos en una mesa de El Agave', label: 'Las noches' },
-  { img: carneJugo, alt: 'Carne en su jugo con frijoles y chiles', label: 'Carne en su jugo' },
+  { img: barra, alt: 'Barra de ladrillo y madera con cazuelas de barro en la repisa', label: 'La barra', span: 'wide', pos: '50% 55%' },
+  { img: grupoNeon, alt: 'Grupo de amigos con una cazuela de cantarito bajo el letrero de neón', label: 'La mesa llena', span: 'wide', pos: '50% 58%' },
 ];
 
 export const FAQ = [

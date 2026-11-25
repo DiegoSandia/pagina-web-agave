@@ -1314,6 +1314,10 @@ address {
 .bento-item.wide {
   grid-column: span 2;
 }
+.bento-item.big {
+  grid-column: span 2;
+  grid-row: span 2;
+}
 .bento-btn {
   position: relative;
   display: block;
@@ -2120,18 +2124,19 @@ select.input:disabled {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: 38% 50%;
 }
 .groups-photo::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, transparent 55%, rgba(10, 7, 6, 0.85));
+  background: linear-gradient(180deg, transparent 72%, rgba(10, 7, 6, 0.6));
   pointer-events: none;
 }
 .groups-badge {
   position: absolute;
   left: 18px;
-  bottom: 18px;
+  top: 18px;
   z-index: 1;
   padding: 8px 14px;
   border-radius: 999px;
@@ -2190,6 +2195,12 @@ select.input:disabled {
   }
 }
 @media (max-width: 560px) {
+  .groups-photo {
+    aspect-ratio: 1;
+  }
+  .groups-photo img {
+    object-position: 22% 50%;
+  }
   .groups-perks {
     grid-template-columns: 1fr;
   }
