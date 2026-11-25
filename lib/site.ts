@@ -15,14 +15,15 @@ import tacosNeon from '@/assets/photos/v2/tacos-neon.jpg';
 import desayuno from '@/assets/photos/v2/desayuno.jpg';
 import chilaquilesPollo from '@/assets/photos/v2/chilaquiles-pollo.jpg';
 import enchiladasPour from '@/assets/photos/v2/enchiladas-pour.jpg';
-import meseroCantaritos from '@/assets/photos/v3/mesero-cantaritos.jpg';
-import nocheSombreros from '@/assets/photos/v3/noche-sombreros.jpg';
-import djNeon from '@/assets/photos/v3/dj-neon.jpg';
-import amistadCantarito from '@/assets/photos/v3/amistad-cantarito.jpg';
-import grupoNeon from '@/assets/photos/v3/grupo-neon.jpg';
-import cubetaNeon from '@/assets/photos/v3/cubeta-neon.jpg';
-import salon from '@/assets/photos/v3/salon.jpg';
-import barra from '@/assets/photos/v3/barra.jpg';
+import barraMojito from '@/assets/photos/v2/barra-mojito.jpg';
+import papasMojito from '@/assets/photos/v2/papas-mojito.jpg';
+import carneJugo from '@/assets/photos/v2/carne-jugo.jpg';
+import mojitosMesa from '@/assets/photos/v3/mojitos-mesa.jpg';
+import alitasBarra from '@/assets/photos/v3/alitas-barra.jpg';
+import tacosMojito from '@/assets/photos/v3/tacos-mojito.jpg';
+import antojitos from '@/assets/photos/v3/antojitos.jpg';
+import mesaNeon from '@/assets/photos/v3/mesa-neon.jpg';
+import desayunoCenital from '@/assets/photos/v3/desayuno-cenital.jpg';
 import flotante from '@/assets/photos/v3/flotante.jpg';
 import birriaNoodles from '@/assets/photos/birria-noodles.jpg';
 import aguaJamaica from '@/assets/photos/agua-jamaica.jpg';
@@ -334,7 +335,7 @@ export const MENU: MenuGroup[] = [
       {
         id: 'cervezas',
         label: 'Cervezas',
-        img: cubetaNeon,
+        img: papasMojito,
         items: [
           { name: 'Corona · Victoria · Pacífico', note: '355 ml', price: 55 },
           { name: 'Modelo Especial · Negra Modelo', note: '355 ml', price: 60 },
@@ -543,15 +544,15 @@ export const WEEK = [
 ];
 
 export const GALLERY: { img: StaticImageData; alt: string; label: string; span?: 'tall' | 'wide' | 'big'; pos?: string }[] = [
-  { img: nocheSombreros, alt: 'Grupo grande con sombreros alrededor de una mesa con cantaritos, de noche en El Agave', label: 'Las noches', span: 'big', pos: '60% 60%' },
-  { img: djNeon, alt: 'DJ tocando en cabina de madera junto al letrero de neón de El Agave', label: 'DJ en vivo', span: 'tall', pos: '42% 50%' },
-  { img: amistadCantarito, alt: 'Dos amigas sonriendo, una levanta un cantarito de barro', label: 'Salud', span: 'tall', pos: '30% 50%' },
-  { img: meseroCantaritos, alt: 'Mesero sirviendo cantaritos desde la cazuela en la mesa', label: 'En tu mesa', span: 'tall', pos: '36% 50%' },
-  { img: mojitosTrio, alt: 'Tres mega mojitos de sabores bajo el letrero de neón', label: 'Mega bebidas', pos: '50% 62%' },
-  { img: salon, alt: 'Salón de El Agave con mesas de madera, enredadera, focos y letrero de neón', label: 'El salón', span: 'big', pos: '30% 50%' },
+  { img: mojitosMesa, alt: 'Tres mega mojitos de sabores en una mesa de madera bajo el letrero de neón', label: 'Mega bebidas', span: 'big' },
+  { img: barraMojito, alt: 'Bartender sirviendo ron en un mega mojito en la barra', label: 'La barra', span: 'tall' },
+  { img: alitasBarra, alt: 'Alitas doradas junto a una bebida en capas bajo el neón', label: 'Alitas', span: 'tall', pos: '62% 50%' },
+  { img: tacosMojito, alt: 'Tacos con mojito y shots bajo el letrero de neón', label: 'Tacos', span: 'tall', pos: '58% 50%' },
   { img: cenitalBirria, alt: 'Birria vista desde arriba con cebolla, cilantro y limón', label: 'Birria' },
-  { img: barra, alt: 'Barra de ladrillo y madera con cazuelas de barro en la repisa', label: 'La barra', span: 'wide', pos: '50% 55%' },
-  { img: grupoNeon, alt: 'Grupo de amigos con una cazuela de cantarito bajo el letrero de neón', label: 'La mesa llena', span: 'wide', pos: '50% 58%' },
+  { img: mesaNeon, alt: 'Mesa de madera con birria y tacos bajo el letrero de neón de El Agave', label: 'Tu mesa', span: 'big', pos: '50% 80%' },
+  { img: antojitos, alt: 'Mesa con antojitos, salsas y consomé en platos de barro', label: 'Al centro', pos: '50% 72%' },
+  { img: desayunoCenital, alt: 'Desayuno en salsas verde y roja visto desde arriba, con tortillas y cantarito', label: 'Desayunos', span: 'wide' },
+  { img: carneJugo, alt: 'Carne en su jugo con frijoles y chiles', label: 'Carne en su jugo', span: 'wide', pos: '50% 60%' },
 ];
 
 export const FAQ = [

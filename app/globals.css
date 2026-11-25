@@ -2124,7 +2124,7 @@ select.input:disabled {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: 38% 50%;
+  object-position: 50% 70%;
 }
 .groups-photo::after {
   content: '';
@@ -2199,7 +2199,7 @@ select.input:disabled {
     aspect-ratio: 1;
   }
   .groups-photo img {
-    object-position: 22% 50%;
+    object-position: 50% 82%;
   }
   .groups-perks {
     grid-template-columns: 1fr;
