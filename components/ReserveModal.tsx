@@ -61,7 +61,7 @@ export default function ReserveModal() {
         {mounted && <ReserveForm key={preset?.occasion ?? 'mesa'} idPrefix="modal" preset={preset ?? undefined} />}
         <a
           className="res-modal-chat"
-          href={waLink(group ? 'Hola, quiero preguntar por una posada o reunión para un grupo.' : 'Hola, tengo una pregunta.')}
+          href={waLink(group ? 'Hola, quiero cotizar un paquete para grupo. Somos ___ personas, para (desayuno / comida / cena), el día ___, en la sucursal ___.' : 'Hola, tengo una pregunta.')}
           target="_blank"
           rel="noopener noreferrer"
         >

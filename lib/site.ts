@@ -529,17 +529,18 @@ export const PROMOS = [
   'Cantarito chico de cortesía con mesa de 4+',
   'Cazuelas de 5 y 10 litros para la mesa',
   'Pulque 2×1 miércoles y jueves',
-  'Karaoke viernes y sábado',
+  'Karaoke: miércoles en Arboledas, viernes y sábado en Centro',
+  'Paquetes de posada: desayuno, comida o cena',
   'Birria estilo Jalisco desde $150',
 ];
 
 export const WEEK = [
   { day: 1, short: 'Lun', name: 'Lunes', hours: 'Solo Centro · desde 10 AM', plan: '2×1 en copeo' },
   { day: 2, short: 'Mar', name: 'Martes', hours: 'Desde 10 AM', plan: '2×1 en copeo' },
-  { day: 3, short: 'Mié', name: 'Miércoles', hours: 'Desde 10 AM', plan: 'Pulque 2×1' },
+  { day: 3, short: 'Mié', name: 'Miércoles', hours: 'Desde 10 AM', plan: 'Pulque 2×1 · Karaoke Arboledas' },
   { day: 4, short: 'Jue', name: 'Jueves', hours: 'Desde 10 AM', plan: 'Pulque 2×1' },
-  { day: 5, short: 'Vie', name: 'Viernes', hours: 'Desde 10 AM', plan: 'Karaoke' },
-  { day: 6, short: 'Sáb', name: 'Sábado', hours: 'Desde 10 AM', plan: 'Karaoke' },
+  { day: 5, short: 'Vie', name: 'Viernes', hours: 'Desde 10 AM', plan: 'Karaoke Centro' },
+  { day: 6, short: 'Sáb', name: 'Sábado', hours: 'Desde 10 AM', plan: 'Karaoke Centro' },
   { day: 0, short: 'Dom', name: 'Domingo', hours: 'Desde 10 AM', plan: 'Desayuno y birria' },
 ];
 
@@ -560,9 +561,10 @@ export const FAQ = [
   { q: '¿Cuánto cuesta la birria?', a: 'La birria estilo Jalisco mediana (120 g) cuesta $150 y la grande (170 g) $175. El consomé solo está en $40, el birriamen en $150 y la orden de 3 tacos de birria en $120.' },
   { q: '¿Cómo funciona el 2×1 en copeo?', a: 'Es todos los días, por persona e incluye un mezclador. Aplican restricciones: Hypnotic y Jägermeister no entran en ninguna preparación.' },
   { q: '¿Hacen eventos y grupos?', a: 'Sí: posadas, cumpleaños, grupos de trabajo y reuniones. Para mesas grandes tenemos cazuelas de cantarito de 5 y 10 litros. Aparta en la sección Posadas y grupos o escríbenos por WhatsApp con anticipación; en diciembre las fechas se llenan rápido.' },
+  { q: '¿Tienen paquetes para posadas?', a: 'Sí, hay paquetes de desayuno, comida y cena según el número de personas. Dinos cuántos son, qué día y en qué sucursal, y te mandamos la cotización por WhatsApp.' },
   { q: '¿Cómo reservo una mesa?', a: 'En la sección Reservar de esta página: eliges sucursal, día, hora y cuántos vienen, se abre WhatsApp con todo escrito y te confirmamos la mesa por ese chat. Toma 20 segundos.' },
-  { q: '¿Qué promociones tienen?', a: '2×1 en copeo todos los días, pulque 2×1 miércoles y jueves, cantarito chico de cortesía con mesa de 4 o más y karaoke viernes y sábado. Los domingos, desayuno y birria.' },
-  { q: '¿Hay música en vivo?', a: 'Sí. En Centro hay música en vivo de miércoles a domingo y en Arboledas de jueves a domingo. Viernes y sábado también hay karaoke.' },
+  { q: '¿Qué promociones tienen?', a: '2×1 en copeo todos los días, pulque 2×1 miércoles y jueves, cantarito chico de cortesía con mesa de 4 o más y karaoke los miércoles en Arboledas y viernes y sábado en Centro. Los domingos, desayuno y birria.' },
+  { q: '¿Hay música en vivo?', a: 'Sí. En Centro hay música en vivo de miércoles a domingo y en Arboledas de jueves a domingo. El karaoke es los miércoles en Arboledas y viernes y sábado en Centro.' },
   { q: '¿Qué formas de pago aceptan?', a: 'Efectivo, tarjeta de crédito y débito, y pago con el celular.' },
   { q: '¿Tienen estacionamiento?', a: 'Sí, contamos con valet parking.' },
   { q: '¿Puedo ir con niños o con mascotas?', a: 'Los niños son bienvenidos. Por ahora no se permiten mascotas.' },

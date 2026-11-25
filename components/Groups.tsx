@@ -9,10 +9,10 @@ import { openReserve } from './ReserveModal';
 import { ArrowRight, Spark, WhatsApp } from './icons';
 
 const PERKS = [
+  { title: 'Paquetes para tu grupo', copy: 'Desayuno, comida o cena, según cuántos sean. Te cotizamos por WhatsApp.' },
   { title: 'Cazuelas para compartir', copy: 'De 5 litros ($990) y de 10 litros ($1,799) para que nadie se quede con el vaso vacío.' },
-  { title: 'Cubetas y 2×1 en copeo', copy: 'Cubetas desde $270 y 2×1 en copeo todos los días.' },
-  { title: 'Cortesía en mesas de 4+', copy: 'Cantarito chico de cortesía al llegar.' },
-  { title: 'Viernes y sábado, karaoke', copy: 'Para que la posada termine como debe: cantando.' },
+  { title: 'Cubetas, 2×1 y cortesía', copy: 'Cubetas desde $270, 2×1 en copeo todos los días y cantarito chico de cortesía en mesas de 4+.' },
+  { title: 'Karaoke', copy: 'Miércoles en Arboledas. Viernes y sábado en Centro.' },
 ];
 
 export default function Groups() {
@@ -35,7 +35,7 @@ export default function Groups() {
             Trae a <span className="neon">todo el grupo</span>
           </h2>
           <p className="lede rv">
-            La posada de la oficina, el cumpleaños o la reunión de fin de año. Dinos cuántos son y qué día, y te confirmamos por WhatsApp.
+            La posada de la oficina, el cumpleaños o la reunión de fin de año. Elige paquete de desayuno, comida o cena: dinos cuántos son y qué día, y te cotizamos por WhatsApp.
           </p>
 
           <ul className="groups-perks rv">
@@ -56,11 +56,11 @@ export default function Groups() {
             </button>
             <a
               className="btn btn-ghost btn-lg"
-              href={waLink('Hola, quiero preguntar por una posada o reunión para un grupo.')}
+              href={waLink('Hola, quiero cotizar un paquete para grupo. Somos ___ personas, para (desayuno / comida / cena), el día ___, en la sucursal ___.')}
               target="_blank"
               rel="noopener noreferrer"
             >
-              <WhatsApp size={18} /> Preguntar primero
+              <WhatsApp size={18} /> Cotizar paquete
             </a>
           </div>
         </div>
