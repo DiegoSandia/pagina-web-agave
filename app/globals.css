@@ -2536,9 +2536,14 @@ select.input:disabled {
   background: radial-gradient(900px 400px at 50% 0%, rgba(229, 62, 12, 0.12), transparent 70%), var(--ink-2);
   overflow: hidden;
 }
+.footer > .container {
+  container-type: inline-size;
+}
+/* Sized to the container, not the viewport: the neon face is ~10.9em wide
+   for "Prende la noche", so 8.6cqi always fits on one line with room for glow. */
 .footer-neon {
   font-family: var(--f-neon);
-  font-size: clamp(38px, 8.6vw, 140px);
+  font-size: clamp(30px, 8.6cqi, 140px);
   line-height: 1;
   text-align: center;
   text-transform: uppercase;
@@ -2920,6 +2925,10 @@ select.input:disabled {
   }
   .footer-neon {
     white-space: normal;
+    font-size: clamp(38px, 13cqi, 72px);
+  }
+  .footer-neon .neon {
+    white-space: nowrap;
   }
   .proof-score {
     flex-direction: column;
