@@ -2117,14 +2117,14 @@ select.input:disabled {
   position: relative;
   border-radius: var(--radius);
   overflow: hidden;
-  aspect-ratio: 4 / 5;
+  aspect-ratio: 6 / 5;
   box-shadow: 0 40px 90px -40px rgba(255, 107, 26, 0.45);
 }
 .groups-photo img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: 50% 70%;
+  object-position: 50% 85%;
 }
 .groups-photo::after {
   content: '';
@@ -2199,7 +2199,7 @@ select.input:disabled {
     aspect-ratio: 1;
   }
   .groups-photo img {
-    object-position: 50% 82%;
+    object-position: 50% 85%;
   }
   .groups-perks {
     grid-template-columns: 1fr;

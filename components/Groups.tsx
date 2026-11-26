@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { trackEvent as track } from '@/lib/analytics';
-import cazuelaGrupo from '@/assets/photos/v2/barra-cantaritos.jpg';
+import grupoJovenes from '@/assets/photos/v3/grupo-jovenes.jpg';
 import { waLink } from '@/lib/site';
 import { getOrigin } from '@/lib/origin';
 import { openReserve } from './ReserveModal';
@@ -25,7 +25,7 @@ export default function Groups() {
     <section id="grupos" className="section groups" aria-labelledby="groups-title">
       <div className="container groups-grid">
         <div className="groups-photo rv-img">
-          <Image src={cazuelaGrupo} alt="Cazuela rodeada de cantaritos de barro servidos en la barra de El Agave" placeholder="blur" sizes="(max-width: 900px) 100vw, 46vw" />
+          <Image src={grupoJovenes} alt="Grupo de amigos en una mesa de El Agave con el letrero de neón al fondo" placeholder="blur" sizes="(max-width: 900px) 100vw, 46vw" />
           <span className="groups-badge">Diciembre se aparta rápido</span>
         </div>
 
